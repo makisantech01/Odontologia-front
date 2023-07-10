@@ -13,7 +13,7 @@ import Cookie from "universal-cookie";
 library.add(faArrowRightFromBracket);
 
 const linkClasses =
-  "flex items-center gap-2 font-light px-3 py-2 hover:bg-secondary-100 hover:no-underline rounded-sm text-base";
+  "flex items-center gap-2 font-light transition-all duration-200 ease-in-out px-3 py-2 hover:bg-secondary-100 hover:no-underline rounded-sm text-base";
 
 const SidebarLink = ({ item }) => {
   const { pathname } = useLocation();

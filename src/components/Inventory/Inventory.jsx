@@ -27,7 +27,7 @@ const Inventory = () => {
             <DueDateTable />
           </article>
         </section>
-        <article className="flex flex-col hover:transform hover:scale-105 mx-auto mt-[5%] mb-[5%] shadow-2xl shadow-black justify-center bg-primary items-center h-[10%] w-[20%] rounded-md">
+        <article className="flex transition-transform duration-200 ease-in-out flex-col hover:transform hover:scale-105 mx-auto mt-[5%] mb-[5%] shadow-2xl shadow-black justify-center bg-primary items-center h-[10%] w-[20%] rounded-md">
           Stock total de productos:
           <strong>{totalProductos}</strong>
         </article>
