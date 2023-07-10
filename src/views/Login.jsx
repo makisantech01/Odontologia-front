@@ -9,11 +9,13 @@ import { useDispatch } from "react-redux";
 import { LoginUser } from "../components/store/features/usersSlice";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import {useNavigate} from "react-router-dom"
 library.add(faIdCard, faLock);
 
 const Login = () => {
   const userType = useSelector((state) => state.users.type);
   const dispatch = useDispatch();
+  const nav = useNavigate()
   const {
     register,
     handleSubmit,
@@ -31,7 +33,7 @@ const Login = () => {
 
   useEffect(() => {
     if (userType === true) {
-      window.location.href = "/citas";
+      nav("/citas")
     }
   });
 
@@ -56,7 +58,7 @@ const Login = () => {
               <input
                 className="border p-2 rounded w-[17em]"
                 type="number"
-                placeholder="12345678"
+                placeholder="Ingrese su DNI"
                 {...register("dni", {
                   required: "Campo obligatorio",
                   pattern: {
