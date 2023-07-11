@@ -16,7 +16,7 @@ const SearchBar = ({ searchTerm, onSearch, onKeyPress }) => {
         value={searchTerm}
         onKeyPress={onKeyPress}
         onChange={onSearch}
-        className="pl-8 pr-2 py-2 w-full rounded-full"
+        className="pl-8 pr-2 py-2 w-full rounded-full outline-none"
       />
     </div>
   );

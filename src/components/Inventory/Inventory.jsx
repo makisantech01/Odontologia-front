@@ -6,13 +6,20 @@ import { useDispatch, useSelector } from "react-redux/es/exports";
 import { useEffect, useState } from "react";
 import { getProducts } from "../store/features/inventorySlice";
 import SearchBar from "../Pacients/SearchBar";
+import EditModal from "./Modals/EditModal";
 const Inventory = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
 
-
+  const handleEdit = (row) => {
+    setSelectedRow(row);
+    setShowModal(true);
+  };
+ 
   const dispatch = useDispatch();
   const inventoryProducts = useSelector((state) => state.inventory.products);
-  console.log("🚀 ~ file: Inventory.jsx:12 ~ Inventory ~ productos:", inventoryProducts);
+
   const totalProductos = inventoryProducts.length
 
   useEffect(() => {
@@ -29,14 +36,14 @@ const Inventory = () => {
       <div className="absolute w-1/5">
         <Sidebar />
       </div>
-      <div className="ml-[20%] m-auto gap-36 flex flex-row">
+      <div className="ml-[20%] m-auto gap-20 flex flex-row">
       <section className="flex flex-col m-auto ml-[10%] gap-5 ">
         <SearchBar searchTerm={searchTerm} onSearch={handleSearch} />
-          {inventoryProducts && <AllProductsTables productos={inventoryProducts} />}
+          {inventoryProducts && <AllProductsTables handleEdit={handleEdit} productos={inventoryProducts} />}
           <button className=" h-[30%] transition-all duration-300 ease-in-out text-white rounded-lg w-[20%] m-auto bg-secondary-200 hover:bg-secondary-300 hover:scale-105">Agregar producto</button>
         </section>
         <section className="flex m-auto mr-7 flex-col gap-9 items-center">
-        <article className="flex transition-transform duration-200 ease-in-out flex-col hover:transform hover:scale-105 mx-auto shadow-2xl shadow-black justify-center bg-primary items-center h-[10%] w-[60%] rounded-md">
+        <article className="flex transition-transform duration-200 ease-in-out flex-col hover:transform hover:scale-105 mx-auto shadow-2xl whitespace-nowrap shadow-black justify-center bg-primary items-center h-[10%] w-[70%] rounded-md">
           Cantidad total de productos:
           <strong>{totalProductos}</strong>
         </article>
@@ -49,11 +56,11 @@ const Inventory = () => {
               Productos cerca de vencer
             </span></div>
          
-            <DueDateTable productos={inventoryProducts} />
+            {inventoryProducts && <DueDateTable productos={inventoryProducts} />}
           </article>
         </section>
-
       </div>
+{showModal && selectedRow && (<EditModal setShowModal={setShowModal} selectedRow={selectedRow}/>)}
     </main>
   );
 };
