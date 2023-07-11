@@ -1,7 +1,12 @@
 import { useTable, Column } from "react-table";
 import { useMemo } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+library.add(faCheck, faEdit, faTrash);
 
-const AllProductsTables = ({productos}) => {
+const AllProductsTables = ({ productos, handleEdit  }) => {
+
   const columns = useMemo(
     () => [
       {
@@ -24,8 +29,33 @@ const AllProductsTables = ({productos}) => {
         Header: "Stock Minimo",
         accessor: "stockMinimo",
       },
+      {
+        Header: "", // Empty header for the icons column
+        accessor: "id", // Use a custom accessor for the icons column
+        Cell: ({value, row }) => { // Render the icons in the cell
+          const onHandleDelete = () => {
+            console.log(value);
+          };
+          const onHandleEdit = () => {
+            console.log(row.original);
+            handleEdit(row.original);
+          };
+          return (
+            <>
+          <div className="flex flex-row gap-3">
+          <button onClick={onHandleEdit} className="text-blue-700">
+            <FontAwesomeIcon icon={faEdit} />
+          </button>
+          <button onClick={onHandleDelete} className="text-red-600">
+            <FontAwesomeIcon icon={faTrash} />
+          </button>
+        </div>
+            </>
+          );
+        },
+      },
     ],
-    []
+    [handleEdit]
   );
 
   const tableInstance = useTable({ columns, data: productos });
@@ -34,7 +64,7 @@ const AllProductsTables = ({productos}) => {
     tableInstance;
 
   return (
-    <div className=" max-h-96 w-full overflow-y-scroll scrollbar-thumb-primary scrollbar-rounded-full rounded-md scrollbar-track-slate-300 scrollbar-thin scrollbar-hide">
+    <div className="max-h-96 w-full overflow-y-scroll scrollbar-thumb-primary scrollbar-rounded-full rounded-md scrollbar-track-slate-300 scrollbar-thin scrollbar-hide">
       <table {...getTableProps()} className="border-collapse w-full">
         {/* headers */}
         <thead className="sticky top-0">
@@ -58,32 +88,16 @@ const AllProductsTables = ({productos}) => {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell, index) => {
-                  if (cell.column.id === "dueDate") {
-                    const formattedDate = new Date(
-                      cell.value
-                    ).toLocaleDateString();
-                    return (
-                      <td
-                        {...cell.getCellProps()}
-                        className={`bg-slate-300 py-2 px-4 border-b border-black text-sm ${
-                          index !== row.cells.length - 1 ? "border-r" : ""
-                        }`}
-                      >
-                        {formattedDate}
-                      </td>
-                    );
-                  } else {
-                    return (
-                      <td
-                        {...cell.getCellProps()}
-                        className={`bg-slate-300 py-2 px-4 border-b border-black text-sm ${
-                          index !== row.cells.length - 1 ? "border-r" : ""
-                        }`}
-                      >
-                        {cell.render("Cell")}
-                      </td>
-                    );
-                  }
+                  return (
+                    <td
+                      {...cell.getCellProps()}
+                      className={`bg-slate-300 py-2 px-4 border-b border-black text-sm ${
+                        index !== row.cells.length - 1 ? "border-r" : ""
+                      }`}
+                    >
+                      {cell.render("Cell")}
+                    </td>
+                  );
                 })}
               </tr>
             );
