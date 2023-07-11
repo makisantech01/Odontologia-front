@@ -36,7 +36,7 @@ const Calendar = ({ value = new Date(), onChange }) => {
   React.useEffect(() => {
     const buscarPacientesRelacionados = async () => {
       try {
-        const response = await dispatch(fetchClients());
+        const response = dispatch(fetchClients());
         const resultados = response.payload;
         SetRelatedPatients(resultados);
       } catch (error) {
