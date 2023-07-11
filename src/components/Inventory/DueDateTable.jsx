@@ -1,24 +1,27 @@
 import React from "react";
 import { useTable, Column, useSortBy, HeaderGroup, Cell } from "react-table";
-import { productos } from "./fakeData";
 import { useMemo } from "react";
 
-const DueDateTable = () => {
+const DueDateTable = ({ productos }) => {
   const productosOrdenados = useMemo(() => {
-    return [...productos].sort(
-      (a, b) => a.dueDate.getTime() - b.dueDate.getTime()
+    if(!productos){
+      return []
+    }
+   return [...productos].sort(
+      (a, b) => a.vencimiento - b.vencimiento
     );
-  }, []);
+   
+  }, [productos]);
 
   const columns = useMemo(
     () => [
       {
         Header: "Nombre",
-        accessor: "name",
+        accessor: "nombre",
       },
       {
         Header: "Fecha de vencimiento",
-        accessor: "dueDate",
+        accessor: "vencimiento",
       },
     ],
     []

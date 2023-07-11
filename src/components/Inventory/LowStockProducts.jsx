@@ -6,23 +6,26 @@ import {
   HeaderGroup,
   CellProps,
 } from "react-table";
-import { productos } from "./fakeData";
 import { useMemo } from "react";
 
-const LowStockProducts = () => {
+const LowStockProducts = ({productos}) => {
   const productosOrdenados = useMemo(() => {
-    return [...productos].sort((a, b) => a.quantity - b.quantity);
-  }, []);
+    if (!productos) {
+      return []; // Devuelve un array vacío si productos es nulo o indefinido
+    }
+    return [...productos].sort((a, b) => a.cantidad - b.cantidad);
+  }, [productos]);
+  
 
   const columns = useMemo(
     () => [
       {
         Header: "Nombre",
-        accessor: "name",
+        accessor: "nombre",
       },
       {
         Header: "Cantidad",
-        accessor: "quantity",
+        accessor: "cantidad",
       },
     ],
     []

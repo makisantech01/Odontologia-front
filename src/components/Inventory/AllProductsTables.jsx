@@ -1,29 +1,28 @@
 import { useTable, Column } from "react-table";
-import { productos } from "./fakeData";
 import { useMemo } from "react";
 
-const AllProductsTables = () => {
+const AllProductsTables = ({productos}) => {
   const columns = useMemo(
     () => [
       {
         Header: "Nombre",
-        accessor: "name",
+        accessor: "nombre",
       },
       {
         Header: "Cantidad",
-        accessor: "quantity",
+        accessor: "cantidad",
       },
       {
         Header: "Lote",
-        accessor: "batch",
+        accessor: "lote",
       },
       {
         Header: "Fecha de vencimiento",
-        accessor: "dueDate",
+        accessor: "vencimiento",
       },
       {
         Header: "Stock Minimo",
-        accessor: "minStock",
+        accessor: "stockMinimo",
       },
     ],
     []
