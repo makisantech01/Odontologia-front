@@ -1,29 +1,28 @@
 import { useTable, Column } from "react-table";
-import { productos } from "./fakeData";
 import { useMemo } from "react";
 
-const AllProductsTables = () => {
+const AllProductsTables = ({productos}) => {
   const columns = useMemo(
     () => [
       {
         Header: "Nombre",
-        accessor: "name",
+        accessor: "nombre",
       },
       {
         Header: "Cantidad",
-        accessor: "quantity",
+        accessor: "cantidad",
       },
       {
         Header: "Lote",
-        accessor: "batch",
+        accessor: "lote",
       },
       {
         Header: "Fecha de vencimiento",
-        accessor: "dueDate",
+        accessor: "vencimiento",
       },
       {
         Header: "Stock Minimo",
-        accessor: "minStock",
+        accessor: "stockMinimo",
       },
     ],
     []
@@ -35,7 +34,7 @@ const AllProductsTables = () => {
     tableInstance;
 
   return (
-    <div className="max-h-80 w-full overflow-y-scroll scrollbar-thumb-primary scrollbar-rounded-full rounded-md scrollbar-track-slate-300 scrollbar-thin scrollbar-hide">
+    <div className=" max-h-96 w-full overflow-y-scroll scrollbar-thumb-primary scrollbar-rounded-full rounded-md scrollbar-track-slate-300 scrollbar-thin scrollbar-hide">
       <table {...getTableProps()} className="border-collapse w-full">
         {/* headers */}
         <thead className="sticky top-0">
