@@ -29,10 +29,11 @@ const Citas = () => {
       <div className="bg-secondary-100 flex flex-col h-[100vh] w-4/5">
         <div className="h-[100vh] flex items-center justify-center">
           <div className="flex gap-8">
-            <div className="flex flex-col justify-center items-center gap-4">
+            {currentDate && <div className="flex flex-col justify-center items-center gap-4">
               <Calendar value={currentDate} onChange={setCurrentDate} />
               <Button onClick={handleSetToday}>Hoy</Button>
-            </div>
+            </div>}
+    
           </div>
         </div>
       </div>
