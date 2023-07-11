@@ -53,9 +53,9 @@ const ClientTable = ({ searchTerm }) => {
     <div className="calendar-container w-[800px] h-auto border-t border-l overflow-auto overflow-x-hidden scrollbar-thumb-primary scrollbar-rounded-full scrollbar-track-slate-300 scrollbar-thin">
       <table {...getTableProps()} className="table-auto w-[800px]">
         <thead className="sticky top-0">
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
+          {headerGroups?.map((headerGroup) => (
+            <tr {...headerGroup?.getHeaderGroupProps()}>
+              {headerGroup?.headers?.map((column) => (
                 <th
                   {...column.getHeaderProps()}
                   className="px-4 py-2 font-semibold bg-primary text-white text-center"

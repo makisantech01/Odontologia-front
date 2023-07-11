@@ -29,9 +29,9 @@ const handleClick = () => {
     trigger,
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     try {
-      const response = await dispatch(LoginUser(data));
+      const response = dispatch(LoginUser(data));
     } catch (error) {
       console.error(error);
     }
@@ -39,7 +39,7 @@ const handleClick = () => {
 
   useEffect(() => {
     if (userType === true) {
-      nav("/citas")
+      nav("citas")
     }
   });
 
