@@ -9,10 +9,10 @@ function App() {
   return (
     <div className="page-container">
       <Routes>
-        <Route path="citas" element={<Citas />} />
-        <Route path="inventario" element={<Inventario />} />
-        <Route path="pacientes" element={<Pacientes />} />
-        <Route path="registrarse" element={<Register />} />
+        <Route path="/citas" element={<Citas />} />
+        <Route path="/inventario" element={<Inventario />} />
+        <Route path="/pacientes" element={<Pacientes />} />
+        <Route path="/registrarse" element={<Register />} />
         <Route path="/" element={<Login />} />
       </Routes>
     </div>
