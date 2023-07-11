@@ -34,7 +34,7 @@ const AllProductsTables = ({productos}) => {
     tableInstance;
 
   return (
-    <div className="max-h-80 w-full overflow-y-scroll scrollbar-thumb-primary scrollbar-rounded-full rounded-md scrollbar-track-slate-300 scrollbar-thin scrollbar-hide">
+    <div className=" max-h-96 w-full overflow-y-scroll scrollbar-thumb-primary scrollbar-rounded-full rounded-md scrollbar-track-slate-300 scrollbar-thin scrollbar-hide">
       <table {...getTableProps()} className="border-collapse w-full">
         {/* headers */}
         <thead className="sticky top-0">
