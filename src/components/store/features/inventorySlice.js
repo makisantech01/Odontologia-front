@@ -9,7 +9,6 @@ export const getProducts = createAsyncThunk("inventory/getProductsucts", async (
     return response.data.data;
   });
 
-
   export const putProducts = createAsyncThunk("inventory/putProductsucts", async (payload) => {
     const { lote, cantidad, nombre, vencimiento, stockMinimo, id } = payload;
     const object = { lote, cantidad, nombre, vencimiento, stockMinimo };
@@ -22,7 +21,22 @@ export const getProducts = createAsyncThunk("inventory/getProductsucts", async (
     dispatch(getProducts());
     return responseData;
   });
-  
+
+  export const deleteProducts = createAsyncThunk("inventory/deleteProducts", async (payload, { dispatch }) => {
+    console.log(payload);
+    const response = await axios.delete(`${productosUrl}/productos/${payload}`);
+    dispatch(getProducts());
+    const responseData = response.data;
+    return responseData;
+  });
+
+  export const postProducts = createAsyncThunk("inventory/postProducts", async (payload, { dispatch }) => {
+    const response = await axios.post(`${productosUrl}/productos`, payload);
+    dispatch(getProducts());
+    const responseData = response.data;
+    console.log(responseData);
+    return responseData;
+  });
 
   const inventorySlice = createSlice({
     name: "inventory",
@@ -40,6 +54,13 @@ export const getProducts = createAsyncThunk("inventory/getProductsucts", async (
         Swal.fire('Los cambios se realizaron con éxito!', '', 'success');
      
       });
+      builder.addCase(deleteProducts.fulfilled, (state, action) => {
+        Swal.fire('Producto elminado con exito!', '', 'success');
+      })
+      builder.addCase(postProducts.fulfilled, (state, action) => {
+        Swal.fire('Producto creado con exito!', '', 'success');
+        console.log(action.payload)
+      })
     },
   });
   
