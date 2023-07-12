@@ -3,9 +3,12 @@ import { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import {useDispatch} from "react-redux"
+import { deleteProducts } from "../store/features/inventorySlice";
+import Swal from 'sweetalert2'
 library.add(faCheck, faEdit, faTrash);
 
-const AllProductsTables = ({ productos, handleEdit  }) => {
+const AllProductsTables = ({ productos, handleEdit,  }) => {
 
   const columns = useMemo(
     () => [
@@ -33,8 +36,19 @@ const AllProductsTables = ({ productos, handleEdit  }) => {
         Header: "", // Empty header for the icons column
         accessor: "id", // Use a custom accessor for the icons column
         Cell: ({value, row }) => { // Render the icons in the cell
-          const onHandleDelete = () => {
-            console.log(value);
+          const dispatch = useDispatch()
+          const onHandleDelete = async () => {
+            const result = await Swal.fire({
+              title:"¿Estas segur@ que quieres eliminar este producto? esta acción no se puede deshacer." ,
+              icon: 'question',
+              showCancelButton: true,
+              confirmButtonText: 'Sí, eliminar',
+              cancelButtonText: 'Cancelar',
+              reverseButtons: true
+            });
+            if (result.isConfirmed) {
+              dispatch(deleteProducts(value))
+            }     
           };
           const onHandleEdit = () => {
             console.log(row.original);
