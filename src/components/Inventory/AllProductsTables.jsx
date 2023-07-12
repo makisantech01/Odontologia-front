@@ -8,7 +8,7 @@ import { deleteProducts } from "../store/features/inventorySlice";
 import Swal from 'sweetalert2'
 library.add(faCheck, faEdit, faTrash);
 
-const AllProductsTables = ({ productos, handleEdit,  }) => {
+const AllProductsTables = ({ productos, handleEdit }) => {
 
   const columns = useMemo(
     () => [

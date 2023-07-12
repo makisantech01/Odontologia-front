@@ -29,11 +29,11 @@ const EditModal = ({selectedRow, setShowModal}) => {
     const result = await Swal.fire({
         title:"¿Quieres modificar este producto? Estos son tus cambios" ,
         html: `
-    <div>Nombre: <strong>${selectedRow.nombre}</strong></div>
-    <div>Cantidad: <strong>${selectedRow.cantidad}</strong></div>
-    <div>Vencimiento: <strong>${selectedRow.vencimiento}</strong></div>
-    <div>Lote: <strong>${selectedRow.lote}</strong></div>
-    <div>Stock Mínimo: <strong>${selectedRow.stockMinimo} </strong></div>
+    <div>Nombre: <strong>${newData.nombre}</strong></div>
+    <div>Cantidad: <strong>${newData.cantidad}</strong></div>
+    <div>Vencimiento: <strong>${newData.vencimiento}</strong></div>
+    <div>Lote: <strong>${newData.lote}</strong></div>
+    <div>Stock Mínimo: <strong>${newData.stockMinimo} </strong></div>
   `,
         icon: 'question',
         showCancelButton: true,
