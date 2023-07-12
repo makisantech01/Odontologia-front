@@ -15,7 +15,7 @@ const ClientTable = ({ searchTerm }) => {
 
   React.useEffect(() => {
     dispatch(fetchClients());
-    dispatch(fetchClient(39115272));
+    dispatch(fetchClient("39115272"));
   }, [dispatch]);
 
   const columns = React.useMemo(
