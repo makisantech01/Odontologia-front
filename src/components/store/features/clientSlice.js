@@ -7,6 +7,10 @@ export const fetchClients = createAsyncThunk("clients/fetch", async () => {
   const response = await axios.get(pacientesUrl);
   return response.data;
 });
+export const fetchClient = createAsyncThunk("clients/fetch", async (dni) => {
+  const response = await axios.get(`${pacientesUrl}/${dni}`);
+  return response.data;
+});
 
 const clientSlice = createSlice({
   name: "clients",

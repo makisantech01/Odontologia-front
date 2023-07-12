@@ -4,7 +4,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCheck, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchClients } from "../store/features/clientSlice";
+import { fetchClients, fetchClient } from "../store/features/clientSlice";
 
 library.add(faCheck, faEdit, faTrash);
 
@@ -15,6 +15,7 @@ const ClientTable = ({ searchTerm }) => {
 
   React.useEffect(() => {
     dispatch(fetchClients());
+    dispatch(fetchClient(39115272));
   }, [dispatch]);
 
   const columns = React.useMemo(
