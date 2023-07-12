@@ -73,7 +73,7 @@ const Inventory = () => {
                 Productos bajo stock
               </span>
             </div>
-            {inventoryProducts && <LowStockProducts productos={inventoryProducts} />}
+          {inventoryProducts &&<LowStockProducts productos={inventoryProducts}/>}
           </article>
           <article className="">
             <div className="mb-1">
