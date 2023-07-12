@@ -33,6 +33,7 @@
     "react-table": "^7.8.0",
     "react-tailwindcss-datepicker": "^1.6.3",
     "sort-by": "^1.2.0",
+    "sweetalert2": "^11.7.16",
     "tailwind-scrollbar-hide": "^1.1.7",
     "universal-cookie": "^4.0.4"
   },

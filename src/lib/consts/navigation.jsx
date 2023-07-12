@@ -28,12 +28,3 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     icon: <FontAwesomeIcon icon={faUsers} />,
   },
 ];
-
-export const DASHBOARD_SIDEBAR_BOTTOM_LINKS = [
-  {
-    key: "support",
-    label: "Ayuda y Soporte",
-    path: "/soporte",
-    icon: <FontAwesomeIcon icon={faQuestion} />,
-  },
-];

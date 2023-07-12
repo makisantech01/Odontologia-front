@@ -63,7 +63,8 @@ const handleClick = () => {
               />
               <input
                 className="border p-2 rounded w-[17em]"
-                type="text"
+                type="number"
+                min="0"
                 placeholder="Ingrese su DNI"
                 {...register("dni", {
                   required: "Campo obligatorio",
