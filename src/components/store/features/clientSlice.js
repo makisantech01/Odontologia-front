@@ -7,6 +7,13 @@ export const fetchClients = createAsyncThunk("clients/fetch", async () => {
   const response = await axios.get(pacientesUrl);
   return response.data;
 });
+export const fetchClient = createAsyncThunk(
+  "selectedClient/fetch",
+  async (dni) => {
+    const response = await axios.get(`${pacientesUrl}/${dni}`);
+    return response.data;
+  }
+);
 
 export const getUserById = createAsyncThunk(
   "userSlice/getUserById",

@@ -6,14 +6,24 @@ import Button from "../components/Appoiments/Button";
 import Sidebar from "../components/Sidebar";
 import AppoinmentList from "../components/Appoiments/AppoinmentList";
 import DateFilter from "../components/Appoiments/DateFilter";
+import { getAppointments } from "../components/store/features/appointmentsSlice";
 
 const Citas = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users.users);
+  const appointments = useSelector((state) => state.appointments);
   const loading = useSelector((state) => state.users.loading);
   const error = useSelector((state) => state.users.error);
   const [currentDate, setCurrentDate] = useState(new Date());
   const handleSetToday = () => setCurrentDate(new Date());
+
+  const date = new Date();
+  const dia = date.getDate();
+  const mes = date.getMonth() + 1;
+  const año = date.getFullYear();
+  const currentDateISO = `${dia.toString().padStart(2, "0")}/${mes
+    .toString()
+    .padStart(2, "0")}/${año}`;
 
   useEffect(() => {
     dispatch(fetchUsers());
