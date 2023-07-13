@@ -25,9 +25,9 @@ const Calendar = ({ value = new Date(), onChange }) => {
   const { calendarData } = useSelector((state) => state.calendar);
   const selectedClient = useSelector((state) => state.clients.selectedClient);
 
-  console.log("el calendario ->", data);
-
   const dispatch = useDispatch();
+
+  console.log("la data -->", data);
 
   React.useEffect(() => {
     dispatch(fetchData());
@@ -117,8 +117,6 @@ const Calendar = ({ value = new Date(), onChange }) => {
     ]);
   };
 
-  console.log("el cliente ->", inputClients);
-
   const handleClient = () => {
     try {
       setClient({
@@ -185,7 +183,6 @@ const Calendar = ({ value = new Date(), onChange }) => {
                           type="number"
                           onChange={(e) => {
                             handleInputValue(e, sectionIndex, index, time);
-                            console.log("handle ->", sectionIndex, time, index);
                           }}
                           placeholder="Search..."
                         />
@@ -193,10 +190,7 @@ const Calendar = ({ value = new Date(), onChange }) => {
                     </td>
                     <td>
                       <div className="flex gap-1 justify-center">
-                        <p>
-                          {inputClients[index]?.index === index &&
-                            inputClients[index]?.name}
-                        </p>
+                        <p>{inputClients[index]?.name}</p>
                       </div>
                     </td>
                     <td>

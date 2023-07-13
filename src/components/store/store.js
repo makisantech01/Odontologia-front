@@ -3,11 +3,13 @@ import { clientReducer } from "./features/clientSlice";
 import { usersReducer } from "./features/usersSlice";
 import calendarReducer from "./features/calendarSlice";
 import { inventoryReducer } from "./features/inventorySlice";
+import { appointmentsReducer } from "./features/appointmentsSlice";
 export const store = configureStore({
   reducer: {
     clients: clientReducer,
     users: usersReducer,
     calendar: calendarReducer,
     inventory: inventoryReducer,
+    appointments: appointmentsReducer
   },
 });
