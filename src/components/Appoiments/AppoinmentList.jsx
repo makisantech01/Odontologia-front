@@ -9,7 +9,8 @@ import { fetchClients, getUserById } from "../store/features/clientSlice";
 import DateFilter from "./DateFilter";
 import { fetchData } from "../store/features/calendarSlice";
 import axios from "axios";
-import { getAppointments } from "../store/features/appointmentsSlice";
+import { getAppointments, deleteAppointments } from "../store/features/appointmentsSlice";
+import Swal from "sweetalert2";
 const AppoinmentList = () => {
   const [list, setList] = useState([]);
   const [inputClients, setInputClients] = useState([]);
@@ -18,6 +19,21 @@ const AppoinmentList = () => {
   const { data } = useSelector((state) => state.clients);
   const { calendarData } = useSelector((state) => state.calendar);
   const appointments = useSelector((state) => state.appointments.appointments);
+
+  //fecha actual
+  const date = new Date();
+  const dia = date.getDate();
+  const mes = date.getMonth() + 1;
+  const año = date.getFullYear();
+  const currentDateISO = `${dia.toString().padStart(2, "0")}/${mes
+    .toString()
+    .padStart(2, "0")}/${año}`;
+
+  const currentAppointments = appointments.filter((a) => {
+    return a.fecha >= currentDateISO;
+  });
+
+  console.log("ESTOS SON LOS APPOINTMENTS",appointments);
 
   const users = useSelector((state) => state.selectedClient);
 
@@ -72,9 +88,9 @@ const AppoinmentList = () => {
     try {
       if (dni !== "") {
         const response = await dispatch(getUserById(dni));
-        console.log("que dice el response ->", response)
+        console.log("que dice el response ->", response);
 
-        const result = response;
+        const result = response.payload.data;
 
         setSearchResult(`${result.nombre} ${result.apellido}`);
         handleCreatePatient({
@@ -105,6 +121,20 @@ const AppoinmentList = () => {
       dni: event,
     });
   };
+  const handleDelete = async(id) => {
+    console.log('ID del turno:', id);
+    const result = await Swal.fire({
+      title: "¿Quieres eliminar este turno?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+      reverseButtons: true
+    });
+    if(result.isConfirmed){
+      dispatch(deleteAppointments(id))
+    }
+  }
 
   const handleSelectChanged = (e) => {
     e.preventDefault();
@@ -166,7 +196,7 @@ const AppoinmentList = () => {
         </button>
       </form>
       <ul className="mt-4 bg-gray-300 text-black h-[40em] rounded-2xl px-2 py-5 overflow-y-auto scrollbar-hide">
-        {appointments.map((item, index) => (
+        {currentAppointments.map((item, index) => (
           <li
             key={index}
             className="mb-2 shadow-md bg-primary py-2 rounded-full px-3 flex justify-evenly items-center"
@@ -176,12 +206,12 @@ const AppoinmentList = () => {
             <div>{item?.paciente?.apellido}</div>
             <div>{item.fecha}</div>
             <div>{item.hora}</div>
-            <div>
+            <button value={item.id} onClick={() => handleDelete(item.id)}>
               <FontAwesomeIcon
                 className="h-[1.5em] text-red-600 cursor-pointer"
                 icon={faCircleXmark}
               />
-            </div>
+            </button>
           </li>
         ))}
       </ul>

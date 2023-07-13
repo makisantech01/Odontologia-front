@@ -55,18 +55,9 @@ const ClientTable = ({ searchTerm }) => {
         accessor: "opciones",
         Cell: () => (
           <div className="flex gap-1 justify-evenly">
-            <FontAwesomeIcon
-              icon="check"
-              className="text-green-600 text-2xl"
-            />
-            <FontAwesomeIcon
-              icon="edit"
-              className="text-blue-600 text-2xl"
-            />
-            <FontAwesomeIcon
-              icon="trash"
-              className="text-red-600 text-2xl"
-            />
+            <FontAwesomeIcon icon="check" className="text-green-600 text-2xl" />
+            <FontAwesomeIcon icon="edit" className="text-blue-600 text-2xl" />
+            <FontAwesomeIcon icon="trash" className="text-red-600 text-2xl" />
           </div>
         ),
       },
@@ -83,13 +74,8 @@ const ClientTable = ({ searchTerm }) => {
     return [];
   }, [clients, searchTerm]);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({ columns, data: filteredRows });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({ columns, data: filteredRows });
 
   return (
     <div className="calendar-container w-[800px] h-auto border-t border-l overflow-auto overflow-x-hidden scrollbar-thumb-primary scrollbar-rounded-full scrollbar-track-slate-300 scrollbar-thin">
