@@ -24,6 +24,7 @@ const Inventory = () => {
   const inventoryProducts = useSelector(
     (state) => state.inventory.products
   );
+  console.log("🚀 ~ file: Inventory.jsx:27 ~ Inventory ~ inventoryProducts:", inventoryProducts)
 
   const totalProductos = inventoryProducts.length;
 

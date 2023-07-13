@@ -12,10 +12,7 @@ export const getProducts = createAsyncThunk("inventory/getProductsucts", async (
   export const putProducts = createAsyncThunk("inventory/putProductsucts", async (payload, { dispatch }) => {
     const { lote, cantidad, nombre, vencimiento, stockMinimo, id } = payload;
     const object = { lote, cantidad, nombre, vencimiento, stockMinimo };
-    console.log("🚀 ~ file: inventorySlice.js:25 ~ putProducts ~ object:", object);
-  
     const response = await axios.put(`${productosUrl}/productos/${id}`, object);
-
     const responseData = response.data;
     dispatch(getProducts());
     return responseData;
