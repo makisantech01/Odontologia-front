@@ -5,16 +5,22 @@ import {
   faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchClients } from "../store/features/clientSlice";
+import { fetchClients, getUserById } from "../store/features/clientSlice";
 import DateFilter from "./DateFilter";
 import { fetchData } from "../store/features/calendarSlice";
 import axios from "axios";
+import { getAppointments } from "../store/features/appointmentsSlice";
 const AppoinmentList = () => {
   const [list, setList] = useState([]);
   const [inputClients, setInputClients] = useState([]);
   const [searchResult, setSearchResult] = useState("");
+  const [dni, setDni] = useState("");
   const { data } = useSelector((state) => state.clients);
-  // const { calendarData } = useSelector((state) => state.calendar);
+  const { calendarData } = useSelector((state) => state.calendar);
+  const appointments = useSelector((state) => state.appointments.appointments);
+
+  const users = useSelector((state) => state.selectedClient);
+
   const [values, setValues] = useState({
     dni: "",
     name: "",
@@ -26,6 +32,10 @@ const AppoinmentList = () => {
 
   React.useEffect(() => {
     dispatch(fetchData());
+  }, [dispatch]);
+
+  React.useEffect(() => {
+    dispatch(getAppointments());
   }, [dispatch]);
 
   //post request
@@ -57,17 +67,21 @@ const AppoinmentList = () => {
     [values]
   );
 
-  const SearchRelatedPatient = async () => {
+  const SearchRelatedPatient = async (e) => {
+    e.preventDefault();
     try {
-      const response = await dispatch(fetchClients());
+      if (dni !== "") {
+        const response = await dispatch(getUserById(dni));
+        console.log("que dice el response ->", response)
 
-      const result = response.payload.data[0];
+        const result = response;
 
-      setSearchResult(`${result.nombre} ${result.apellido}`);
-      handleCreatePatient({
-        name: result.nombre,
-        lastName: result.apellido,
-      });
+        setSearchResult(`${result.nombre} ${result.apellido}`);
+        handleCreatePatient({
+          name: result.nombre,
+          lastName: result.apellido,
+        });
+      }
     } catch (error) {
       console.error("Error al buscar pacientes relacionados:", error);
     }
@@ -82,9 +96,10 @@ const AppoinmentList = () => {
     }
   };
 
-  const handleInputValue = (e) => {
+  const handleInputValue = async (e) => {
     e.preventDefault();
     const event = e.target.value;
+    setDni(event);
     handleCreatePatient({
       ...values,
       dni: event,
@@ -132,7 +147,7 @@ const AppoinmentList = () => {
         <select
           className="bg-secondary-100 text-white py-2 px-3 rounded-full"
           onChange={handleSelectChanged}
-          defaultValue={"16:00"}
+          defaultValue={"Hora"}
         >
           <option value={"16:00"}>16:00</option>
           <option value={"16:30"}>16:30</option>
@@ -150,17 +165,17 @@ const AppoinmentList = () => {
           />
         </button>
       </form>
-      <ul className="mt-4 bg-gray-300 text-black h-[40em] rounded-2xl px-2 py-5">
-        {optionsList.map((item, index) => (
+      <ul className="mt-4 bg-gray-300 text-black h-[40em] rounded-2xl px-2 py-5 overflow-y-auto scrollbar-hide">
+        {appointments.map((item, index) => (
           <li
             key={index}
-            className="mb-2 bg-primary py-2 rounded-full px-3 flex justify-evenly items-center"
+            className="mb-2 shadow-md bg-primary py-2 rounded-full px-3 flex justify-evenly items-center"
           >
-            <div>{item.dni}</div>
-            <div>{item.name}</div>
-            <div>{item.lastName}</div>
-            <div>{item.date}</div>
-            <div>{item.time}</div>
+            <div>{item?.pacienteId}</div>
+            <div>{item?.paciente?.nombre}</div>
+            <div>{item?.paciente?.apellido}</div>
+            <div>{item.fecha}</div>
+            <div>{item.hora}</div>
             <div>
               <FontAwesomeIcon
                 className="h-[1.5em] text-red-600 cursor-pointer"
