@@ -9,7 +9,8 @@ import { fetchClients, getUserById } from "../store/features/clientSlice";
 import DateFilter from "./DateFilter";
 import { fetchData } from "../store/features/calendarSlice";
 import axios from "axios";
-import { getAppointments } from "../store/features/appointmentsSlice";
+import { getAppointments, deleteAppointments } from "../store/features/appointmentsSlice";
+import Swal from "sweetalert2";
 const AppoinmentList = () => {
   const [list, setList] = useState([]);
   const [inputClients, setInputClients] = useState([]);
@@ -32,7 +33,7 @@ const AppoinmentList = () => {
     return a.fecha >= currentDateISO;
   });
 
-  console.log(appointments);
+  console.log("ESTOS SON LOS APPOINTMENTS",appointments);
 
   const users = useSelector((state) => state.selectedClient);
 
@@ -120,6 +121,20 @@ const AppoinmentList = () => {
       dni: event,
     });
   };
+  const handleDelete = async(id) => {
+    console.log('ID del turno:', id);
+    const result = await Swal.fire({
+      title: "¿Quieres eliminar este turno?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+      reverseButtons: true
+    });
+    if(result.isConfirmed){
+      dispatch(deleteAppointments(id))
+    }
+  }
 
   const handleSelectChanged = (e) => {
     e.preventDefault();
@@ -191,12 +206,12 @@ const AppoinmentList = () => {
             <div>{item?.paciente?.apellido}</div>
             <div>{item.fecha}</div>
             <div>{item.hora}</div>
-            <div>
+            <button value={item.id} onClick={() => handleDelete(item.id)}>
               <FontAwesomeIcon
                 className="h-[1.5em] text-red-600 cursor-pointer"
                 icon={faCircleXmark}
               />
-            </div>
+            </button>
           </li>
         ))}
       </ul>
