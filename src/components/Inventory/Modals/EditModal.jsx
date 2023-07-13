@@ -8,7 +8,7 @@ const EditModal = ({selectedRow, setShowModal}) => {
   const fechaParts = selectedRow.vencimiento.split("/");
   const vencimientoDate = new Date(
     parseInt(fechaParts[2]),
-    parseInt(fechaParts[1]),
+    parseInt(fechaParts[1] - 1),
     parseInt(fechaParts[0])
   );
   
