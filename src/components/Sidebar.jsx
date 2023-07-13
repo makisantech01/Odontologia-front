@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   DASHBOARD_SIDEBAR_LINKS,
-  DASHBOARD_SIDEBAR_BOTTOM_LINKS,
 } from "../lib/consts/navigation";
 import { Link, useLocation } from "react-router-dom";
 import classNames from "classnames";
@@ -58,9 +57,6 @@ const Sidebar = () => {
         ))}
       </div>
       <div className="flex flex-col gap-0.5 pt-2">
-        {DASHBOARD_SIDEBAR_BOTTOM_LINKS.map((item) => (
-          <SidebarLink key={item.key} item={item} />
-        ))}
         <button
           className={classNames("text-red-500 cursor-pointer", linkClasses)}
           onClick={onLogout}

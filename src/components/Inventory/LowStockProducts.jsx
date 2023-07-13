@@ -1,28 +1,28 @@
 import React from "react";
-import {
-  useTable,
-  Column,
-  useSortBy,
-  HeaderGroup,
-  CellProps,
-} from "react-table";
-import { productos } from "./fakeData";
+import { useTable, useSortBy } from "react-table";
 import { useMemo } from "react";
 
-const LowStockProducts = () => {
+const LowStockProducts = ({ productos }) => {
   const productosOrdenados = useMemo(() => {
-    return [...productos].sort((a, b) => a.quantity - b.quantity);
-  }, []);
+    if (!productos) {
+      return [];
+    }
+    return [...productos].sort((a, b) => a.cantidad - b.cantidad);
+  }, [productos]);
 
   const columns = useMemo(
     () => [
       {
         Header: "Nombre",
-        accessor: "name",
+        accessor: "nombre",
       },
       {
         Header: "Cantidad",
-        accessor: "quantity",
+        accessor: "cantidad",
+      },
+      {
+        Header: "Stock Minimo",
+        accessor: "stockMinimo",
       },
     ],
     []
@@ -36,19 +36,24 @@ const LowStockProducts = () => {
     useSortBy
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    tableInstance;
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = tableInstance;
 
   return (
-    <div className="max-h-80 w-[100%]  overflow-y-scroll scrollbar-thumb-primary scrollbar-rounded-full rounded-md scrollbar-track-slate-300 scrollbar-thin scrollbar-hide">
-      <table {...getTableProps()}>
+    <div className=" max-h-56 w-full overflow-y-scroll scrollbar-hide">
+      <table {...getTableProps()} className="border-collapse w-full">
         <thead className="sticky top-0">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
-                  className="py-2 px-4 bg-primary text-white font-medium uppercase text-sm border-r border-black"
+                  className="py-2 px-4 bg-primary text-white font-medium uppercase text-sm border-r-0 border-l border-t border-b border-black"
                 >
                   {column.render("Header")}
                   <span>
@@ -71,7 +76,7 @@ const LowStockProducts = () => {
                 {row.cells.map((cell) => (
                   <td
                     {...cell.getCellProps()}
-                    className="bg-slate-300  py-2 px-4 border-b border-black text-sm"
+                    className="bg-slate-300 py-2 px-4 border-b-0 border-l border-r border-black text-sm"
                   >
                     {cell.render("Cell")}
                   </td>

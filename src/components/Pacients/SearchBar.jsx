@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 library.add(faMagnifyingGlass);
 
-const SearchBar = ({ searchTerm, onSearch }) => {
+const SearchBar = ({ searchTerm, onSearch, onKeyPress }) => {
   return (
     <div className="relative">
       <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
@@ -14,8 +14,9 @@ const SearchBar = ({ searchTerm, onSearch }) => {
       <input
         type="text"
         value={searchTerm}
+        onKeyPress={onKeyPress}
         onChange={onSearch}
-        className="pl-8 pr-2 py-2 w-full rounded-full"
+        className="pl-8 pr-2 py-2 w-full rounded-full outline-none"
       />
     </div>
   );

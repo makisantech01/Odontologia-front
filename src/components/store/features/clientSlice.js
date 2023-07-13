@@ -15,6 +15,14 @@ export const fetchClient = createAsyncThunk(
   }
 );
 
+export const getUserById = createAsyncThunk ("userSlice/getUserById", async(payload)=>{
+  const response = await axios.get(`${pacientesUrl}/${payload}`);
+  const responseData=response.data
+  console.log(responseData)
+  return responseData
+})
+
+
 const clientSlice = createSlice({
   name: "clients",
   initialState: {

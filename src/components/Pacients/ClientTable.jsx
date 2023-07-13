@@ -1,10 +1,12 @@
 import React from "react";
-import { useTable, Column } from "react-table";
+import { useTable } from "react-table";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCheck, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchClients, fetchClient } from "../store/features/clientSlice";
+import { fetchClients } from "../store/features/clientSlice";
+import { getUserById } from "../store/features/clientSlice";
+import { Link } from "react-router-dom";
 
 library.add(faCheck, faEdit, faTrash);
 
@@ -15,14 +17,39 @@ const ClientTable = ({ searchTerm }) => {
 
   React.useEffect(() => {
     dispatch(fetchClients());
-    dispatch(fetchClient("39115272"));
   }, [dispatch]);
 
   const columns = React.useMemo(
     () => [
-      { Header: "DNI", accessor: "dni" },
-      { Header: "Nombre", accessor: "nombre" },
-      { Header: "Celular", accessor: "telefono1" },
+      {
+        Header: "DNI",
+        accessor: "dni",
+      },
+      {
+        Header: "Nombre",
+        accessor: "nombre",
+        Cell: ({ row }) => {
+          const onPacientInfo = () => {
+            const dni = row.original.dni;
+            dispatch(getUserById(dni));
+            console.log(dni);
+          };
+          return (
+            <Link to={`/pacientes/${row.original.dni}`}>
+              <div
+                className="hover:underline cursor-pointer text-black hover:text-blue-400"
+                onClick={onPacientInfo}
+              >
+                {row.original.nombre}
+              </div>
+            </Link>
+          );
+        },
+      },
+      {
+        Header: "Celular",
+        accessor: "telefono1",
+      },
       {
         Header: "Opciones",
         accessor: "opciones",
@@ -39,16 +66,16 @@ const ClientTable = ({ searchTerm }) => {
   );
 
   const filteredRows = React.useMemo(() => {
-    if (Array.isArray(clients)) {
-      return clients.filter((client) =>
-        client.name.toLowerCase().includes(searchTerm.toLowerCase())
+    if (Array.isArray(clients.data)) {
+      return clients.data.filter((client) =>
+        client.nombre.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     return [];
   }, [clients, searchTerm]);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data: clients.data || [] });
+    useTable({ columns, data: filteredRows });
 
   return (
     <div className="calendar-container w-[800px] h-auto border-t border-l overflow-auto overflow-x-hidden scrollbar-thumb-primary scrollbar-rounded-full scrollbar-track-slate-300 scrollbar-thin">
