@@ -4,7 +4,8 @@ import { fetchUsers } from "../components/store/features/usersSlice";
 import Calendar from "../components/Appoiments/Calendar";
 import Button from "../components/Appoiments/Button";
 import Sidebar from "../components/Sidebar";
-import { fetchCurrentAppointments } from "../components/store/features/appointmentSlice";
+import AppoinmentList from "../components/Appoiments/AppoinmentList";
+import DateFilter from "../components/Appoiments/DateFilter";
 
 const Citas = () => {
   const dispatch = useDispatch();
@@ -43,8 +44,9 @@ const Citas = () => {
         <div className="h-[100vh] flex items-center justify-center">
           <div className="flex gap-8">
             <div className="flex flex-col justify-center items-center gap-4">
-              <Calendar value={currentDate} onChange={setCurrentDate} />
-              <Button onClick={handleSetToday}>Hoy</Button>
+              {/* <Calendar value={currentDate} onChange={setCurrentDate} />
+              <Button onClick={handleSetToday}>Hoy</Button> */}
+              <AppoinmentList />
             </div>
           </div>
         </div>
