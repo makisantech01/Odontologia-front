@@ -19,6 +19,21 @@ const AppoinmentList = () => {
   const { calendarData } = useSelector((state) => state.calendar);
   const appointments = useSelector((state) => state.appointments.appointments);
 
+  //fecha actual
+  const date = new Date();
+  const dia = date.getDate();
+  const mes = date.getMonth() + 1;
+  const año = date.getFullYear();
+  const currentDateISO = `${dia.toString().padStart(2, "0")}/${mes
+    .toString()
+    .padStart(2, "0")}/${año}`;
+
+  const currentAppointments = appointments.filter((a) => {
+    return a.fecha >= currentDateISO;
+  });
+
+  console.log(appointments);
+
   const users = useSelector((state) => state.selectedClient);
 
   const [values, setValues] = useState({
@@ -72,9 +87,9 @@ const AppoinmentList = () => {
     try {
       if (dni !== "") {
         const response = await dispatch(getUserById(dni));
-        console.log("que dice el response ->", response)
+        console.log("que dice el response ->", response);
 
-        const result = response;
+        const result = response.payload.data;
 
         setSearchResult(`${result.nombre} ${result.apellido}`);
         handleCreatePatient({
@@ -166,7 +181,7 @@ const AppoinmentList = () => {
         </button>
       </form>
       <ul className="mt-4 bg-gray-300 text-black h-[40em] rounded-2xl px-2 py-5 overflow-y-auto scrollbar-hide">
-        {appointments.map((item, index) => (
+        {currentAppointments.map((item, index) => (
           <li
             key={index}
             className="mb-2 shadow-md bg-primary py-2 rounded-full px-3 flex justify-evenly items-center"
