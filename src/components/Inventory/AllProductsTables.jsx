@@ -39,7 +39,7 @@ const AllProductsTables = ({ productos, handleEdit }) => {
           const dispatch = useDispatch()
           const onHandleDelete = async () => {
             const result = await Swal.fire({
-              title:"¿Estas segur@ que quieres eliminar este producto? esta acción no se puede deshacer." ,
+              title:"¿Estás segur@ que quieres eliminar este producto? Esta acción no se puede deshacer." ,
               icon: 'question',
               showCancelButton: true,
               confirmButtonText: 'Sí, eliminar',
