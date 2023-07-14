@@ -1,14 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import bottonWave from "../assets/botton_wave.png";
 import topWave from "../assets/topwave.png";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  LoginUser,
+  RegisterUser,
+} from "../components/store/features/usersSlice";
 library.add(faEnvelope, faLock);
 
 const Register = () => {
+  const userType = useSelector((state) => state.users.type);
+  const dispatch = useDispatch();
+  const nav = useNavigate();
   const {
     register,
     handleSubmit,
@@ -16,9 +24,22 @@ const Register = () => {
     trigger,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      console.log(data);
+      const response = await dispatch(RegisterUser(data));
+      if (response) {
+        await dispatch(LoginUser(data));
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
+  React.useEffect(() => {
+    if (userType === false) {
+      nav("citas");
+    }
+  });
 
   const handleBlur = (fieldName) => {
     trigger(fieldName);
@@ -40,8 +61,18 @@ const Register = () => {
               />
               <input
                 className="border p-2 rounded w-[17em]"
-                type="text"
-                placeholder="ejemplo@gmail.com"
+                type="number"
+                min={10000000}
+                max={99999999}
+                placeholder="Ingrese su DNI"
+                {...register("dni", {
+                  required: "Campo obligatorio",
+                  pattern: {
+                    value: /^\d{8}$/,
+                    message: "El DNI debe tener 8 números",
+                  },
+                })}
+                onBlur={() => handleBlur("dni")}
               />
             </div>
             <div className="flex items-center gap-6">
@@ -50,6 +81,10 @@ const Register = () => {
                 className="border p-2 rounded w-[17em]"
                 type="password"
                 placeholder="********"
+                {...register("password", {
+                  required: "Campo obligatorio",
+                })}
+                onBlur={() => handleBlur("password")}
               />
             </div>
             <div className="flex items-center gap-6">
@@ -58,15 +93,20 @@ const Register = () => {
                 className="border p-2 rounded w-[17em]"
                 type="password"
                 placeholder="********"
+                {...register("password", {
+                  required: "Campo obligatorio",
+                })}
+                onBlur={() => handleBlur("password")}
               />
             </div>
-            <span className="text-white hover:text-gray-200 cursor-pointer">
-              Olvidaste tu contraseña?
-            </span>
           </div>
           <div className="flex justify-center py-6">
             <Link to={"/"}>
-              <button className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl">
+              <button
+                className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
+                type="submit"
+                onClick={handleSubmit(onSubmit)}
+              >
                 Registrarse
               </button>
             </Link>
