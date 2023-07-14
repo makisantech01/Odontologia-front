@@ -7,7 +7,7 @@ library.add(faMagnifyingGlass);
 
 const SearchBar = ({ searchTerm, onSearch, onKeyPress }) => {
   return (
-    <div className="relative">
+    <div className="relative w-[20em] flex items-center justify-center">
       <span className="absolute inset-y-0 left-0 pl-2 flex items-center">
         <FontAwesomeIcon icon={faMagnifyingGlass} className="text-gray-400" />
       </span>

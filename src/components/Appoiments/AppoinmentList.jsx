@@ -164,10 +164,10 @@ const AppoinmentList = () => {
   }, [list]);
 
   return (
-    <main className="flex flex-col gap-3 w-[51em]">
+    <div className="flex flex-col lg:mx-[15vw] mx-4  h-[40em]">
       <form
         onSubmit={handleSubmit}
-        className="flex bg-primary py-2 px-3 rounded-full justify-evenly items-center"
+        className="flex flex-col lg:w-full lg:flex-row bg-primary py-3 px-3 rounded-lg gap-3 justify-evenly items-center"
       >
         <input
           type="number"
@@ -175,7 +175,7 @@ const AppoinmentList = () => {
           onChange={(e) => {
             handleInputValue(e);
           }}
-          className="px-2 py-2 rounded-full w-[10em] pl-5 outline-none"
+          className="px-2 py-2 rounded-lg w-[10em] pl-5 outline-none"
           placeholder="DNI..."
         />
         <div className="w-[18em] text-center">
@@ -186,36 +186,40 @@ const AppoinmentList = () => {
         <div>
           <DateFilter onSelect={handleCreatePatient} />
         </div>
-        <select
-          className="bg-secondary-100 text-white py-2 px-3 rounded-full"
-          onChange={handleSelectChanged}
-          defaultValue={"Hora"}
-        >
-          <option value={"16:00"}>16:00</option>
-          <option value={"16:30"}>16:30</option>
-          <option value={"17:00"}>17:00</option>
-          <option value={"17:30"}>17:30</option>
-          <option value={"18:00"}>18:00</option>
-          <option value={"18:30"}>18:30</option>
-          <option value={"19:00"}>19:00</option>
-          <option value={"19:30"}>19:30</option>
-        </select>
-        <button type="submit" onClick={handlePost}>
-          <FontAwesomeIcon
-            className="h-[2.5em] text-green-800"
-            icon={faCircleCheck}
-          />
-        </button>
+        <div className="flex gap-4">
+          <select
+            className="bg-secondary-100 text-white py-2 px-3 rounded-lg"
+            onChange={handleSelectChanged}
+            defaultValue={"16:30"}
+          >
+            <option value={"16:00"}>16:00</option>
+            <option value={"16:30"}>16:30</option>
+            <option value={"17:00"}>17:00</option>
+            <option value={"17:30"}>17:30</option>
+            <option value={"18:00"}>18:00</option>
+            <option value={"18:30"}>18:30</option>
+            <option value={"19:00"}>19:00</option>
+            <option value={"19:30"}>19:30</option>
+          </select>
+          <button type="submit" onClick={handlePost}>
+            <FontAwesomeIcon
+              className="h-[2.5em] text-green-800 bg-white rounded-full"
+              icon={faCircleCheck}
+            />
+          </button>
+        </div>
       </form>
-      <ul className="mt-4 bg-gray-300 text-black h-[40em] rounded-2xl px-2 py-5 overflow-y-auto scrollbar-hide">
+      <ul className=" flex flex-col items-center mt-4 bg-gray-300 text-black h-[30em] w-full rounded-lg lg:rounded-2xl py-5 px-3 overflow-y-auto scrollbar-hide">
         {currentAppointments.map((item, index) => (
           <li
             key={index}
-            className="mb-2 shadow-md bg-primary py-2 rounded-full px-3 flex justify-evenly items-center"
+            className=" font-semibold mb-4 shadow-md bg-primary py-2 rounded-lg px-3 flex lg:justify-evenly lg:flex-row flex-col w-80 lg:w-full items-center"
           >
             <div>{item?.pacienteId}</div>
-            <div>{item?.paciente?.nombre}</div>
-            <div>{item?.paciente?.apellido}</div>
+            <div>
+              {item?.paciente?.nombre} {item?.paciente?.apellido}
+            </div>
+
             <div>{item.fecha}</div>
             <div>{item.hora}</div>
             <button value={item.id} onClick={() => handleDelete(item.id)}>
@@ -227,7 +231,7 @@ const AppoinmentList = () => {
           </li>
         ))}
       </ul>
-    </main>
+    </div>
   );
 };
 
