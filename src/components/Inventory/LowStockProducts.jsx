@@ -36,16 +36,11 @@ const LowStockProducts = ({ productos }) => {
     useSortBy
   );
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = tableInstance;
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    tableInstance;
 
   return (
-    <div className=" max-h-56 w-full overflow-y-scroll scrollbar-hide">
+    <div className="rounded-lg max-h-56 w-full overflow-y-scroll scrollbar-hide">
       <table {...getTableProps()} className="border-collapse w-full">
         <thead className="sticky top-0">
           {headerGroups.map((headerGroup) => (

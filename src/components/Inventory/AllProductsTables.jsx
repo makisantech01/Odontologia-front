@@ -3,13 +3,12 @@ import { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import {useDispatch} from "react-redux"
+import { useDispatch } from "react-redux";
 import { deleteProducts } from "../store/features/inventorySlice";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 library.add(faCheck, faEdit, faTrash);
 
 const AllProductsTables = ({ productos, handleEdit }) => {
-
   const columns = useMemo(
     () => [
       {
@@ -35,20 +34,22 @@ const AllProductsTables = ({ productos, handleEdit }) => {
       {
         Header: "", // Empty header for the icons column
         accessor: "id", // Use a custom accessor for the icons column
-        Cell: ({value, row }) => { // Render the icons in the cell
-          const dispatch = useDispatch()
+        Cell: ({ value, row }) => {
+          // Render the icons in the cell
+          const dispatch = useDispatch();
           const onHandleDelete = async () => {
             const result = await Swal.fire({
-              title:"¿Estás segur@ que quieres eliminar este producto? Esta acción no se puede deshacer." ,
-              icon: 'question',
+              title:
+                "¿Estás segur@ que quieres eliminar este producto? Esta acción no se puede deshacer.",
+              icon: "question",
               showCancelButton: true,
-              confirmButtonText: 'Sí, eliminar',
-              cancelButtonText: 'Cancelar',
-              reverseButtons: true
+              confirmButtonText: "Sí, eliminar",
+              cancelButtonText: "Cancelar",
+              reverseButtons: true,
             });
             if (result.isConfirmed) {
-              dispatch(deleteProducts(value))
-            }     
+              dispatch(deleteProducts(value));
+            }
           };
           const onHandleEdit = () => {
             console.log(row.original);
@@ -56,14 +57,14 @@ const AllProductsTables = ({ productos, handleEdit }) => {
           };
           return (
             <>
-          <div className="flex flex-row gap-3">
-          <button onClick={onHandleEdit} className="text-blue-700">
-            <FontAwesomeIcon icon={faEdit} />
-          </button>
-          <button onClick={onHandleDelete} className="text-red-600">
-            <FontAwesomeIcon icon={faTrash} />
-          </button>
-        </div>
+              <div className="flex flex-row gap-3">
+                <button onClick={onHandleEdit} className="text-blue-700">
+                  <FontAwesomeIcon icon={faEdit} />
+                </button>
+                <button onClick={onHandleDelete} className="text-red-600">
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </div>
             </>
           );
         },
