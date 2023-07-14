@@ -9,9 +9,9 @@ const DueDateTable = ({ productos }) => {
     }
 
     return [...productos].sort((a, b) => {
-      const dateA = new Date(a.vencimiento).getTime();
-      const dateB = new Date(b.vencimiento).getTime();
-      return dateA - dateB;
+      const dateA = a.vencimiento.split("/");
+      const dateB = b.vencimiento.split("/");
+      return dateA[2] - dateB[2];
     });
   }, [productos]);
 
@@ -37,13 +37,8 @@ const DueDateTable = ({ productos }) => {
     useSortBy
   );
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = tableInstance;
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    tableInstance;
 
   return (
     <div className="max-h-60 w-full overflow-y-scroll scrollbar-hide">
@@ -80,7 +75,7 @@ const DueDateTable = ({ productos }) => {
                     className="bg-slate-300 py-2 px-4 border-b-0 border-l border-r border-black text-sm"
                   >
                     {cell.column.id === "vencimiento"
-                      ? new Date(cell.value).toLocaleDateString()
+                      ? cell.value
                       : cell.render("Cell")}
                   </td>
                 ))}
