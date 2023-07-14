@@ -21,6 +21,17 @@ export const LoginUser = createAsyncThunk(
   }
 );
 
+export const RegisterUser = createAsyncThunk(
+  "user/RegisterUser",
+  async (formData) => {
+    const response = await axios.post(
+      "https://api-sist-odontologico-production.up.railway.app/usuarios",
+      formData
+    );
+    const data = response.data;
+    return data;
+  }
+);
 
 const initialState = {
   users: [],
@@ -36,15 +47,15 @@ const usersSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUsers.pending, (state) => {
+      .addCase(RegisterUser.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
+      .addCase(RegisterUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.users = action.payload;
+        state.users = [...state.users, action.payload];
       })
-      .addCase(fetchUsers.rejected, (state, action) => {
+      .addCase(RegisterUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
