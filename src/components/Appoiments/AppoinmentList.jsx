@@ -9,7 +9,11 @@ import { fetchClients, getUserById } from "../store/features/clientSlice";
 import DateFilter from "./DateFilter";
 import { fetchData } from "../store/features/calendarSlice";
 import axios from "axios";
-import { getAppointments, deleteAppointments } from "../store/features/appointmentsSlice";
+import {
+  getAppointments,
+  deleteAppointments,
+  cleanAppointments,
+} from "../store/features/appointmentsSlice";
 import Swal from "sweetalert2";
 const AppoinmentList = () => {
   const [list, setList] = useState([]);
@@ -19,6 +23,7 @@ const AppoinmentList = () => {
   const { data } = useSelector((state) => state.clients);
   const { calendarData } = useSelector((state) => state.calendar);
   const appointments = useSelector((state) => state.appointments.appointments);
+  const dispatch = useDispatch();
 
   //fecha actual
   const date = new Date();
@@ -33,7 +38,15 @@ const AppoinmentList = () => {
     return a.fecha >= currentDateISO;
   });
 
-  console.log("ESTOS SON LOS APPOINTMENTS",appointments);
+  console.log("ESTOS SON LOS APPOINTMENTS", appointments);
+
+  //eliminacion de turnos antiguos pasados los 2 meses
+  appointments.map(async (a) => {
+    const [day, month, year] = a.fecha.split("/");
+    if (month < mes - 1) {
+      await dispatch(cleanAppointments(a.id));
+    }
+  });
 
   const users = useSelector((state) => state.selectedClient);
 
@@ -44,7 +57,6 @@ const AppoinmentList = () => {
     date: "",
     time: "",
   });
-  const dispatch = useDispatch();
 
   React.useEffect(() => {
     dispatch(fetchData());
@@ -121,20 +133,20 @@ const AppoinmentList = () => {
       dni: event,
     });
   };
-  const handleDelete = async(id) => {
-    console.log('ID del turno:', id);
+  const handleDelete = async (id) => {
+    console.log("ID del turno:", id);
     const result = await Swal.fire({
       title: "¿Quieres eliminar este turno?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Sí, eliminar",
       cancelButtonText: "Cancelar",
-      reverseButtons: true
+      reverseButtons: true,
     });
-    if(result.isConfirmed){
-      dispatch(deleteAppointments(id))
+    if (result.isConfirmed) {
+      dispatch(deleteAppointments(id));
     }
-  }
+  };
 
   const handleSelectChanged = (e) => {
     e.preventDefault();
