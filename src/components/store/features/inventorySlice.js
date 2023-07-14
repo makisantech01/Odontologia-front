@@ -51,10 +51,10 @@ export const getProducts = createAsyncThunk("inventory/getProductsucts", async (
      
       });
       builder.addCase(deleteProducts.fulfilled, (state, action) => {
-        Swal.fire('Producto elminado con exito!', '', 'success');
+        Swal.fire('Producto eliminado con éxito!', '', 'success');
       })
       builder.addCase(postProducts.fulfilled, (state, action) => {
-        Swal.fire('Producto creado con exito!', '', 'success');
+        Swal.fire('Producto creado con éxito!', '', 'success');
         console.log(action.payload)
       })
     },
