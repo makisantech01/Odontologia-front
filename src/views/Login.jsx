@@ -12,13 +12,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { LoginUser } from "../components/store/features/usersSlice";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 library.add(faIdCard, faLock, faEyeSlash, faEye);
 
 const Login = () => {
-  const userType = useSelector((state) => state.users.type);
   const dispatch = useDispatch();
   const nav = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -37,16 +35,11 @@ const Login = () => {
   const onSubmit = (data) => {
     try {
       const response = dispatch(LoginUser(data));
+      nav("citas");
     } catch (error) {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    if (userType === true) {
-      nav("citas");
-    }
-  });
 
   const handleBlur = (fieldName) => {
     trigger(fieldName);
@@ -117,20 +110,21 @@ const Login = () => {
             {errors.password && (
               <p className="h-0 text-red-500">{errors.password.message}</p>
             )}
-            <span className="text-white hover:text-gray-200 cursor-pointer">
+            <span
+              className="text-white hover:text-gray-200 cursor-pointer"
+              onClick={() => nav("recuperacion-contraseña")}
+            >
               Olvidaste tu contraseña?
             </span>
           </div>
           <div className="flex justify-center py-2">
-            <Link to={"/"}>
-              <button
-                className="w-[7em] transition-all duration-300 ease-in-out border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
-                type="submit"
-                onClick={handleSubmit(onSubmit)}
-              >
-                Login
-              </button>
-            </Link>
+            <button
+              className="w-[7em] transition-all duration-300 ease-in-out border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
+              type="submit"
+              onClick={handleSubmit(onSubmit)}
+            >
+              Login
+            </button>
           </div>
           <div className="flex justify-center">
             <Link to={"/registrarse"}>

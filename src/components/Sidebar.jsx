@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import { DASHBOARD_SIDEBAR_LINKS } from "../lib/consts/navigation";
+import {
+  DASHBOARD_SIDEBAR_LINKS,
+  USER_SIDEBAR_LINKS,
+} from "../lib/consts/navigation";
 import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
@@ -32,6 +36,7 @@ const SidebarLink = ({ item }) => {
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const userType = useSelector((state) => state.users.type);
 
   const onLogout = () => {
     const cookie = new Cookie();
@@ -53,9 +58,13 @@ const Sidebar = () => {
           <span className="text-neutral-100 text-3xl font-bold">Conident</span>
         </div>
         <div className="flex-1 py-8 flex flex-col gap-0.5">
-          {DASHBOARD_SIDEBAR_LINKS.map((item) => (
-            <SidebarLink key={item.key} item={item} />
-          ))}
+          {userType === true
+            ? DASHBOARD_SIDEBAR_LINKS.map((item) => (
+                <SidebarLink key={item.key} item={item} />
+              ))
+            : USER_SIDEBAR_LINKS.map((item) => (
+                <SidebarLink key={item.key} item={item} />
+              ))}
         </div>
         <div className="flex flex-col gap-0.5 pt-2">
           <button
