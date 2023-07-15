@@ -70,21 +70,21 @@ const EditModal = ({ selectedRow, setShowModal }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 backdrop-filter backdrop-blur-sm">
-      <div className="bg-white border-solid border-primary border-2 h-auto w-[50%] rounded flex flex-col items-center">
-        <h2 className="flex justify-center text-xl">
+      <div className="bg-primary h-auto w-auto rounded-xl flex flex-col items-center">
+        <strong className="flex justify-center text-xl">
           Editando producto:{' '}
           <span className="underline text-black">{selectedRow.nombre}</span>
-        </h2>
+        </strong>
         <section>
           <form>
             <section className="flex flex-row justify-center items-center gap-5 mt-[10%]">
-              <article className="flex flex-col gap-1 w-[40%]">
+              <article className="flex flex-col gap-1 ">
                 <label htmlFor="">Nombre</label>
                 <input
                   type="text"
                   id="nombre"
                   placeholder="Nombre"
-                  className="bg-slate-300 border-solid border rounded-sm border-black"
+                  className="bg-slate-300 border-solid border rounded-md border-black"
                   defaultValue={selectedRow.nombre}
                   {...register('nombre', {
                     required: 'Campo obligatorio',
@@ -99,7 +99,7 @@ const EditModal = ({ selectedRow, setShowModal }) => {
                   min="0"
                   id="cantidad"
                   placeholder="Cantidad"
-                  className="bg-slate-300 border-solid border rounded-sm border-black"
+                  className="bg-slate-300 border-solid border rounded-md border-black"
                   defaultValue={selectedRow.cantidad}
                   {...register('cantidad', {
                     required: 'Campo obligatorio',
@@ -113,7 +113,7 @@ const EditModal = ({ selectedRow, setShowModal }) => {
                   type="number"
                   min="0"
                   id="stockMin"
-                  className="bg-slate-300 border-solid border rounded-sm border-black"
+                  className="bg-slate-300 border-solid border rounded-md border-black"
                   placeholder="stockMin"
                   defaultValue={selectedRow.stockMinimo}
                   {...register('stockMinimo', {
@@ -131,7 +131,7 @@ const EditModal = ({ selectedRow, setShowModal }) => {
                   id="lote"
                   placeholder="Lote"
                   defaultValue={selectedRow.lote}
-                  className="bg-slate-300 border-solid border rounded-sm border-black"
+                  className="bg-slate-300 border-solid border rounded-md border-black"
                   {...register('lote', {
                     required: 'Campo obligatorio',
                   })}
@@ -145,7 +145,7 @@ const EditModal = ({ selectedRow, setShowModal }) => {
                   id="vencimiento"
                   placeholder="vencimiento"
                   defaultValue={formattedVencimiento}
-                  className="bg-slate-300 border-solid border rounded-sm border-black"
+                  className="bg-slate-300 border-solid border rounded-md border-black"
                   {...register('vencimiento', {
                     required: 'Campo obligatorio',
                   })}

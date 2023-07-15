@@ -6,8 +6,15 @@ import Patients from "./views/Patients";
 import Register from "./views/Register";
 import PassRecovery from "./views/PassRecovery";
 import PassRestore from "./views/PassRestore";
-
+import { getUserData } from "./components/store/features/usersSlice";
+import  Cookies  from "universal-cookie";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 function App() {
+  const dispatch  = useDispatch()
+  useEffect(() => {
+     dispatch(getUserData())
+  }, [dispatch])
   return (
     <Routes>
       {/* Dashboard routes */}
