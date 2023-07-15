@@ -26,14 +26,24 @@ const AppointmentUser = () => {
     const appointmentsUrl =
       "https://api-sist-odontologico-production.up.railway.app/turnos";
 
-    axios
-      .post(`${appointmentsUrl}/${dni}`, appointment)
-      .then((response) => {
-        console.log("Response ->", response.data);
-      })
-      .catch((error) => {
-        console.error("Error ->", error);
-      });
+    const result = await Swal.fire({
+      title: `¿Confirma el turno con fecha ${date} y hora ${time}?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Sí, reservar",
+      cancelButtonText: "Cancelar",
+      reverseButtons: true,
+    });
+    if (result.isConfirmed) {
+      axios
+        .post(`${appointmentsUrl}/${dni}`, appointment)
+        .then((response) => {
+          console.log("Response ->", response.data);
+        })
+        .catch((error) => {
+          console.error("Error ->", error);
+        });
+    }
   };
 
   return (
