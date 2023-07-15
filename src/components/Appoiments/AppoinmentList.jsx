@@ -5,7 +5,7 @@ import {
   faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchClients, getUserById } from "../store/features/clientSlice";
+import { getUserById } from "../store/features/clientSlice";
 import DateFilter from "./DateFilter";
 import { fetchData } from "../store/features/calendarSlice";
 import axios from "axios";
@@ -15,13 +15,11 @@ import {
   cleanAppointments,
 } from "../store/features/appointmentsSlice";
 import Swal from "sweetalert2";
+
 const AppoinmentList = () => {
   const [list, setList] = useState([]);
-  const [inputClients, setInputClients] = useState([]);
   const [searchResult, setSearchResult] = useState("");
   const [dni, setDni] = useState("");
-  const { data } = useSelector((state) => state.clients);
-  const { calendarData } = useSelector((state) => state.calendar);
   const appointments = useSelector((state) => state.appointments.appointments);
   const dispatch = useDispatch();
 
@@ -47,8 +45,6 @@ const AppoinmentList = () => {
       await dispatch(cleanAppointments(a.id));
     }
   });
-
-  const users = useSelector((state) => state.selectedClient);
 
   const [values, setValues] = useState({
     dni: "",
