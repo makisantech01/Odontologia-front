@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../components/store/features/usersSlice";
-import Calendar from "../components/Appoiments/Calendar";
-import Button from "../components/Appoiments/Button";
 import Sidebar from "../components/Sidebar";
 import AppoinmentList from "../components/Appoiments/AppoinmentList";
 import DateFilter from "../components/Appoiments/DateFilter";
@@ -34,20 +32,12 @@ const Citas = () => {
   }
 
   return (
-    <div className="flex">
-      <div className="w-1/5">
+    <div className="flex flex-row h-screen w-screen overflow-hidden bg-secondary-100">
+      <div className="lg:w-[20%] m-0">
         <Sidebar />
       </div>
-      <div className="bg-secondary-100 flex flex-col h-[100vh] w-4/5">
-        <div className="h-[100vh] flex items-center justify-center">
-          <div className="flex gap-8">
-            <div className="flex flex-col justify-center items-center gap-4">
-              {/* <Calendar value={currentDate} onChange={setCurrentDate} />
-              <Button onClick={handleSetToday}>Hoy</Button> */}
-              <AppoinmentList />
-            </div>
-          </div>
-        </div>
+      <div className="lg:w-[80%] w-[100vw] m-0 flex justify-center items-center">
+        <AppoinmentList />
       </div>
     </div>
   );
