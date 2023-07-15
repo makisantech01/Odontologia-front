@@ -3,7 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import bottonWave from "../assets/botton_wave.png";
 import topWave from "../assets/topwave.png";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
+import {
+  faIdCard,
+  faLock,
+  faEyeSlash,
+  faEye,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +16,7 @@ import {
   LoginUser,
   RegisterUser,
 } from "../components/store/features/usersSlice";
-library.add(faEnvelope, faLock);
+library.add(faIdCard, faLock, faEyeSlash, faEye);
 
 const Register = () => {
   const userType = useSelector((state) => state.users.type);
@@ -22,7 +27,10 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
     trigger,
+    watch,
   } = useForm();
+
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const onSubmit = async (data) => {
     try {
@@ -51,12 +59,12 @@ const Register = () => {
         <img src={topWave} className=" absolute z-[1] top-0 right-0 w-[40%]" />
         <form className="w-[500px] mx-auto bg-primary p-4 rounded-3xl shadow-2xl z-10">
           <h2 className="text-6xl font-bold text-center italic text-white mb-[1.8em] mt-5">
-            Conident
+            Registro
           </h2>
           <div className="flex justify-center flex-col items-center gap-6">
             <div className="flex items-center gap-6">
               <FontAwesomeIcon
-                icon={faEnvelope}
+                icon={faIdCard}
                 className="text-4xl text-white"
               />
               <input
@@ -74,33 +82,85 @@ const Register = () => {
                 })}
                 onBlur={() => handleBlur("dni")}
               />
+              {errors.dni && (
+                <p className="h-0 text-red-500">{errors.dni.message}</p>
+              )}
             </div>
-            <div className="flex items-center gap-6">
-              <FontAwesomeIcon icon={faLock} className="text-4xl text-white" />
-              <input
-                className="border p-2 rounded w-[17em]"
-                type="password"
-                placeholder="********"
-                {...register("password", {
-                  required: "Campo obligatorio",
-                })}
-                onBlur={() => handleBlur("password")}
+            <div className="flex items-center gap-6 flex-row">
+              <FontAwesomeIcon
+                icon={faLock}
+                className="text-4xl text-white mr-2"
               />
+              <div className="relative flex-grow">
+                <input
+                  className="border p-2 rounded w-[17em]"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="********"
+                  {...register("password", {
+                    required: "Campo obligatorio",
+                  })}
+                  onBlur={() => handleBlur("password")}
+                />
+                {showPassword ? (
+                  <FontAwesomeIcon
+                    icon={faEye}
+                    className="absolute top-1/2 right-2 transform -translate-y-1/2 text-xl cursor-pointer text-secondary"
+                    onClick={() => setShowPassword(!showPassword)}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faEyeSlash}
+                    className="absolute top-1/2 right-2 transform -translate-y-1/2 text-xl cursor-pointer text-secondary"
+                    onClick={() => setShowPassword(!showPassword)}
+                  />
+                )}
+              </div>
             </div>
-            <div className="flex items-center gap-6">
-              <FontAwesomeIcon icon={faLock} className="text-4xl text-white" />
-              <input
-                className="border p-2 rounded w-[17em]"
-                type="password"
-                placeholder="********"
-                {...register("password", {
-                  required: "Campo obligatorio",
-                })}
-                onBlur={() => handleBlur("password")}
+            <div className="flex items-center gap-6 flex-row">
+              <FontAwesomeIcon
+                icon={faLock}
+                className="text-4xl text-white mr-2"
               />
+              <div className="relative flex-grow">
+                <input
+                  className="border p-2 rounded w-[17em]"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="********"
+                  {...register("confirm_password", {
+                    required: "Campo obligatorio",
+                    validate: (val) => {
+                      if (watch("password") != val) {
+                        return "Las contraseñas no coinciden";
+                      }
+                    },
+                  })}
+                  onBlur={() => handleBlur("confirm_password")}
+                />
+                {showPassword ? (
+                  <FontAwesomeIcon
+                    icon={faEye}
+                    className="absolute top-1/2 right-2 transform -translate-y-1/2 text-xl cursor-pointer text-secondary"
+                    onClick={() => setShowPassword(!showPassword)}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faEyeSlash}
+                    className="absolute top-1/2 right-2 transform -translate-y-1/2 text-xl cursor-pointer text-secondary"
+                    onClick={() => setShowPassword(!showPassword)}
+                  />
+                )}
+              </div>
             </div>
+            {errors.password && (
+              <p className="h-0 text-red-500">{errors.password.message}</p>
+            )}
+            {errors.confirm_password && (
+              <p className="h-0 text-red-500">
+                {errors.confirm_password.message}
+              </p>
+            )}
           </div>
-          <div className="flex justify-center py-6">
+          <div className="flex justify-center py-1">
             <Link to={"/"}>
               <button
                 className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
@@ -108,6 +168,13 @@ const Register = () => {
                 onClick={handleSubmit(onSubmit)}
               >
                 Registrarse
+              </button>
+            </Link>
+          </div>
+          <div className="flex justify-center">
+            <Link to={"/"}>
+              <button className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl">
+                Atrás
               </button>
             </Link>
           </div>
