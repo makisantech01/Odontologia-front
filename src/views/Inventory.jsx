@@ -50,7 +50,7 @@ const Inventory = () => {
       <div className="lg:w-[20%] m-0 z-50 shadow-lg">
         <Sidebar />
       </div>
-      <div className="lg:w-[80%] w-[100vw] mt-10 lg:mt-0 h-[100vh] m-0 lg:flex lg:flex-row flex-col justify-center items-center gap-8 mx-4 lg:mx-0">
+      <div className="lg:w-[80%] w-[100vw] mt-10 lg:mt-0 h-[100vh] m-0 lg:flex lg:flex-row flex-col justify-center items-center gap-8 mx-4">
         <section className="flex flex-col justify-center items-center gap-5">
           <SearchBar searchTerm={searchTerm} onSearch={handleSearch} />
           <AllProductsTables
@@ -65,7 +65,7 @@ const Inventory = () => {
           </button>
         </section>
         <section className=" flex flex-col gap-9 py-10 items-center">
-          <article className="flex transition-transform duration-200 ease-in-out flex-col hover:transform hover:scale-105 mx-auto shadow-2xl whitespace-nowrap shadow-black justify-center bg-primary items-center h-[5em] w-[15em] rounded-lg">
+          <article className="flex mt-2 transition-all duration-200 ease-in-out flex-col hover:transform hover:scale-105 mx-auto shadow-2xl whitespace-nowrap shadow-black justify-center bg-primary items-center h-[5%] w-full rounded-lg">
             Cantidad total de productos:
             <strong className="mt-2 text-2xl">{totalProductos}</strong>
           </article>
