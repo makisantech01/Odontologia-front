@@ -37,7 +37,7 @@ const Register = () => {
       console.log(data);
       const response = await dispatch(RegisterUser(data));
       if (response) {
-        await dispatch(LoginUser(data));
+       dispatch(LoginUser(data));
       }
     } catch (error) {
       console.error(error);

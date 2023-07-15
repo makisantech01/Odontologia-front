@@ -2,12 +2,25 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import jwt_decode from "jwt-decode";
-
+const cookies = new Cookies()
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
   const response = await fetch("https://jsonplaceholder.typicode.com/users");
   const data = await response.json();
   return data;
 });
+
+export const getUserData = createAsyncThunk("users/getUserData", async (_, { getState }) => {
+  const state = getState().users;
+  const typeData = cookies.get("token");
+  
+  if (typeData) {
+    const decoded = jwt_decode(typeData);
+    return { ...state, type: decoded.admin, users: decoded.id };
+  }
+  
+  return state;
+});
+
 
 export const LoginUser = createAsyncThunk(
   "user/LoginUser",
@@ -64,21 +77,25 @@ const usersSlice = createSlice({
         state.loading = true;
       })
       .addCase(LoginUser.fulfilled, (state, action) => {
-        const cookies = new Cookies();
         const responseData = action.payload;
         cookies.set("token", responseData, { path: "/" });
         const typeData = cookies.get("token");
         if (typeData) {
           const decoded = jwt_decode(typeData);
-          const adminValue = decoded.admin;
-          console.log(adminValue);
-          state.type = adminValue;
+          state.type = decoded.admin;
           state.users = decoded.id;
         }
       })
       .addCase(LoginUser.rejected, (state, action) => {
         state.error = "hubo un error al iniciar sesión";
-      });
+      })
+      .addCase(getUserData.fulfilled, (state, action)=>{
+        console.log("estado: fullfilled")
+        console.log("estado",state.type)
+        const { type, users } = action.payload;
+        state.type = type;
+        state.users = users;
+      })
   },
 });
 export const { actions: usersActions, reducer: usersReducer } = usersSlice;

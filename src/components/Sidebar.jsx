@@ -13,12 +13,14 @@ import Cookie from "universal-cookie";
 
 import { RiCloseFill, RiMenu3Fill } from "react-icons/ri";
 
+
 library.add(faArrowRightFromBracket);
 
 const linkClasses =
   "flex items-center gap-2 font-light transition-all duration-200 ease-in-out px-3 py-2 hover:bg-secondary-100 hover:no-underline rounded-sm text-base";
 
 const SidebarLink = ({ item }) => {
+ 
   const { pathname } = useLocation();
   return (
     <Link
@@ -37,6 +39,7 @@ const SidebarLink = ({ item }) => {
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const userType = useSelector((state) => state.users.type);
+  console.log("🚀 ~ file: Sidebar.jsx:42 ~ Sidebar ~ userType:", userType)
 
   const onLogout = () => {
     const cookie = new Cookie();
@@ -46,6 +49,9 @@ const Sidebar = () => {
       window.location.href = "/";
     }
   };
+ 
+
+  
 
   return (
     <>
