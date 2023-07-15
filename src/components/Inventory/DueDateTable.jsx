@@ -41,7 +41,7 @@ const DueDateTable = ({ productos }) => {
     tableInstance;
 
   return (
-    <div className="max-h-60 w-full overflow-y-scroll scrollbar-hide">
+    <div className="rounded-lg max-h-60 w-full overflow-y-scroll scrollbar-hide">
       <table {...getTableProps()} className="border-collapse w-full">
         <thead className="sticky top-0">
           {headerGroups.map((headerGroup) => (

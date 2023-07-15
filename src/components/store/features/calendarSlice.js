@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  calendarData: {},
+  calendarData: [],
   loading: false,
   error: null,
 };
@@ -37,7 +37,7 @@ export const fetchData = () => async (dispatch) => {
   dispatch(getDataStart());
   try {
     const response = await axios.get(calendarDays);
-    dispatch(getDataSuccess(response.data));
+    dispatch(getDataSuccess(response.data.data));
   } catch (error) {
     dispatch(getDataFailure(error.message));
   }

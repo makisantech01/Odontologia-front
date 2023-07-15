@@ -34,8 +34,8 @@ export const RegisterUser = createAsyncThunk(
 );
 
 const initialState = {
-  users: [],
-  login: [],
+  users: {},
+  login: {},
   loading: false,
   error: null,
   type: null,
@@ -73,6 +73,7 @@ const usersSlice = createSlice({
           const adminValue = decoded.admin;
           console.log(adminValue);
           state.type = adminValue;
+          state.users = decoded.id;
         }
       })
       .addCase(LoginUser.rejected, (state, action) => {

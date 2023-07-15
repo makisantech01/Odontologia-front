@@ -22,7 +22,7 @@ function DateFilter(props) {
       onChange={handleValueChange}
       isClearable
       placeholderText="Agregar una fecha"
-      className="text-center py-2 rounded-full"
+      className="text-center py-2 rounded-lg"
       minDate={new Date()}
       dateFormat="dd/MM/yyy"
       filterDate={(date) => date.getDay() !== 6 && date.getDay() !== 0}

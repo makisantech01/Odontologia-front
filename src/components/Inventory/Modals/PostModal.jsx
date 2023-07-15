@@ -1,8 +1,8 @@
-import React from 'react'
+import React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from 'react-redux';
-import {postProducts } from '../../store/features/inventorySlice';
-import Swal from 'sweetalert2'
+import { useDispatch } from "react-redux";
+import { postProducts } from "../../store/features/inventorySlice";
+import Swal from "sweetalert2";
 const PostModal = ({ setShowPostModal }) => {
   const dispatch = useDispatch();
   const {
@@ -57,18 +57,19 @@ const PostModal = ({ setShowPostModal }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 backdrop-filter backdrop-blur-sm">
-      <div className="bg-white border-solid border-primary border-2 h-auto w-[50%] rounded flex flex-col items-center">
-        <h2 className="flex relative justify-center text-xl">Creando producto</h2>
+      <div className=" bg-primary w-[20em] rounded-lg flex flex-col items-center py-3">
+        <h2 className="flex relative justify-center text-3xl font-bold py-4">
+          Creando producto
+        </h2>
         <section>
           <form>
-            <section className="flex flex-row justify-center items-center gap-5 mt-[10%]">
-              <article className="flex flex-col gap-1 w-[40%]">
-                <label htmlFor="">Nombre</label>
+            <section className="flex flex-col justify-center items-center gap-5 mt-[10%]">
+              <article className="flex flex-col gap-2 w-[90%]">
                 <input
                   type="text"
                   id="nombre"
                   placeholder="Nombre"
-                  className="bg-slate-300 border-solid border rounded-sm border-black"
+                  className="bg-slate-200  rounded-lg pl-4"
                   {...register("nombre", {
                     required: "Campo obligatorio",
                   })}
@@ -76,13 +77,12 @@ const PostModal = ({ setShowPostModal }) => {
                 {errors.nombre && (
                   <p className="text-red-500">{errors.nombre.message}</p>
                 )}
-                <label htmlFor="">Cantidad</label>
                 <input
                   type="number"
                   min="0"
                   id="cantidad"
                   placeholder="Cantidad"
-                  className="bg-slate-300 border-solid border rounded-sm border-black"
+                  className="bg-slate-200  rounded-lg pl-4"
                   {...register("cantidad", {
                     required: "Campo obligatorio",
                   })}
@@ -90,12 +90,11 @@ const PostModal = ({ setShowPostModal }) => {
                 {errors.cantidad && (
                   <p className="text-red-500">{errors.cantidad.message}</p>
                 )}
-                <label htmlFor="">Stock mínimo</label>
                 <input
                   type="number"
                   min="0"
                   id="stockMinimo"
-                  className="bg-slate-300 border-solid border rounded-sm border-black"
+                  className="bg-slate-200 rounded-lg pl-4"
                   placeholder="Stock mínimo"
                   {...register("stockMinimo", {
                     required: "Campo obligatorio",
@@ -105,13 +104,12 @@ const PostModal = ({ setShowPostModal }) => {
                   <p className="text-red-500">{errors.stockMinimo.message}</p>
                 )}
               </article>
-              <article className="flex flex-col gap-1 w-[40%]">
-                <label htmlFor="">Lote</label>
+              <article className="flex flex-col gap-2 w-[90%]">
                 <input
                   type="text"
                   id="lote"
                   placeholder="Lote"
-                  className="bg-slate-300 border-solid border rounded-sm border-black"
+                  className="bg-slate-200 rounded-lg pl-4"
                   {...register("lote", {
                     required: "Campo obligatorio",
                   })}
@@ -124,7 +122,7 @@ const PostModal = ({ setShowPostModal }) => {
                   type="date"
                   id="vencimiento"
                   placeholder="Vencimiento"
-                  className="bg-slate-300 border-solid border rounded-sm border-black"
+                  className="bg-slate-200  rounded-sm"
                   {...register("vencimiento", {
                     required: "Campo obligatorio",
                   })}
@@ -136,15 +134,15 @@ const PostModal = ({ setShowPostModal }) => {
             </section>
           </form>
         </section>
-        <div className="flex mt-[1%] mb-[5%] justify-center gap-4 items-center">
+        <div className="flex my-4 justify-center gap-4 items-center">
           <button
-            className="p-1 bg-red-900 hover:bg-red-600 rounded-lg"
+            className="p-1 bg-red-700 hover:bg-red-900 rounded-lg py-2 px-2"
             onClick={() => setShowPostModal(false)}
           >
             Cancelar
           </button>
           <button
-            className="p-1 bg-blue-500 hover:bg-blue-900 rounded-lg"
+            className="p-1 bg-blue-500 hover:bg-blue-900 rounded-lg py-2 px-2 text-white"
             type="submit"
             onClick={handleSubmit(onSubmit)}
           >
