@@ -19,7 +19,6 @@ import {
 library.add(faIdCard, faLock, faEyeSlash, faEye);
 
 const Register = () => {
-  const userType = useSelector((state) => state.users.type);
   const dispatch = useDispatch();
   const nav = useNavigate();
   const {
@@ -37,17 +36,13 @@ const Register = () => {
       console.log(data);
       const response = await dispatch(RegisterUser(data));
       if (response) {
-       dispatch(LoginUser(data));
+        await dispatch(LoginUser(data));
+        nav("citas");
       }
     } catch (error) {
       console.error(error);
     }
   };
-  React.useEffect(() => {
-    if (userType === false) {
-      nav("citas");
-    }
-  });
 
   const handleBlur = (fieldName) => {
     trigger(fieldName);
@@ -161,15 +156,13 @@ const Register = () => {
             )}
           </div>
           <div className="flex justify-center py-1">
-            <Link to={"/"}>
-              <button
-                className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
-                type="submit"
-                onClick={handleSubmit(onSubmit)}
-              >
-                Registrarse
-              </button>
-            </Link>
+            <button
+              className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
+              type="submit"
+              onClick={handleSubmit(onSubmit)}
+            >
+              Registrarse
+            </button>
           </div>
           <div className="flex justify-center">
             <Link to={"/"}>
