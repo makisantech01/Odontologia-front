@@ -4,7 +4,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCheck, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchClients } from "../store/features/clientSlice";
+import { fetchClient, fetchClients } from "../store/features/clientSlice";
 import { getUserById } from "../store/features/clientSlice";
 import { Link } from "react-router-dom";
 
@@ -31,7 +31,7 @@ const ClientTable = ({ searchTerm }) => {
         Cell: ({ row }) => {
           const onPacientInfo = () => {
             const dni = row.original.dni;
-            dispatch(getUserById(dni));
+            dispatch(fetchClient(dni));
             console.log(dni);
           };
           return (

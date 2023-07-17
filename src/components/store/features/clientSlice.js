@@ -29,7 +29,7 @@ const clientSlice = createSlice({
   name: "clients",
   initialState: {
     clients: [],
-    selectedClient: null,
+    selectedClient: {},
   },
   reducers: {
     selectedClient: (state, action) => {
@@ -39,6 +39,9 @@ const clientSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchClients.fulfilled, (state, action) => {
       return action.payload;
+    });
+    builder.addCase(fetchClient.fulfilled, (state, action) => {
+      state.selectedClient = action.payload;
     });
   },
 });

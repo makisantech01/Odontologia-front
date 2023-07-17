@@ -8,11 +8,7 @@ import {
   deleteAppointments,
 } from "../store/features/appointmentsSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircleCheck,
-  faCircleXmark,
-} from "@fortawesome/free-solid-svg-icons";
-import { space } from "postcss/lib/list";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 const AppointmentUser = () => {
   const dispatch = useDispatch();
@@ -30,8 +26,7 @@ const AppointmentUser = () => {
   const currentDateISO = `${dia.toString().padStart(2, "0")}/${mes
     .toString()
     .padStart(2, "0")}/${año}`;
-  const currentTime =
-    date.getHours().toString() + ":" + date.getMinutes().toString();
+  const currentTime = date.getHours();
 
   const userAppointments = allAppointments.filter((a) => {
     return a.pacienteId === dni.toString() && a.fecha >= currentDateISO;
@@ -64,9 +59,9 @@ const AppointmentUser = () => {
         reverseButtons: true,
       });
       if (result.isConfirmed) {
-        // const authUrl = `${appointmentsUrl}/google`;
-        // // Abrir una nueva pestaña con la URL de autorización
-        // const newTab = await window.open(authUrl, "_blank");
+        const authUrl = `${appointmentsUrl}/google`;
+        // Abrir una nueva pestaña con la URL de autorización
+        await window.open(authUrl, "_blank");
         axios
           .post(`${appointmentsUrl}/turnos/${dni}`, appointment)
           .then((response) => {
@@ -112,10 +107,10 @@ const AppointmentUser = () => {
   };
 
   const handleDelete = async (appointment) => {
-    if (appointment.fecha === currentDateISO && currentTime <= "12:00") {
+    if (appointment.fecha === currentDateISO && currentTime >= 11) {
       await Swal.fire({
         title:
-          "No se pueden cancelar turnos pasadas las 12hs de la misma fecha",
+          "No se pueden cancelar turnos pasadas las 11hs de la misma fecha",
         icon: "error",
         showCancelButton: false,
         confirmButtonText: "OK",
