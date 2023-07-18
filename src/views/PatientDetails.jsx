@@ -11,11 +11,11 @@ import PatientMenu from "../components/PatientsDetails/PatientMenu";
 const PatientDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const selectedClient = useSelector((state) => state?.clients?.data[id]);
+  const selectedClient = useSelector((state) => state?.clients?.data);
+  console.log("al info del cliente ->", selectedClient);
 
   useEffect(() => {
     dispatch(fetchClient(id));
-    console.log("al info del cliente ->", selectedClient);
   }, [dispatch, id]);
   return (
     <div className="flex flex-row h-screen w-screen overflow-hidden bg-secondary-100">
