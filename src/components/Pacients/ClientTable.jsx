@@ -5,7 +5,6 @@ import { faCheck, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchClient, fetchClients } from "../store/features/clientSlice";
-import { getUserById } from "../store/features/clientSlice";
 import { Link } from "react-router-dom";
 
 library.add(faCheck, faEdit, faTrash);

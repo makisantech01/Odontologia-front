@@ -11,6 +11,7 @@ import { getUserData } from "./components/store/features/usersSlice";
 import Cookies from "universal-cookie";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import PacientForm from "./components/Pacients/PacientForm";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,6 +28,7 @@ function App() {
       <Route path="/" element={<Login />} />
       <Route path="/recuperacion-contraseña" element={<PassRecovery />} />
       <Route path="/restablecer-contrasena" element={<PassRestore />} />
+      <Route path="/datos-personales" element={<PacientForm />} />
       {/* Pacients routes */}
     </Routes>
   );

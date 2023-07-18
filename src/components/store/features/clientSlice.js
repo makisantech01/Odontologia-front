@@ -16,10 +16,10 @@ export const fetchClient = createAsyncThunk(
   }
 );
 
-export const getUserById = createAsyncThunk(
+export const createClient = createAsyncThunk(
   "userSlice/getUserById",
-  async (payload) => {
-    const response = await axios.get(`${pacientesUrl}/${payload}`);
+  async (dni, data) => {
+    const response = await axios.post(`${pacientesUrl}/${dni}`, data);
     const responseData = response.data;
     return responseData;
   }
@@ -41,6 +41,9 @@ const clientSlice = createSlice({
       return action.payload;
     });
     builder.addCase(fetchClient.fulfilled, (state, action) => {
+      state.selectedClient = action.payload;
+    });
+    builder.addCase(createClient.fulfilled, (state, action) => {
       state.selectedClient = action.payload;
     });
   },

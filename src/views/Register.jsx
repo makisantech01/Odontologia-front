@@ -37,7 +37,7 @@ const Register = () => {
       const response = await dispatch(RegisterUser(data));
       if (response) {
         await dispatch(LoginUser(data));
-        nav("citas");
+        nav("/datos-personales");
       }
     } catch (error) {
       console.error(error);
@@ -156,13 +156,15 @@ const Register = () => {
             )}
           </div>
           <div className="flex justify-center py-1">
-            <button
-              className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
-              type="submit"
-              onClick={handleSubmit(onSubmit)}
-            >
-              Registrarse
-            </button>
+            <Link to={"/datos-personales"}>
+              <button
+                className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
+                type="submit"
+                onClick={handleSubmit(onSubmit)}
+              >
+                Registrarse
+              </button>
+            </Link>
           </div>
           <div className="flex justify-center">
             <Link to={"/"}>
