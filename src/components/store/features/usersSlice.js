@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import jwt_decode from "jwt-decode";
+import { useEffect } from "react";
 const cookies = new Cookies()
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
   const response = await fetch("https://jsonplaceholder.typicode.com/users");
@@ -30,6 +31,7 @@ export const LoginUser = createAsyncThunk(
       formData
     );
     const data = response.data.token;
+
     return data;
   }
 );
