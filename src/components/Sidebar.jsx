@@ -3,7 +3,7 @@ import {
   DASHBOARD_SIDEBAR_LINKS,
   USER_SIDEBAR_LINKS,
 } from "../lib/consts/navigation";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -20,6 +20,8 @@ const linkClasses =
 
 const SidebarLink = ({ item }) => {
   const { pathname } = useLocation();
+  const id = useParams();
+  console.log("el item -->", item.path, pathname, id);
   return (
     <Link
       to={item.path}
@@ -52,7 +54,7 @@ const Sidebar = () => {
       <section
         className={`${
           isOpen ? "left-0" : "-left-full"
-        }  bg-primary lg:bg-primary lg:w-[20%] w-[30%] shadow-lg flex flex-col  justify-between py-4 fixed h-screen transition-all duration-200 lg:left-0`}
+        }  bg-primary lg:bg-primary lg:w-[20%] w-[100%] shadow-lg z-[50] flex flex-col  justify-between py-4 fixed h-screen transition-all duration-200 lg:left-0`}
       >
         <div className="flex items-center justify-center gap-2 px-1 py-3">
           <span className="text-neutral-100 text-3xl font-bold">Conident</span>

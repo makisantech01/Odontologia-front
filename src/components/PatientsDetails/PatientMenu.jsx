@@ -3,6 +3,7 @@ import Details from "./Options/Details";
 import Odontogram from "./Options/Odontogram";
 import PatientAppointment from "./Options/PatientAppointment";
 import MedicalHistory from "./Options/MedicalHistory";
+import { fetchClient } from "../store/features/clientSlice";
 
 const Option = ({ title, active, onClick }) => {
   return (
