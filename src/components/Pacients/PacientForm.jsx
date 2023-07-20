@@ -284,7 +284,7 @@ const PacientForm = () => {
               <button
                 className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
                 type="submit"
-                onClick={() => handleSubmit(onSubmit)}
+                onClick={handleSubmit(onSubmit)}
               >
                 Guardar
               </button>
