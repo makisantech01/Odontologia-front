@@ -21,7 +21,7 @@ const linkClasses =
 const SidebarLink = ({ item }) => {
   const { pathname } = useLocation();
   const id = useParams();
-  console.log("el item -->", item.path, pathname, id);
+  // console.log("el item -->", item.path, pathname, id);
   return (
     <Link
       to={item.path}
