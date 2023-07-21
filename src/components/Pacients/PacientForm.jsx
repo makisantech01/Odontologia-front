@@ -29,9 +29,22 @@ const PacientForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      console.log(data);
-      //   await dispatch(createClient(user, data));
-      nav("/citas");
+      const fechaNacimiento = new Date(data.fechaNacimiento);
+      const dd = String(fechaNacimiento.getUTCDate()).padStart(2, "0");
+      const mm = String(fechaNacimiento.getMonth() + 1).padStart(2, "0");
+      const yyyy = fechaNacimiento.getFullYear();
+
+      // Crear la fecha en el formato deseado (dd/mm/yyyy)
+      const fechaFormateada = `${dd}/${mm}/${yyyy}`;
+
+      // Actualizar el valor de la fecha de vencimiento en los datos
+      const newData = { ...data, fechaNacimiento: fechaFormateada };
+      console.log(newData);
+      const response = await dispatch(createClient(newData));
+      if (response) {
+        console.log(response);
+        nav("/historial-medico");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -42,7 +55,7 @@ const PacientForm = () => {
   };
 
   return (
-    <div className="bg-secondary-100 h-screen flex items-center justify-center">
+    <div className="bg-secondary-100 flex items-center justify-center">
       <div className=" flex flex-col justify-center">
         <img src={topWave} className=" absolute z-[1] top-0 right-0 w-[40%]" />
         <form className="w-[500px] mx-auto bg-primary p-4 rounded-3xl shadow-2xl z-10">
@@ -56,13 +69,13 @@ const PacientForm = () => {
                 className="text-4xl text-white"
               />
               <input
-                value={user}
+                defaultValue={user}
                 className="border p-2 rounded w-[17em]"
                 {...register("dni", {
                   required: "Campo obligatorio",
                 })}
                 onBlur={() => handleBlur("dni")}
-                disabled
+                readOnly
               />
             </div>
             <div className="flex items-center gap-6">
@@ -180,9 +193,9 @@ const PacientForm = () => {
 
             <input
               className="border p-2 rounded w-[17em]"
-              type="text"
-              value={0}
-              disabled
+              type="number"
+              defaultValue={0}
+              readOnly
               hidden
               {...register("nroHistoriaClinica")}
               onBlur={() => handleBlur("nroHistoriaClinica")}
@@ -280,15 +293,13 @@ const PacientForm = () => {
             )}
           </div>
           <div className="flex justify-center py-1">
-            <Link to={"/citas"}>
-              <button
-                className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
-                type="submit"
-                onClick={handleSubmit(onSubmit)}
-              >
-                Guardar
-              </button>
-            </Link>
+            <button
+              className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
+              type="submit"
+              onClick={handleSubmit(onSubmit)}
+            >
+              Siguiente
+            </button>
           </div>
         </form>
         <img

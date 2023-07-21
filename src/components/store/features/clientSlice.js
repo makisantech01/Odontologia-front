@@ -17,9 +17,9 @@ export const fetchClient = createAsyncThunk(
 );
 
 export const createClient = createAsyncThunk(
-  "userSlice/getUserById",
-  async (dni, data) => {
-    const response = await axios.post(`${pacientesUrl}/${dni}`, data);
+  "userSlice/createClient",
+  async (client) => {
+    const response = await axios.post(`${pacientesUrl}/${client.dni}`, client);
     const responseData = response.data;
     return responseData;
   }

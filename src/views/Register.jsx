@@ -77,10 +77,10 @@ const Register = () => {
                 })}
                 onBlur={() => handleBlur("dni")}
               />
-              {errors.dni && (
-                <p className="h-0 text-red-500">{errors.dni.message}</p>
-              )}
             </div>
+            {errors.dni && (
+              <p className="h-0 text-red-500">{errors.dni.message}</p>
+            )}
             <div className="flex items-center gap-6 flex-row">
               <FontAwesomeIcon
                 icon={faLock}
