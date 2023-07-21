@@ -1,71 +1,13 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
-import { formSchema } from "../../../Validations/FormValidation";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { validationSchema } from "../../../Validations/FormValidation";
+import * as yup from "yup";
 
 const convertirABooleano = (valor) => {
   return valor === "si";
 };
 
 const MHF = () => {
-  const onSubmit = (values) => {
-    const formData = {
-      enfermedad: convertirABooleano(values.enfermedad),
-      detalleEnfermedad: values.detalleEnfermedad,
-
-      tratamientoMedico: convertirABooleano(values.tratamientoMedico),
-      detalleTratamiento: values.detalleTratamiento,
-
-      medicacion: convertirABooleano(values.medicacion),
-      detalleMedicacion: values.detalleMedicacion,
-
-      cicatrizacion: convertirABooleano(values.cicatrizacion),
-
-      fiebreReumatica: convertirABooleano(values.fiebreReumatica),
-
-      diabetes: convertirABooleano(values.diabetes),
-
-      problemasCardiacos: convertirABooleano(values.problemasCardiacos),
-
-      aspirinas: convertirABooleano(values.aspirinas),
-
-      anticoagulante: convertirABooleano(values.anticoagulante),
-
-      tabaquismo: convertirABooleano(values.tabaquismo),
-
-      embarazo: convertirABooleano(values.embarazo),
-      mesesEmbarazo: values.mesesEmbarazo,
-
-      hipertension: convertirABooleano(values.hipertension),
-
-      hipotension: convertirABooleano(values.hipotension),
-
-      problemasRenales: convertirABooleano(values.problemasRenales),
-
-      problemasGastricos: convertirABooleano(values.problemasGastricos),
-      detalleGastricos: values.detalleGastricos,
-
-      convulsiones: convertirABooleano(values.convulsiones),
-
-      epilepsia: convertirABooleano(values.epilepsia),
-
-      sifilisGonorreaHIV: convertirABooleano(values.sifilisGonorreaHIV),
-
-      operacion: convertirABooleano(values.operacion),
-      detalleOperacion: values.detalleOperacion,
-
-      problemasRespiratorios: convertirABooleano(values.problemasRespiratorios),
-      detalleRespiratorios: values.detalleRespiratorios,
-
-      tiroides: convertirABooleano(values.tiroides),
-      detalleTiroides: values.detalleTiroides,
-
-      otros: convertirABooleano(values.otros),
-      detalleOtros: values.detalleOtros,
-
-      consentimiento: convertirABooleano(values.consentimiento),
-    };
-    console.log("el formData -->", formData);
-  };
   return (
     <div className="container mx-auto mt-8">
       <Formik
@@ -105,64 +47,82 @@ const MHF = () => {
           detalleOtros: "",
           consentimiento: "",
         }}
-        onSubmit={onSubmit}
-        formSchema={formSchema}
+        // validationSchema={yup.object({
+        //   enfermedad: yup.string().required("Por favor selecione"),
+        //   consentimiento: yup.string().required("Required"),
+        // })}
+        onSubmit={(values, { setSubmiting }) => {
+          const formData = {
+            enfermedad: convertirABooleano(values.enfermedad),
+            detalleEnfermedad: values.detalleEnfermedad,
+            consentimiento: convertirABooleano(values.consentimiento),
+          };
+
+          console.log(JSON.stringify(formData, null, 2));
+          setSubmiting(false);
+        }}
       >
-        {({ values, setFieldValue, errors, touched }) => (
-          <Form>
-            <div className="flex flex-col lg:flex-row w-full">
-              <div className="lg:w-1/2 w-full flex flex-col">
-                {/* Pregunta 1 */}
-                <div className="mb-4 flex gap-2 lg:gap-5">
-                  <label className="font-bold">¿Sufre alguna enfermedad?</label>
-                  <div>
-                    <label className="mr-4">
-                      <Field
-                        type="radio"
-                        name="enfermedad"
-                        value="si"
-                        checked={values.enfermedad === "si"}
-                        onChange={() => setFieldValue("enfermedad", "si")}
-                        className="mr-3"
-                      />
-                      Si
-                    </label>
-                    <label>
-                      <Field
-                        type="radio"
-                        name="enfermedad"
-                        value="no"
-                        checked={values.enfermedad === "no"}
-                        onChange={() => {
-                          setFieldValue("enfermedad", "no");
-                          setFieldValue("detalleEnfermedad", "");
-                        }}
-                        className="mr-3"
-                      />
-                      No
-                    </label>
-                  </div>
-                </div>
-                {touched.enfermedad && errors.enfermedad && (
-                  <div className="text-red-600">{errors.enfermedad}</div>
-                )}
-                {values.enfermedad === "si" && (
-                  <div className="mb-4">
-                    <label className="font-bold mr-3">¿Cuál?</label>
+        <Form>
+          <div className="flex flex-col lg:flex-row w-full">
+            <div className="lg:w-1/2 w-full flex flex-col">
+              {/* Pregunta 1 */}
+              <div className="mb-4 flex gap-2 lg:gap-5">
+                <label className="font-bold">¿Sufre alguna enfermedad?</label>
+                <div>
+                  <label className="mr-4">
                     <Field
-                      type="text"
-                      name="detalleEnfermedad"
-                      className="rounded p-1/2 text-white bg-gray-700 outline-none pl-2 cursor-text"
+                      type="radio"
+                      name="enfermedad"
+                      value="si"
+                      // checked={enfermedad === "si"}
+                      // onChange={() => setFieldValue("enfermedad", "si")}
+                      className="mr-3"
                     />
-                    {touched.detalleEnfermedad && errors.detalleEnfermedad && (
-                      <div className="text-red-600">
-                        {errors.detalleEnfermedad}
-                      </div>
-                    )}
-                  </div>
-                )}
-                {/* Pregunta 2 */}
-                <div className="mb-4 flex gap-2 lg:gap-5">
+                    Si
+                  </label>
+                  <label>
+                    <Field
+                      type="radio"
+                      name="enfermedad"
+                      value="no"
+                      // checked={enfermedad === "no"}
+                      // onChange={() => {
+                      //   setFieldValue("enfermedad", "no");
+                      //   setFieldValue("detalleEnfermedad", "");
+                      // }}
+                      className="mr-3"
+                    />
+                    No
+                  </label>
+                  {/* <ErrorMessage
+                    component="label"
+                    name="enfermedad"
+                    className="text-red-600"
+                  /> */}
+                </div>
+              </div>
+              {/* {touched.enfermedad && errors.enfermedad && (
+                <div className="text-red-600">{errors.enfermedad}</div>
+              )} */}
+              {/* {enfermedad === "si" && (
+                <div className="mb-4">
+                  <label className="font-bold mr-3">¿Cuál?</label>
+                  <Field
+                    type="text"
+                    name="detalleEnfermedad"
+                    className="rounded p-1/2 text-white bg-gray-700 outline-none pl-2 cursor-text"
+                  />
+                  {touched.detalleEnfermedad && errors.detalleEnfermedad && (
+                    <div className="text-red-600">
+                      {errors.detalleEnfermedad}
+                    </div>
+                  )}
+                </div>
+              )} */}
+            </div>
+          </div>
+          {/* Pregunta 2 */}
+          {/* <div className="mb-4 flex gap-2 lg:gap-5">
                   <label className="font-bold">¿Hace tratamiento medico?</label>
                   <div>
                     <label className="mr-4">
@@ -203,9 +163,9 @@ const MHF = () => {
                       className="rounded p-1/2 text-white bg-gray-700 outline-none pl-2 cursor-text"
                     />
                   </div>
-                )}
-                {/* Pregunta 3 */}
-                <div className="mb-4 flex gap-2 lg:gap-5">
+                )} */}
+          {/* Pregunta 3 */}
+          {/* <div className="mb-4 flex gap-2 lg:gap-5">
                   <label className="font-bold">¿Toma alguna medicacion?</label>
                   <div>
                     <label className="mr-4">
@@ -244,9 +204,9 @@ const MHF = () => {
                       className="rounded p-1/2 text-white bg-gray-700 outline-none pl-2 cursor-text"
                     />
                   </div>
-                )}
-                {/* Pregunta 4 */}
-                <div className="mb-4 flex gap-2 lg:gap-5">
+                )} */}
+          {/* Pregunta 4 */}
+          {/* <div className="mb-4 flex gap-2 lg:gap-5">
                   <label className="font-bold">
                     ¿Es alérgico a alguna droga?
                   </label>
@@ -289,9 +249,9 @@ const MHF = () => {
                   </div>
                 )}
               </div>
-              <div className="lg:w-1/2 w-full">
-                {/* Pregunta 1 */}
-                <div className="mb-4 flex gap-2 lg:gap-5">
+              <div className="lg:w-1/2 w-full"> */}
+          {/* Pregunta 1 */}
+          {/* <div className="mb-4 flex gap-2 lg:gap-5">
                   <label className="font-bold">Hipertensión</label>
                   <div>
                     <label className="mr-4">
@@ -324,9 +284,9 @@ const MHF = () => {
                       No
                     </label>
                   </div>
-                </div>
-                {/* Pregunta 2 */}
-                <div className="mb-4 flex gap-2 lg:gap-5">
+                </div> */}
+          {/* Pregunta 2 */}
+          {/* <div className="mb-4 flex gap-2 lg:gap-5">
                   <label className="font-bold">Hipotensión</label>
                   <div>
                     <label className="mr-4">
@@ -361,42 +321,46 @@ const MHF = () => {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className=" w-full flex justify-center items-center gap-3 py-3 px-5 font-thin">
-              <label>
-                He comprendido todos los explicaciones que se me han facilitado
-                en el lenguaje claro y sencillo, he podido realizar todas las
-                observaciones y se me han aclarado todas las dudas; por lo que
-                estoy completamente de acuerdo con el tratamiento que se me va a
-                realizar. Otorgo mi consentimiento para realizar el tratamiento
-                necesario para rehabilitar mi solud bucodental propuesta por
-                el/la Dr/a MP.
-                <Field
-                  type="checkbox"
-                  id="consentimiento"
-                  name="consentimiento"
-                  value="no"
-                  checked={values.consentimiento === "si"}
-                  onChange={(e) => {
-                    setFieldValue(
-                      "consentimiento",
-                      e.target.checked ? "si" : "no"
-                    );
-                  }}
-                  className="ml-5"
-                />
-              </label>
-            </div>
-            <div className="flex justify-center">
-              <button
-                type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              >
-                Enviar
-              </button>
-            </div>
-          </Form>
-        )}
+            </div> */}
+          <div className=" w-full flex justify-center items-center gap-3 py-3 px-5 font-thin">
+            <label>
+              He comprendido todos los explicaciones que se me han facilitado en
+              el lenguaje claro y sencillo, he podido realizar todas las
+              observaciones y se me han aclarado todas las dudas; por lo que
+              estoy completamente de acuerdo con el tratamiento que se me va a
+              realizar. Otorgo mi consentimiento para realizar el tratamiento
+              necesario para rehabilitar mi solud bucodental propuesta por el/la
+              Dr/a MP.
+              <Field
+                type="checkbox"
+                id="consentimiento"
+                name="consentimiento"
+                value="si"
+                // checked={consentimiento === "si"}
+                // onChange={(e) => {
+                //   setFieldValue(
+                //     "consentimiento",
+                //     e.target.checked ? "si" : "no"
+                //   );
+                // }}
+                className="ml-5"
+              />
+              {/* <ErrorMessage
+                component="label"
+                name="consentimiento"
+                className="text-red-600"
+              /> */}
+            </label>
+          </div>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Enviar
+            </button>
+          </div>
+        </Form>
       </Formik>
     </div>
   );

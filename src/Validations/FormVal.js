@@ -1,0 +1,47 @@
+import * as yup from "yup";
+
+export const validationSchema = yup.object({
+  enfermedad: yup.string().required("Este campo es requerido"),
+  detalleEnfermedad: yup.string().when("enfermedad", {
+    is: "si",
+    then: () => yup.string().required("Este campo es requerido"),
+  }),
+  hipertension: yup.string().required("Este campo es requerido"),
+});
+
+export const initialValues = {
+  enfermedad: "",
+  detalleEnfermedad: "",
+  tratamientoMedico: "",
+  detalleTratamiento: "",
+  medicacion: "",
+  detalleMedicacion: "",
+  alergia: "",
+  detalleAlergia: "",
+  cicatrizacion: "",
+  fiebreReumatica: "",
+  diabetes: "",
+  problemasCardiacos: "",
+  aspirinas: "",
+  anticoagulante: "",
+  tabaquismo: "",
+  embarazo: "",
+  mesesEmbarazo: "",
+  hipertension: "",
+  hipotension: "",
+  problemasRenales: "",
+  problemasGastricos: "",
+  detalleGastricos: "",
+  convulsiones: "",
+  epilepsia: "",
+  sifilisGonorreaHIV: "",
+  operacion: "",
+  detalleOperacion: "",
+  problemasRespiratorios: "",
+  detalleRespiratorios: "",
+  tiroides: "",
+  detalleTiroides: "",
+  otros: "",
+  detalleOtros: "",
+  consentimiento: "",
+};

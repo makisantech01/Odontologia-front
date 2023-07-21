@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
-export const formSchema = yup.object().shape({
-  enfermedad: yup.string().required("Este campo es requerido"),
+export const validationSchema = yup.object().shape({
+  gender: yup.string().required("Este campo es requerido"),
   detalleEnfermedad: yup.string().when("enfermedad", {
     is: (value) => value === "si",
     then: yup
