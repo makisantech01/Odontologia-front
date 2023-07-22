@@ -124,6 +124,5 @@ export const initialValues = {
   detalleTiroides: "",
   otros: "",
   detalleOtros: "",
-  operacion: "",
-  consentimiento: "",
+  // consentimiento: "",
 };

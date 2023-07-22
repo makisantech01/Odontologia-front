@@ -36,8 +36,7 @@ const MyForm = () => {
             values.problemasRespiratorios === "si";
             values.tiroides = values.tiroides === "si";
             values.otros = values.otros === "si";
-            values.operacion = values.operacion === "si";
-            values.consentimiento = values.consentimiento === "si";
+            // values.consentimiento = values.consentimiento === "si";
 
             console.log(values);
             setSubmitting(false);
@@ -508,21 +507,18 @@ const MyForm = () => {
                 {values.embarazo === "si" && (
                   <div className="flex flex-col">
                     <div className="flex gap-2">
-                      <span
-                        htmlFor="detalleEnfermedad"
-                        className="block w-auto"
-                      >
-                        ¿Cual?
+                      <span htmlFor="mesesEmbarazo" className="block w-auto">
+                        ¿De cuantos meses?
                       </span>
                       <Field
-                        type="text"
-                        id="detalleEnfermedad"
-                        name="detalleEnfermedad"
+                        type="number"
+                        id="mesesEmbarazo"
+                        name="mesesEmbarazo"
                         className=" rounded-md bg-slate-400 outline-none pl-3"
                       />
                     </div>
                     <ErrorMessage
-                      name="detalleEnfermedad"
+                      name="mesesEmbarazo"
                       component="div"
                       className="text-red-500 font-semibold"
                     />
@@ -976,39 +972,10 @@ const MyForm = () => {
                     />
                   </div>
                 )}
-                {/* Question 24 */}
-                <div className="flex flex-col">
-                  <div className="flex gap-2">
-                    <span className="">¿Alguna operacion?</span>
-                    <label className="block mb-1">
-                      <Field
-                        type="radio"
-                        name="operacion"
-                        value="si"
-                        onClick={() => setFieldValue("operacion", "si")}
-                      />
-                      <span className="ml-2">Si</span>
-                    </label>
-                    <label className="block mb-1">
-                      <Field
-                        type="radio"
-                        name="operacion"
-                        value="no"
-                        onClick={() => setFieldValue("operacion", "no")}
-                      />
-                      <span className="ml-2">No</span>
-                    </label>
-                  </div>
-                  <ErrorMessage
-                    name="operacion"
-                    component="div"
-                    className="text-red-600"
-                  />
-                </div>
               </div>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <div className=" w-full flex justify-center items-center gap-3 py-3 px-5 font-thin">
+              {/* <div className=" w-full flex justify-center items-center gap-3 py-3 px-5 font-thin">
                 <label>
                   He comprendido todos los explicaciones que se me han
                   facilitado en el lenguaje claro y sencillo, he podido realizar
@@ -1018,13 +985,10 @@ const MyForm = () => {
                   realizar el tratamiento necesario para rehabilitar mi solud
                   bucodental propuesta por el/la Dr/a MP.
                   <Field
-                    type="checkbox"
-                    id="consentimiento"
+                    type="radio"
                     name="consentimiento"
-                    checked="consentimiento"
-                    onChange={(e) => {
-                      setFieldValue(e.target.checked);
-                    }}
+                    value="si"
+                    onClick={() => setFieldValue("consentimiento", "si")}
                     className="ml-5"
                   />
                   <ErrorMessage
@@ -1033,7 +997,7 @@ const MyForm = () => {
                     className="text-red-600"
                   />
                 </label>
-              </div>
+              </div> */}
 
               <button
                 type="submit"
