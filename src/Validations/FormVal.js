@@ -107,7 +107,7 @@ export const initialValues = {
   anticoagulante: "",
   tabaquismo: "",
   embarazo: "",
-  mesesEmbarazo: "",
+  mesesEmbarazo: 0,
   hipertension: "",
   hipotension: "",
   problemasRenales: "",
@@ -124,5 +124,5 @@ export const initialValues = {
   detalleTiroides: "",
   otros: "",
   detalleOtros: "",
-  // consentimiento: "",
+  consentimiento: "",
 };

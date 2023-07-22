@@ -21,7 +21,7 @@ const PatientDetails = () => {
       <div className="lg:w-[20%] m-0 z-50">
         <Sidebar />
       </div>
-      <div className="bg-secondary-100 flex flex-col h-[100vh] w-[100vw] justify-center overflow-auto items-center gap-6  mx-4">
+      <div className="bg-secondary-100 flex flex-col h-[100vh] w-[100vw] justify-center items-center gap-6  mx-4">
         <header className="text-[#FB8C00] text-3xl font-bold pt-[3em] lg:pt-0">
           {selectedClient?.nombre + " " + selectedClient?.apellido}
         </header>

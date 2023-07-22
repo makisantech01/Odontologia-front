@@ -1,611 +1,1088 @@
-import React, { useState } from "react";
+import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import {
+  validationSchema,
+  initialValues,
+} from "../../../Validations/FormVal.js";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const MedicalHistoryForm = () => {
-  const [formData, setFormData] = useState({
-    enfermedad: "Seleccione...",
-    detalleEnfermedad: "",
-    tratamientoMedico: "Seleccione...",
-    detalleTratamiento: "",
-    medicacion: "Seleccione...",
-    detalleMedicacion: "",
-    alergia: "Seleccione...",
-    detalleAlergia: "",
-    cicatrizacion: false,
-    fiebreReumatica: false,
-    diabetes: false,
-    problemasCardiacos: false,
-    aspirinas: false,
-    anticoagulante: false,
-    tabaquismo: true,
-    embarazo: "Seleccione...",
-    mesesEmbarazo: 0,
-    hipertensio: false,
-    hipotension: false,
-    problemasRenales: false,
-    problemasGastricos: "Seleccione...",
-    detalleGastricos: "",
-    convulsiones: false,
-    epilepsia: false,
-    sifilisGonorreaHIV: false,
-    operacion: "Seleccione...",
-    detalleOperacion: "",
-    problemasRespiratorios: false,
-    detalleRespiratorios: "",
-    tiroides: "Seleccione...",
-    detalleTiroides: "",
-    otros: "Seleccione...",
-    detalleOtros: "",
-    consentimiento: true,
-  });
+  const { id } = useParams();
+  const onSubmitHandler = (values, { setSubmitting }) => {
+    values.enfermedad = values.enfermedad === "si";
+    values.tratamientoMedico = values.tratamientoMedico === "si";
+    values.medicacion = values.medicacion === "si";
+    values.alergia = values.alergia === "si";
+    values.cicatrizacion = values.cicatrizacion === "si";
+    values.fiebreReumatica = values.fiebreReumatica === "si";
+    values.diabetes = values.diabetes === "si";
+    values.problemasCardiacos = values.problemasCardiacos === "si";
+    values.aspirinas = values.aspirinas === "si";
+    values.anticoagulante = values.anticoagulante === "si";
+    values.tabaquismo = values.tabaquismo === "si";
+    values.embarazo = values.embarazo === "si";
+    values.hipertension = values.hipertension === "si";
+    values.hipotension = values.hipotension === "si";
+    values.problemasRenales = values.problemasRenales === "si";
+    values.problemasGastricos = values.problemasGastricos === "si";
+    values.convulsiones = values.convulsiones === "si";
+    values.epilepsia = values.epilepsia === "si";
+    values.sifilisGonorreaHIV = values.sifilisGonorreaHIV === "si";
+    values.operacion = values.operacion === "si";
+    values.problemasRespiratorios = values.problemasRespiratorios === "si";
+    values.tiroides = values.tiroides === "si";
+    values.otros = values.otros === "si";
+    values.consentimiento = values.consentimiento === "si";
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-
-      [name]:
-        name === "enfermedad" ||
-        name === "tratamientoMedico" ||
-        name === "medicacion" ||
-        name === "alergia" ||
-        name === "embarazo" ||
-        name === "operacion" ||
-        name === "problemasGastricos" ||
-        name === "tiroides" ||
-        name === "otros"
-          ? value === "true"
-            ? true
-            : false
-          : value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("lo dato ->", formData);
+    const endpointUrl = `https://api-sist-odontologico-production.up.railway.app/historiales/${id}`;
+    axios
+      .post(endpointUrl, values)
+      .then((response) => {
+        alert("El formulario se completo exitosamente!");
+      })
+      .catch((error) => {
+        console.error("Error en la solicitud POST:", error);
+        setSubmitting(false);
+      });
   };
 
   return (
-    <form
-      className="flex flex-col w-[90%] h-[30em] rounded-lg outline-none overflow-y-auto mx-auto p-4 bg-[#14212A]"
-      onSubmit={handleSubmit}
-    >
-      <div className="flex w-[100%] gap-8">
-        <div className=" w-1/2">
-          <div className="mb-4 flex justify-between">
-            <label className="mb-1 mr-4" htmlFor="enfermedad">
-              ¿Sufre alguna enfermedad?
-            </label>
-            <select
-              id="enfermedad"
-              name="enfermedad"
-              className=" text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData?.enfermedad}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          {formData.enfermedad ? (
-            <div className="mb-4 flex justify-between">
-              <label className="block mb-1 mr-4" htmlFor="detalleEnfermedad">
-                ¿Cuál?
-              </label>
-              <input
-                type="text"
-                id="detalleEnfermedad"
-                name="detalleEnfermedad"
-                className=" w-1/2 rounded-lg  text-black pl-2 outline-none"
-                onChange={handleChange}
-                value={formData.detalleEnfermedad}
-              />
+    <div className="container mx-auto mt-8 overflow-y-auto">
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmitHandler}
+      >
+        {({ values, setFieldValue }) => (
+          <Form className="flex flex-col p-2">
+            <div className="flex lg:flex-row flex-col">
+              <div className=" lg:w-1/2 flex flex-col gap-2 px-4 py-2">
+                {/* Section 1 */}
+                {/* Question 1 */}
+                <div className="flex flex-col gap-2 lg:gap-2">
+                  <div className="flex gap-2 justify-between">
+                    <div>
+                      <span className="">¿Sufre de alguna enfermedad?</span>
+                    </div>
+                    <div className="flex gap-8">
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="enfermedad"
+                          value="si"
+                          onClick={() => setFieldValue("enfermedad", "si")}
+                        />
+                        <span className="ml-2">Sí</span>
+                      </label>
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="enfermedad"
+                          value="no"
+                          onClick={() => {
+                            setFieldValue("enfermedad", "no");
+                            setFieldValue("detalleEnfermedad", "");
+                          }}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="enfermedad"
+                    component="div"
+                    className="text-red-500 font-semibold"
+                  />
+                </div>
+                {values.enfermedad === "si" && (
+                  <div className="flex flex-col">
+                    <div className="flex gap-2">
+                      <span
+                        htmlFor="detalleEnfermedad"
+                        className="block w-auto"
+                      >
+                        ¿Cual?
+                      </span>
+                      <Field
+                        type="text"
+                        id="detalleEnfermedad"
+                        name="detalleEnfermedad"
+                        className=" rounded-md bg-slate-400 outline-none pl-3"
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="detalleEnfermedad"
+                      component="div"
+                      className="text-red-500 font-semibold"
+                    />
+                  </div>
+                )}
+                {/* Question 2 */}
+                <div className="flex flex-col gap-2 lg:gap-2">
+                  <div className="flex gap-2 justify-between">
+                    <div>
+                      <span className="">¿Hace tratamiento medico?</span>
+                    </div>
+                    <div className="flex gap-8">
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="tratamientoMedico"
+                          value="si"
+                          onClick={() =>
+                            setFieldValue("tratamientoMedico", "si")
+                          }
+                        />
+                        <span className="ml-2">Sí</span>
+                      </label>
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="tratamientoMedico"
+                          value="no"
+                          onClick={() => {
+                            setFieldValue("tratamientoMedico", "no");
+                            setFieldValue("detalleTratamiento", "");
+                          }}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="tratamientoMedico"
+                    component="div"
+                    className="text-red-500 font-semibold"
+                  />
+                </div>
+                {values.tratamientoMedico === "si" && (
+                  <div className="flex flex-col">
+                    <div className="flex gap-2">
+                      <span
+                        htmlFor="detalleTratamiento"
+                        className="block w-auto"
+                      >
+                        ¿Cual?
+                      </span>
+                      <Field
+                        type="text"
+                        id="detalleTratamiento"
+                        name="detalleTratamiento"
+                        className=" rounded-md bg-slate-400 outline-none pl-3"
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="detalleTratamiento"
+                      component="div"
+                      className="text-red-500 font-semibold"
+                    />
+                  </div>
+                )}
+                {/* Question 3 */}
+                <div className="flex flex-col gap-2 lg:gap-2">
+                  <div className="flex justify-between">
+                    <span className="">¿Toma alguna medcacion?</span>
+                    <div className="flex gap-8">
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="medicacion"
+                          value="si"
+                          onClick={() => setFieldValue("medicacion", "si")}
+                        />
+                        <span className="ml-2">Sí</span>
+                      </label>
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="medicacion"
+                          value="no"
+                          onClick={() => {
+                            setFieldValue("medicacion", "no");
+                            setFieldValue("detalleMedicacion", "");
+                          }}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="medicacion"
+                    component="div"
+                    className="text-red-500 font-semibold"
+                  />
+                </div>
+                {values.medicacion === "si" && (
+                  <div className="flex flex-col">
+                    <div className="flex gap-2">
+                      <span
+                        htmlFor="detalleMedicacion"
+                        className="block w-auto"
+                      >
+                        ¿Cual?
+                      </span>
+                      <Field
+                        type="text"
+                        id="detalleMedicacion"
+                        name="detalleMedicacion"
+                        className=" rounded-md bg-slate-400 outline-none pl-3"
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="detalleMedicacion"
+                      component="div"
+                      className="text-red-500 font-semibold"
+                    />
+                  </div>
+                )}
+                {/* Question 4 */}
+                <div className="flex flex-col gap-2 lg:gap-2">
+                  <div className="flex justify-between">
+                    <span className="">¿Es alergico a alguna droga?</span>
+                    <div className="flex gap-8">
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="alergia"
+                          value="si"
+                          onClick={() => setFieldValue("alergia", "si")}
+                        />
+                        <span className="ml-2">Sí</span>
+                      </label>
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="alergia"
+                          value="no"
+                          onClick={() => {
+                            setFieldValue("alergia", "no");
+                            setFieldValue("detalleAlergia", "");
+                          }}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="alergia"
+                    component="div"
+                    className="text-red-500 font-semibold"
+                  />
+                </div>
+                {values.alergia === "si" && (
+                  <div className="flex flex-col">
+                    <div className="flex gap-2">
+                      <span htmlFor="detalleAlergia" className="block w-auto">
+                        ¿Cual?
+                      </span>
+                      <Field
+                        type="text"
+                        id="detalleAlergia"
+                        name="detalleAlergia"
+                        className=" rounded-md bg-slate-400 outline-none pl-3"
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="detalleAlergia"
+                      component="div"
+                      className="text-red-500 font-semibold"
+                    />
+                  </div>
+                )}
+                {/* Question 5 */}
+                <div className="flex flex-col">
+                  <div className="flex justify-between">
+                    <span className="">¿Tiene buena cicatrizacion?</span>
+                    <div className="flex gap-8">
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="cicatrizacion"
+                          value="si"
+                          onClick={() => setFieldValue("cicatrizacion", "si")}
+                        />
+                        <span className="ml-2">Si</span>
+                      </label>
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="cicatrizacion"
+                          value="no"
+                          onClick={() => setFieldValue("cicatrizacion", "no")}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="cicatrizacion"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+                {/* Question 6 */}
+                <div className="flex flex-col">
+                  <div className="flex justify-between">
+                    <span className="">Fiebre reumatica</span>
+                    <div className="flex gap-8">
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="fiebreReumatica"
+                          value="si"
+                          onClick={() => setFieldValue("fiebreReumatica", "si")}
+                        />
+                        <span className="ml-2">Si</span>
+                      </label>
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="fiebreReumatica"
+                          value="no"
+                          onClick={() => setFieldValue("fiebreReumatica", "no")}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="fiebreReumatica"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+                {/* Question 7 */}
+                <div className="flex flex-col">
+                  <div className="flex justify-between">
+                    <span className="">Diabetes</span>
+                    <div className="flex gap-8">
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="diabetes"
+                          value="si"
+                          onClick={() => setFieldValue("diabetes", "si")}
+                        />
+                        <span className="ml-2">Si</span>
+                      </label>
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="diabetes"
+                          value="no"
+                          onClick={() => setFieldValue("diabetes", "no")}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="diabetes"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+                {/* Question 8 */}
+                <div className="flex flex-col">
+                  <div className="flex justify-between">
+                    <span className="">Problemas del corazón</span>
+                    <div className="flex gap-8">
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="problemasCardiacos"
+                          value="si"
+                          onClick={() =>
+                            setFieldValue("problemasCardiacos", "si")
+                          }
+                        />
+                        <span className="ml-2">Si</span>
+                      </label>
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="problemasCardiacos"
+                          value="no"
+                          onClick={() =>
+                            setFieldValue("problemasCardiacos", "no")
+                          }
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="problemasCardiacos"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+                {/* Question 9 */}
+                <div className="flex flex-col">
+                  <div className="flex justify-between">
+                    <span className="">Aspirinas</span>
+                    <div className="flex gap-8">
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="aspirinas"
+                          value="si"
+                          onClick={() => setFieldValue("aspirinas", "si")}
+                        />
+                        <span className="ml-2">Si</span>
+                      </label>
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="aspirinas"
+                          value="no"
+                          onClick={() => setFieldValue("aspirinas", "no")}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="aspirinas"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+                {/* Question 10 */}
+                <div className="flex flex-col">
+                  <div className="flex justify-between">
+                    <span className="">Anticoagulante</span>
+                    <div className="flex gap-8">
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="anticoagulante"
+                          value="si"
+                          onClick={() => setFieldValue("anticoagulante", "si")}
+                        />
+                        <span className="ml-2">Si</span>
+                      </label>
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="anticoagulante"
+                          value="no"
+                          onClick={() => setFieldValue("anticoagulante", "no")}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="anticoagulante"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+                {/* Question 11*/}
+                <div className="flex flex-col">
+                  <div className="flex justify-between">
+                    <span className="">Fuma</span>
+                    <div className="flex gap-8">
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="tabaquismo"
+                          value="si"
+                          onClick={() => setFieldValue("tabaquismo", "si")}
+                        />
+                        <span className="ml-2">Si</span>
+                      </label>
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="tabaquismo"
+                          value="no"
+                          onClick={() => setFieldValue("tabaquismo", "no")}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="tabaquismo"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+                {/* Question 12 */}
+                <div className="flex flex-col gap-2 lg:gap-2">
+                  <div className="flex justify-between">
+                    <span className="">Embarazada</span>
+                    <div className="flex gap-8">
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="embarazo"
+                          value="si"
+                          onClick={() => setFieldValue("embarazo", "si")}
+                        />
+                        <span className="ml-2">Sí</span>
+                      </label>
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="embarazo"
+                          value="no"
+                          onClick={() => {
+                            setFieldValue("embarazo", "no");
+                            setFieldValue("detalleEnfermedad", "");
+                          }}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="embarazo"
+                    component="div"
+                    className="text-red-500 font-semibold"
+                  />
+                </div>
+                {values.embarazo === "si" && (
+                  <div className="flex flex-col">
+                    <div className="flex gap-2">
+                      <span htmlFor="mesesEmbarazo" className="block w-auto">
+                        ¿De cuantos meses?
+                      </span>
+                      <Field
+                        type="number"
+                        id="mesesEmbarazo"
+                        name="mesesEmbarazo"
+                        className=" rounded-md bg-slate-400 outline-none pl-3"
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="mesesEmbarazo"
+                      component="div"
+                      className="text-red-500 font-semibold"
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="lg:w-1/2 flex flex-col gap-2 px-4 py-2">
+                {/* Section 2 */}
+                {/* Question 13 */}
+                <div className="flex flex-col">
+                  <div className="flex justify-between">
+                    <span>Hipertensión</span>
+                    <div className="flex gap-8">
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="hipertension"
+                          value="si"
+                          onClick={() => setFieldValue("hipertension", "si")}
+                        />
+                        <span className="ml-2">Si</span>
+                      </label>
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="hipertension"
+                          value="no"
+                          onClick={() => setFieldValue("hipertension", "no")}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="hipertension"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+                {/* Question 14 */}
+                <div className="flex flex-col">
+                  <div className="flex justify-between">
+                    <span className="">Hipotensión</span>
+                    <div className="flex gap-8">
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="hipotension"
+                          value="si"
+                          onClick={() => setFieldValue("hipotension", "si")}
+                        />
+                        <span className="ml-2">Si</span>
+                      </label>
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="hipotension"
+                          value="no"
+                          onClick={() => setFieldValue("hipotension", "no")}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="hipotension"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+                {/* Question 15 */}
+                <div className="flex flex-col">
+                  <div className="flex justify-between">
+                    <span className="">Problemas renales</span>
+                    <div className="flex gap-8">
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="problemasRenales"
+                          value="si"
+                          onClick={() =>
+                            setFieldValue("problemasRenales", "si")
+                          }
+                        />
+                        <span className="ml-2">Si</span>
+                      </label>
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="problemasRenales"
+                          value="no"
+                          onClick={() =>
+                            setFieldValue("problemasRenales", "no")
+                          }
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="problemasRenales"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+                {/* Question 16 */}
+                <div className="flex flex-col">
+                  <div className="flex justify-between">
+                    <span className="">Problemas Gastricos</span>
+                    <div className="flex gap-8">
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="problemasGastricos"
+                          value="si"
+                          onClick={() =>
+                            setFieldValue("problemasGastricos", "si")
+                          }
+                        />
+                        <span className="ml-2">Sí</span>
+                      </label>
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="problemasGastricos"
+                          value="no"
+                          onClick={() => {
+                            setFieldValue("problemasGastricos", "no");
+                            setFieldValue("detalleGastricos", "");
+                          }}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="problemasGastricos"
+                    component="div"
+                    className="text-red-600 font-semibold"
+                  />
+                </div>
+                {values.problemasGastricos === "si" && (
+                  <div className="flex flex-col">
+                    <div className="flex gap-2">
+                      <span htmlFor="detalleGastricos" className="block w-auto">
+                        ¿Cual?
+                      </span>
+                      <Field
+                        type="text"
+                        id="detalleGastricos"
+                        name="detalleGastricos"
+                        className=" rounded-md bg-slate-400 outline-none pl-3"
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="detalleGastricos"
+                      component="div"
+                      className="text-red-500 font-semibold"
+                    />
+                  </div>
+                )}
+                {/* Question 17 */}
+                <div className="flex flex-col">
+                  <div className="flex justify-between">
+                    <span className="">Convulsiones</span>
+                    <div className="flex gap-8">
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="convulsiones"
+                          value="si"
+                          onClick={() => setFieldValue("convulsiones", "si")}
+                        />
+                        <span className="ml-2">Si</span>
+                      </label>
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="convulsiones"
+                          value="no"
+                          onClick={() => setFieldValue("convulsiones", "no")}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="convulsiones"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+                {/* Question 18 */}
+                <div className="flex flex-col">
+                  <div className="flex justify-between">
+                    <span className="">Epilepsia</span>
+                    <div className="flex gap-8">
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="epilepsia"
+                          value="si"
+                          onClick={() => setFieldValue("epilepsia", "si")}
+                        />
+                        <span className="ml-2">Si</span>
+                      </label>
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="epilepsia"
+                          value="no"
+                          onClick={() => setFieldValue("epilepsia", "no")}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="epilepsia"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+                {/* Question 19 */}
+                <div className="flex flex-col">
+                  <div className="flex justify-between">
+                    <span className="">Sifilis - Gonorrea - HIV</span>
+                    <div className="flex gap-8">
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="sifilisGonorreaHIV"
+                          value="si"
+                          onClick={() =>
+                            setFieldValue("sifilisGonorreaHIV", "si")
+                          }
+                        />
+                        <span className="ml-2">Si</span>
+                      </label>
+                      <label className="block mb-1">
+                        <Field
+                          type="radio"
+                          name="sifilisGonorreaHIV"
+                          value="no"
+                          onClick={() =>
+                            setFieldValue("sifilisGonorreaHIV", "no")
+                          }
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="sifilisGonorreaHIV"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+                {/* Question 20 */}
+                <div className="flex flex-col gap-2">
+                  <div className="flex justify-between">
+                    <span className="">¿Alguna operacion?</span>
+                    <div className="flex gap-8">
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="operacion"
+                          value="si"
+                          onClick={() => setFieldValue("operacion", "si")}
+                        />
+                        <span className="ml-2">Sí</span>
+                      </label>
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="operacion"
+                          value="no"
+                          onClick={() => {
+                            setFieldValue("operacion", "no");
+                            setFieldValue("detalleOperacion", "");
+                          }}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="operacion"
+                    component="div"
+                    className="text-red-600 font-semibold"
+                  />
+                </div>
+                {values.operacion === "si" && (
+                  <div className="flex flex-col">
+                    <div className="flex gap-2">
+                      <span htmlFor="detalleOperacion" className="block w-auto">
+                        ¿Cual?
+                      </span>
+                      <Field
+                        type="text"
+                        id="detalleOperacion"
+                        name="detalleOperacion"
+                        className=" rounded-md bg-slate-400 outline-none pl-3"
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="detalleOperacion"
+                      component="div"
+                      className="text-red-600 font-semibold"
+                    />
+                  </div>
+                )}
+                {/* Question 21 */}
+                <div className="flex flex-col gap-2 lg:gap-2">
+                  <div className="flex justify-between">
+                    <span className="">Problemas respiratorios</span>
+                    <div className="flex gap-8">
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="problemasRespiratorios"
+                          value="si"
+                          onClick={() =>
+                            setFieldValue("problemasRespiratorios", "si")
+                          }
+                        />
+                        <span className="ml-2">Sí</span>
+                      </label>
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="problemasRespiratorios"
+                          value="no"
+                          onClick={() => {
+                            setFieldValue("problemasRespiratorios", "no");
+                            setFieldValue("detalleRespiratorios", "");
+                          }}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="problemasRespiratorios"
+                    component="div"
+                    className="text-red-500 font-semibold"
+                  />
+                </div>
+                {values.problemasRespiratorios === "si" && (
+                  <div className="flex flex-col">
+                    <div className="flex gap-2">
+                      <span
+                        htmlFor="detalleRespiratorios"
+                        className="block w-auto"
+                      >
+                        ¿Cual?
+                      </span>
+                      <Field
+                        type="text"
+                        id="detalleRespiratorios"
+                        name="detalleRespiratorios"
+                        className=" rounded-md bg-slate-400 outline-none pl-3"
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="detalleRespiratorios"
+                      component="div"
+                      className="text-red-500 font-semibold"
+                    />
+                  </div>
+                )}
+                {/* Question 22 */}
+                <div className="flex flex-col gap-2">
+                  <div className="flex justify-between">
+                    <span className="">Problema de tiroides</span>
+                    <div className="flex gap-8">
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="tiroides"
+                          value="si"
+                          onClick={() => setFieldValue("tiroides", "si")}
+                        />
+                        <span className="ml-2">Sí</span>
+                      </label>
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="tiroides"
+                          value="no"
+                          onClick={() => {
+                            setFieldValue("tiroides", "no");
+                            setFieldValue("detalleTiroides", "");
+                          }}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="tiroides"
+                    component="div"
+                    className="text-red-600 font-semibold"
+                  />
+                </div>
+                {values.tiroides === "si" && (
+                  <div className="flex flex-col">
+                    <div className="flex gap-2">
+                      <span htmlFor="detalleTiroides" className="block w-auto">
+                        ¿Cual?
+                      </span>
+                      <Field
+                        type="text"
+                        id="detalleTiroides"
+                        name="detalleTiroides"
+                        className=" rounded-md bg-slate-400 outline-none pl-3"
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="detalleTiroides"
+                      component="div"
+                      className="text-red-600 font-semibold"
+                    />
+                  </div>
+                )}
+                {/* Question 23 */}
+                <div className="flex flex-col gap-2">
+                  <div className="flex justify-between">
+                    <span className="">¿Otra enfermedad?</span>
+                    <div className="flex gap-8">
+                      {" "}
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="otros"
+                          value="si"
+                          onClick={() => setFieldValue("otros", "si")}
+                        />
+                        <span className="ml-2">Sí</span>
+                      </label>
+                      <label className="block">
+                        <Field
+                          type="radio"
+                          name="otros"
+                          value="no"
+                          onClick={() => {
+                            setFieldValue("otros", "no");
+                            setFieldValue("detalleOtros", "");
+                          }}
+                        />
+                        <span className="ml-2">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="otros"
+                    component="div"
+                    className="text-red-600 font-semibold"
+                  />
+                </div>
+                {values.otros === "si" && (
+                  <div className="flex flex-col">
+                    <div className="flex gap-2">
+                      <span htmlFor="detalleOtros" className="block w-auto">
+                        ¿Cual?
+                      </span>
+                      <Field
+                        type="text"
+                        id="detalleOtros"
+                        name="detalleOtros"
+                        className=" rounded-md bg-slate-400 outline-none pl-3"
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="detalleOtros"
+                      component="div"
+                      className="text-red-600 font-semibold"
+                    />
+                  </div>
+                )}
+              </div>
             </div>
-          ) : null}
-          <div className="mb-4 flex justify-between">
-            <label className="block mb-1 mr-4" htmlFor="tratamientoMedico">
-              ¿Hace tratamiento médico?
-            </label>
-            <select
-              id="tratamientoMedico flex justify-between"
-              name="tratamientoMedico"
-              className=" text-black outline-none rounded-lg "
-              onChange={handleChange}
-              value={formData.tratamientoMedico}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          {formData.tratamientoMedico === true && (
-            <div className="mb-4 flex justify-between">
-              <label className="block mb-1 mr-4" htmlFor="detalleTratamiento">
-                ¿Cuál?
-              </label>
-              <input
-                type="text"
-                id="detalleTratamiento"
-                name="detalleTratamiento"
-                className=" w-1/2 rounded-lg text-black outline-none pl-2"
-                onChange={handleChange}
-                value={formData.detalleTratamiento}
-              />
-            </div>
-          )}
-          <div className="mb-4 flex justify-between">
-            <label className="mb-1 mr-4" htmlFor="medicacion">
-              ¿Toma alguna medicación?
-            </label>
-            <select
-              id="medicacion"
-              name="medicacion"
-              className="rounded-lg  text-black outline-none"
-              onChange={handleChange}
-              value={formData.medicacion}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          {formData.medicacion === true && (
-            <div className="mb-4 flex justify-between">
-              <label className="block mb-1 mr-4" htmlFor="detalleMedicacion">
-                ¿Cuál?
-              </label>
-              <input
-                type="text"
-                id="detalleMedicacion"
-                name="detalleMedicacion"
-                className="text-black w-1/2 rounded-lg outline-none"
-                onChange={handleChange}
-                value={formData.detalleMedicacion}
-              />
-            </div>
-          )}
-          <div className="mb-4 flex justify-between">
-            <label className="block mb-1 mr-4" htmlFor="alergia">
-              ¿Es alérgico a alguna droga?
-            </label>
-            <select
-              id="alergia"
-              name="alergia"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.alergia}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          {formData.alergia === true && (
-            <div className="mb-4 flex justify-between">
-              <label className="block mb-1 mr-4" htmlFor="detalleAlergia">
-                ¿Cuál?
-              </label>
-              <input
-                type="text"
-                id="detalleAlergia"
-                name="detalleAlergia"
-                className="text-black w-1/2 rounded-lg outline-none"
-                onChange={handleChange}
-                value={formData.detalleAlergia}
-              />
-            </div>
-          )}
-          <div className="mb-4 flex justify-between">
-            <label className="block mb-1 mr-4" htmlFor="cicatrizacion">
-              ¿Tiene buena cicatrización?
-            </label>
-            <select
-              id="cicatrizacion"
-              name="cicatrizacion"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.cicatrizacion}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          <div className="mb-4 flex justify-between">
-            <label className="block mb-1 mr-4" htmlFor="tieneFiebreReumatica">
-              Fiebre Reumática
-            </label>
-            <select
-              id="tieneFiebreReumatica"
-              name="fiebreReumatica"
-              className="text-black rounded-lg  outline-none"
-              onChange={handleChange}
-              value={formData.fiebreReumatica}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          <div className="mb-4 flex justify-between">
-            <label className="block mb-1 mr-4" htmlFor="tieneDiabetes">
-              Diabetes
-            </label>
-            <select
-              id="tieneDiabetes"
-              name="diabetes"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.diabetes}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          <div className="mb-4 flex justify-between">
-            <label className="mb-1 mr-4" htmlFor="tieneProblemasCorazon">
-              Problemas de corazón
-            </label>
-            <select
-              id="tieneProblemasCorazon"
-              name="problemasCardiacos"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.problemasCardiacos}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          <div className="mb-4 flex justify-between">
-            <label className="mb-1 mr-4" htmlFor="aspirinas">
-              Toma Aspirina o anticoagulante
-            </label>
+            <div className="flex flex-col justify-center items-center py-4 gap-3">
+              <div className=" w-[80%] flex justify-center items-center gap-3 py-3 px-5 font-thin">
+                <label className="text-center px-3">
+                  He comprendido todos los explicaciones que se me han
+                  facilitado en el lenguaje claro y sencillo, he podido realizar
+                  todas las observaciones y se me han aclarado todas las dudas;
+                  por lo que estoy completamente de acuerdo con el tratamiento
+                  que se me va a realizar. Otorgo mi consentimiento para
+                  realizar el tratamiento necesario para rehabilitar mi solud
+                  bucodental propuesta por el/la Dr/a MP.
+                  <Field
+                    type="radio"
+                    name="consentimiento"
+                    value="si"
+                    onClick={() => setFieldValue("consentimiento", "si")}
+                    className="ml-5"
+                  />
+                  <ErrorMessage
+                    component="label"
+                    name="consentimiento"
+                    className="text-red-600"
+                  />
+                </label>
+              </div>
 
-            <select
-              id="aspirinas"
-              name="aspirinas"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.aspirinas}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          <div className="mb-4 flex justify-between">
-            <label className="mr-4 mb-1" htmlFor="tabaquismo">
-              Fuma
-            </label>
-            <select
-              id="tabaquismo"
-              name="tabaquismo"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.tabaquismo}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          <div className="mb-4 flex justify-between">
-            <label className="mr-4 mb-1" htmlFor="embarazo">
-              Embarazada
-            </label>
-            <select
-              id="embarazo"
-              name="embarazo"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.embarazo}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          {formData.embarazo === true && (
-            <div className="mb-4 flex justify-between">
-              <label className=" mb-1 mr-4" htmlFor="mesesEmbarazo">
-                ¿De cuántos Meses?
-              </label>
-              <input
-                type="text"
-                id="mesesEmbarazo"
-                name="mesesEmbarazo"
-                className="text-black rounded-lg outline-none"
-                onChange={handleChange}
-                value={formData.mesesEmbarazo}
-              />
+              <div className="flex gap-8">
+                <button
+                  type="submit"
+                  className="bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-md w-[5em]"
+                >
+                  Crear
+                </button>
+                <button className="bg-blue-500 hover:bg-blue-400  text-white px-4 py-2 rounded-md w-[5em]">
+                  Editar
+                </button>
+              </div>
             </div>
-          )}
-        </div>
-        <div className=" w-1/2">
-          <div className="mb-4 flex justify-between">
-            <label className="mr-4 mb-1" htmlFor="tieneHipertension">
-              Hipertensión
-            </label>
-            <select
-              id="tieneHipertension"
-              name="hipertension"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.hipertension}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          <div className="mb-4 flex justify-between">
-            <label className="mr-4 mb-1" htmlFor="tieneHipotension">
-              Hipotensión
-            </label>
-            <select
-              id="tieneHipotension"
-              name="hipotension"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.hipotension}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          <div className="mb-4 flex justify-between">
-            <label className="mr-4 mb-1" htmlFor="tieneProblemasRenales">
-              Problemas Renales
-            </label>
-            <select
-              id="tieneProblemasRenales"
-              name="problemasRenales"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.problemasRenales}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          <div className="mb-4 flex justify-between">
-            <label className="mr-4 mb-1" htmlFor="tieneProblemasGastricos">
-              Problemas Gastricos
-            </label>
-            <select
-              id="tieneProblemasGastricos"
-              name="problemasGastricos"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.problemasGastricos}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          {formData.problemasGastricos === true && (
-            <div className="flex justify-between mb-4">
-              <label className="mr-4 mb-1" htmlFor="detalleGastricos">
-                ¿Cuál?
-              </label>
-              <input
-                type="text"
-                id="detalleGastricos"
-                name="detalleGastricos"
-                className="rounded-lg w-1/2 text-black"
-                onChange={handleChange}
-                value={formData.detalleGastricos}
-              />
-            </div>
-          )}
-          <div className="mb-4 flex justify-between">
-            <label className="mr-4 mb-1" htmlFor="convulsiones">
-              Tuvo convulsiones
-            </label>
-            <select
-              id="convulsiones"
-              name="convulsiones"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.convulsiones}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          <div className="mb-4 flex justify-between">
-            <label className="mr-4 mb-1" htmlFor="tieneEpilepsia">
-              Epilepsia
-            </label>
-            <select
-              id="tieneEpilepsia"
-              name="epilepsia"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.epilepsia}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          <div className="mb-4 flex justify-between">
-            <label className="mr-4 mb-1" htmlFor="sifilisGonorreaHIV">
-              Sífilis - Gonorrea - HIV
-            </label>
-            <select
-              id="sifilisGonorreaHIV"
-              name="sifilisGonorreaHIV"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.sifilisGonorreaHIV}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          <div className="mb-4 flex justify-between">
-            <label className="mr-4 mb-1" htmlFor="operacion">
-              ¿Alguna operación?
-            </label>
-            <select
-              id="operacion"
-              name="operacion"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.operacion}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          {formData.operacion === true && (
-            <div className="mb-4 flex justify-between">
-              <label className="mr-4 mb-1" htmlFor="detalleOperacion">
-                ¿Cuál?
-              </label>
-              <input
-                type="text"
-                id="detalleOperacion"
-                name="detalleOperacion"
-                className="text-black rounded-lg outline-none"
-                onChange={handleChange}
-                value={formData.detalleOperacion}
-              />
-            </div>
-          )}
-          <div className="mb-4 flex justify-between">
-            <label className="mr-4 mb-1" htmlFor="problemasRespiratorios">
-              Problemas respiratorios
-            </label>
-            <select
-              id="problemasRespiratorios"
-              name="problemasRespiratorios"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.problemasRespiratorios}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          {formData.problemasRespiratorios === true && (
-            <div className="mb-4 flex justify-between">
-              <label className="mr-4 mb-1" htmlFor="detalleRespiratorios">
-                ¿Cuál?
-              </label>
-              <input
-                type="text"
-                id="detalleRespiratorios"
-                name="detalleRespiratorios"
-                className="text-black rounded-lg outline-none"
-                onChange={handleChange}
-                value={formData.detalleRespiratorios}
-              />
-            </div>
-          )}
-          <div className="mb-4 flex justify-between">
-            <label className="mr-4 mb-1" htmlFor="tiroides">
-              Problema de tiroides
-            </label>
-            <select
-              id="tiroides"
-              name="tiroides"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.tiroides}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          {formData.tiroides === true && (
-            <div className="mb-4 flex justify-between">
-              <label className="mr-4 mb-1" htmlFor="detalleTiroides">
-                ¿Cuál?
-              </label>
-              <input
-                type="text"
-                id="detalleTiroides"
-                name="detalleTiroides"
-                className="text-black rounded-lg outline-none"
-                onChange={handleChange}
-                value={formData.detalleTiroides}
-              />
-            </div>
-          )}
-          <div className="mb-4 flex justify-between">
-            <label className="mr-4 mb-1" htmlFor="otros">
-              ¿Otra enfermedad?
-            </label>
-            <select
-              id="otros"
-              name="otros"
-              className="text-black rounded-lg outline-none"
-              onChange={handleChange}
-              value={formData.otros}
-            >
-              <option value="">Seleccione...</option>
-              <option value={true}>Sí</option>
-              <option value={false}>No</option>
-            </select>
-          </div>
-          {formData.otros === true && (
-            <div className="mb-4 flex justify-between">
-              <label className="mr-4 mb-1" htmlFor="detalleTiroides">
-                ¿Cuál?
-              </label>
-              <input
-                type="text"
-                id="detalleOtros"
-                name="detalleOtros"
-                className="text-black rounded-lg outline-none"
-                onChange={handleChange}
-                value={formData.detalleOtros}
-              />
-            </div>
-          )}
-        </div>
-      </div>
-      <div className=" w-full flex justify-center items-center gap-3 py-3 px-5 font-thin">
-        <label>
-          He comprendido todos los explicaciones que se me han facilitado en el
-          lenguaje claro y sencillo, he podido realizar todas las observaciones
-          y se me han aclarado todas las dudas; por lo que estoy completamente
-          de acuerdo con el tratamiento que se me va a realizar. Otorgo mi
-          consentimiento para realizar el tratamiento necesario para rehabilitar
-          mi solud bucodental propuesta por el/la Dr/a MP.
-          <input
-            type="checkbox"
-            id="consentimiento"
-            name="consentimiento"
-            value={formData.consentimiento}
-            onChange={handleChange}
-            className="ml-5"
-          />
-        </label>
-      </div>
-      <div className="flex justify-center">
-        <button
-          type="submit"
-          className="bg-blue-500 w-[8em] text-white py-2 px-4 rounded mt-4 hover:bg-blue-600"
-        >
-          Enviar
-        </button>
-      </div>
-    </form>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 };
 
