@@ -1,21 +1,16 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import bottonWave from "../../assets/botton_wave.png";
 import topWave from "../../assets/topwave.png";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faIdCard,
-  faLock,
-  faEnvelope,
-} from "@fortawesome/free-solid-svg-icons";
+import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { createClient } from "../store/features/clientSlice";
-library.add(faIdCard, faLock, faEnvelope);
+import { useSelector } from "react-redux";
+import axios from "axios";
+library.add(faIdCard);
 
 const ClinicalHistory = () => {
-  const dispatch = useDispatch();
   const nav = useNavigate();
   const {
     register,
@@ -27,14 +22,24 @@ const ClinicalHistory = () => {
 
   const user = useSelector((state) => state.users.users);
 
+  const api = "https://api-sist-odontologico-production.up.railway.app";
+
   const onSubmit = async (data) => {
     try {
+      for (let key in data) {
+        if (data[key] === "true") {
+          data[key] = true;
+        } else if (data[key] === "false") {
+          data[key] = false;
+        }
+      }
+      data.mesesEmbarazo === "" ? (data.mesesEmbarazo = 0) : data.mesesEmbarazo;
       console.log(data);
-      //   const response = await dispatch(createClient(data));
-      //   if (response) {
-      //     console.log(response);
-      //     nav("/citas");
-      //   }
+      const response = await axios.post(`${api}/historiales/${user}`, data);
+      if (response) {
+        console.log(response);
+        nav("/citas");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -80,10 +85,11 @@ const ClinicalHistory = () => {
                 type="text"
                 placeholder="Cual?"
                 {...register("detalleEnfermedad", {
-                  validate: () => {
-                    if (watch("enfermedad") == true) {
-                      return "Debe aclarar que enfermedad o enfermedades padece";
+                  validate: (val) => {
+                    if (watch("enfermedad") == "true" && !val) {
+                      return "Debe aclarar que enfermedad/es";
                     }
+                    return true;
                   },
                 })}
                 onBlur={() => handleBlur("detalleEnfermedad")}
@@ -122,7 +128,14 @@ const ClinicalHistory = () => {
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
-                {...register("detalleTratamiento")}
+                {...register("detalleTratamiento", {
+                  validate: (val) => {
+                    if (watch("tratamientoMedico") == "true" && !val) {
+                      return "Debe aclarar que tratamiento/s";
+                    }
+                    return true;
+                  },
+                })}
                 onBlur={() => handleBlur("detalleTratamiento")}
               />
             </div>
@@ -157,7 +170,14 @@ const ClinicalHistory = () => {
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
-                {...register("detalleMedicacion")}
+                {...register("detalleMedicacion", {
+                  validate: (val) => {
+                    if (watch("medicacion") == "true" && !val) {
+                      return "Debe aclarar que medicacion/es";
+                    }
+                    return true;
+                  },
+                })}
                 onBlur={() => handleBlur("detalleMedicacion")}
               />
             </div>
@@ -193,7 +213,14 @@ const ClinicalHistory = () => {
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
-                {...register("detalleAlergia")}
+                {...register("detalleAlergia", {
+                  validate: (val) => {
+                    if (watch("alergia") == "true" && !val) {
+                      return "Debe aclarar que alergia/s";
+                    }
+                    return true;
+                  },
+                })}
                 onBlur={() => handleBlur("detalleAlergia")}
               />
             </div>
@@ -355,7 +382,14 @@ const ClinicalHistory = () => {
                 min={0}
                 max={9}
                 placeholder="Cuantos Meses?"
-                {...register("mesesEmbarazo")}
+                {...register("mesesEmbarazo", {
+                  validate: (val) => {
+                    if (watch("embarazo") == "true" && !val) {
+                      return "Debe aclarar cuantos meses";
+                    }
+                    return true;
+                  },
+                })}
                 onBlur={() => handleBlur("mesesEmbarazo")}
               />
             </div>
@@ -443,7 +477,14 @@ const ClinicalHistory = () => {
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
-                {...register("detalleGastricos")}
+                {...register("detalleGastricos", {
+                  validate: (val) => {
+                    if (watch("problemasGastricos") == "true" && !val) {
+                      return "Debe aclarar que problema/s";
+                    }
+                    return true;
+                  },
+                })}
                 onBlur={() => handleBlur("detalleGastricos")}
               />
             </div>
@@ -533,7 +574,14 @@ const ClinicalHistory = () => {
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
-                {...register("detalleOperacion")}
+                {...register("detalleOperacion", {
+                  validate: (val) => {
+                    if (watch("operacion") == "true" && !val) {
+                      return "Debe aclarar que operacion/es";
+                    }
+                    return true;
+                  },
+                })}
                 onBlur={() => handleBlur("detalleOperacion")}
               />
             </div>
@@ -572,7 +620,14 @@ const ClinicalHistory = () => {
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
-                {...register("detalleRespiratorios")}
+                {...register("detalleRespiratorios", {
+                  validate: (val) => {
+                    if (watch("problemasRespiratorios") == "true" && !val) {
+                      return "Debe aclarar que problema/s";
+                    }
+                    return true;
+                  },
+                })}
                 onBlur={() => handleBlur("detalleRespiratorios")}
               />
             </div>
@@ -607,7 +662,14 @@ const ClinicalHistory = () => {
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
-                {...register("detalleTiroides")}
+                {...register("detalleTiroides", {
+                  validate: (val) => {
+                    if (watch("tiroides") == "true" && !val) {
+                      return "Debe aclarar que tipo/s";
+                    }
+                    return true;
+                  },
+                })}
                 onBlur={() => handleBlur("detalleTiroides")}
               />
             </div>
@@ -642,7 +704,14 @@ const ClinicalHistory = () => {
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
-                {...register("detalleTiroides")}
+                {...register("detalleTiroides", {
+                  validate: (val) => {
+                    if (watch("otros") == "true" && !val) {
+                      return "Debe aclarar que otro/s detalle/s";
+                    }
+                    return true;
+                  },
+                })}
                 onBlur={() => handleBlur("detalleTiroides")}
               />
             </div>
@@ -652,7 +721,14 @@ const ClinicalHistory = () => {
               </p>
             )}
             <div className="flex items-center gap-6">
-              <label className="text-1xl text-white">Consentimiento</label>
+              <label className="text-1xl text-white">
+                Al registrarme, declaro que todos los datos proporcionados
+                respecto a mi estado de salud son verdaderos y que he
+                comprendido todas las explicaciones que se me han facilitado en
+                el lenguaje claro y sencillo. Se me aclararon todas las dudas,
+                por lo que estoy completamente de acuerdo con los tratamientos
+                que se me van a realizar.
+              </label>
               <input
                 className="border p-2 rounded w-[17em]"
                 type="checkbox"
