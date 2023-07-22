@@ -5,7 +5,7 @@ import {
   faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserById } from "../store/features/clientSlice";
+import { fetchClient } from "../store/features/clientSlice";
 import DateFilter from "./DateFilter";
 import { fetchData } from "../store/features/calendarSlice";
 import axios from "axios";
@@ -95,7 +95,7 @@ const AppoinmentList = () => {
     e.preventDefault();
     try {
       if (dni !== "") {
-        const response = await dispatch(getUserById(dni));
+        const response = await dispatch(fetchClient(dni));
         console.log("que dice el response ->", response);
 
         const result = response.payload.data;

@@ -98,7 +98,7 @@ const PassRecovery = () => {
                     message: "Formato de email inválido",
                   },
                 })}
-                onBlur={() => handleBlur("dni")}
+                onBlur={() => handleBlur("email")}
               />
             </div>
             {errors.email && (
