@@ -20,7 +20,7 @@ const PostModal = ({ setShowPostModal }) => {
     try {
       // Transformar la fecha de vencimiento
       const fechaVencimiento = new Date(data.vencimiento);
-      const dd = String(fechaVencimiento.getDate()).padStart(2, "0");
+      const dd = String(fechaVencimiento.getUTCDate()).padStart(2, "0");
       const mm = String(fechaVencimiento.getMonth() + 1).padStart(2, "0");
       const yyyy = fechaVencimiento.getFullYear();
 

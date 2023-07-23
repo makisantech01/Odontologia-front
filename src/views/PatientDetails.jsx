@@ -2,10 +2,7 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchClient,
-  getUserById,
-} from "../components/store/features/clientSlice";
+import { fetchClient } from "../components/store/features/clientSlice";
 import PatientMenu from "../components/PatientsDetails/PatientMenu";
 
 const PatientDetails = () => {

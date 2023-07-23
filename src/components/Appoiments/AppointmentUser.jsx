@@ -59,9 +59,9 @@ const AppointmentUser = () => {
         reverseButtons: true,
       });
       if (result.isConfirmed) {
-        const authUrl = `${appointmentsUrl}/google`;
-        // Abrir una nueva pestaña con la URL de autorización
-        await window.open(authUrl, "_blank");
+        // const authUrl = `${appointmentsUrl}/google`;
+        // // Abrir una nueva pestaña con la URL de autorización
+        // await window.open(authUrl, "_blank");
         axios
           .post(`${appointmentsUrl}/turnos/${dni}`, appointment)
           .then((response) => {
@@ -146,7 +146,10 @@ const AppointmentUser = () => {
               name="hora"
             >
               {item?.horasDisponibles.map((h) => {
-                if (h.disponible) {
+                if (
+                  h.disponible ||
+                  (item.fecha === currentDateISO && currentTime <= h.hora)
+                ) {
                   return (
                     <li
                       key={h.hora}
