@@ -9,6 +9,7 @@ import {
 } from "../store/features/appointmentsSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { fetchClient } from "../../components/store/features/clientSlice";
 
 const AppointmentUser = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const AppointmentUser = () => {
   useEffect(() => {
     dispatch(fetchData());
     dispatch(getAppointments());
+    dispatch(fetchClient(dni));
   }, [dispatch]);
 
   const handleSelectAppointment = async (date, time) => {

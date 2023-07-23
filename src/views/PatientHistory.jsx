@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
 import { fetchClient } from "../components/store/features/clientSlice";
+import Swal from "sweetalert2";
 library.add(faIdCard);
 
 const PatientHistory = () => {
@@ -40,17 +41,62 @@ const PatientHistory = () => {
           data[key] = true;
         } else if (data[key] === "false") {
           data[key] = false;
+        } else if (data[key] === null) {
+          data[key] = "";
         }
       }
-      data.mesesEmbarazo === "" ? (data.mesesEmbarazo = 0) : data.mesesEmbarazo;
       console.log(data);
-      const response = await axios.put(`${api}/historiales/${user}`, data);
-      if (response) {
+
+      const result = await Swal.fire({
+        title: `¿Confirma las modificaciones?`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Sí, actualizar",
+        cancelButtonText: "Cancelar",
+        reverseButtons: true,
+      });
+      if (result.isConfirmed) {
+        const response = await axios.put(
+          `${api}/historiales/${client.id}`,
+          data
+        );
+
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
         console.log(response);
         nav("/citas");
+
+        // Toast.fire({
+        //   icon: "success",
+        //   title: "Información actualizada con éxito!",
+        // });
       }
     } catch (error) {
       console.error(error);
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+      Toast.fire({
+        icon: "error",
+        title: "Error al modificar la información!",
+      });
     }
   };
 
@@ -751,7 +797,7 @@ const PatientHistory = () => {
               type="submit"
               onClick={handleSubmit(onSubmit)}
             >
-              Guardar
+              Actualizar
             </button>
           </div>
         </form>

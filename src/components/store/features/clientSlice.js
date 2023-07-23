@@ -40,9 +40,9 @@ const clientSlice = createSlice({
     selectedClient: {},
   },
   reducers: {
-    selectedClient: (state, action) => {
-      state.selectedClient = action.payload;
-    },
+    // selectedClient: (state, action) => {
+    //   state.selectedClient = action.payload;
+    // },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchClients.fulfilled, (state, action) => {

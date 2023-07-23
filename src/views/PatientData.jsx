@@ -15,9 +15,12 @@ import {
   updateClient,
 } from "../components/store/features/clientSlice";
 import Sidebar from "../components/Sidebar";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 library.add(faIdCard, faLock, faEnvelope);
 
 const PatientData = () => {
+  const nav = useNavigate();
   const dispatch = useDispatch();
   const {
     register,
@@ -29,12 +32,16 @@ const PatientData = () => {
   const user = useSelector((state) => state.users.users);
   const client = useSelector((state) => state.clients.selectedClient);
 
-  const fechaNacimiento = new Date(client.fechaNacimiento);
+  const fechaPartida = client.fechaNacimiento.split("/");
+  const fechaNacimiento = new Date(
+    parseInt(fechaPartida[2]),
+    parseInt(fechaPartida[1] - 1),
+    parseInt(fechaPartida[0])
+  );
   const dd = String(fechaNacimiento.getDate()).padStart(2, "0");
   const mm = String(fechaNacimiento.getMonth() + 1).padStart(2, "0");
   const yyyy = fechaNacimiento.getFullYear();
   const fechaClienteFormateada = `${yyyy}-${mm}-${dd}`;
-  console.log(fechaClienteFormateada);
 
   useEffect(() => {
     dispatch(fetchClient(user));
@@ -53,12 +60,55 @@ const PatientData = () => {
       // Actualizar el valor de la fecha de vencimiento en los datos
       const newData = { ...data, fechaNacimiento: fechaFormateada };
       console.log(newData);
-      const response = await dispatch(updateClient(newData));
-      if (response) {
+
+      const result = await Swal.fire({
+        title: `¿Confirma las modificaciones?`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Sí, actualizar",
+        cancelButtonText: "Cancelar",
+        reverseButtons: true,
+      });
+
+      if (result.isConfirmed) {
+        const response = await dispatch(updateClient(newData));
+
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
         console.log(response);
+        nav("/citas");
+
+        // Toast.fire({
+        //   icon: "success",
+        //   title: "Información actualizada con éxito!",
+        // });
       }
     } catch (error) {
       console.error(error);
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+      Toast.fire({
+        icon: "error",
+        title: "Error al modificar la información!",
+      });
     }
   };
 
@@ -150,7 +200,7 @@ const PatientData = () => {
                 className="text-4xl text-white"
               />
               <input
-                value={fechaClienteFormateada}
+                defaultValue={fechaClienteFormateada}
                 className="border p-2 rounded w-[17em]"
                 type="date"
                 placeholder="Ingrese su fecha de Nacimiento"
