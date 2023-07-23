@@ -48,7 +48,7 @@ export const USER_SIDEBAR_LINKS = [
   {
     key: "Datos Personales",
     label: "Datos Personales",
-    path: "/datos-personales",
+    path: "/datos",
     icon: <FontAwesomeIcon icon={faUser} />,
   },
   {

@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import bottonWave from "../../assets/botton_wave.png";
-import topWave from "../../assets/topwave.png";
+import bottonWave from "../assets/botton_wave.png";
+import topWave from "../assets/topwave.png";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import Sidebar from "../components/Sidebar";
+import { fetchClient } from "../components/store/features/clientSlice";
 library.add(faIdCard);
 
-const ClinicalHistory = () => {
+const PatientHistory = () => {
   const nav = useNavigate();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -21,6 +24,12 @@ const ClinicalHistory = () => {
   } = useForm();
 
   const user = useSelector((state) => state.users.users);
+  const client = useSelector((state) => state.clients.selectedClient.historial);
+  console.log(client);
+
+  useEffect(() => {
+    dispatch(fetchClient(user));
+  }, [dispatch]);
 
   const api = "https://api-sist-odontologico-production.up.railway.app";
 
@@ -35,7 +44,7 @@ const ClinicalHistory = () => {
       }
       data.mesesEmbarazo === "" ? (data.mesesEmbarazo = 0) : data.mesesEmbarazo;
       console.log(data);
-      const response = await axios.post(`${api}/historiales/${user}`, data);
+      const response = await axios.put(`${api}/historiales/${user}`, data);
       if (response) {
         console.log(response);
         nav("/citas");
@@ -52,6 +61,9 @@ const ClinicalHistory = () => {
   return (
     <div className="bg-secondary-100 flex items-center justify-center">
       <div className=" flex flex-col justify-center">
+        <div className="lg:w-[20%] m-0 z-50">
+          <Sidebar />
+        </div>
         <img src={topWave} className=" absolute z-[1] top-0 right-0 w-[40%]" />
         <form className="w-[700px] mx-auto bg-primary p-4 rounded-3xl shadow-2xl z-10">
           <h2 className="text-6xl font-bold text-center italic text-white mb-[1.8em] mt-5">
@@ -61,10 +73,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Enfermedades</label>
               <select
+                defaultValue={client.enfermedad}
                 className="border p-2 rounded w-[17em]"
-                {...register("enfermedad", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("enfermedad")}
                 onBlur={() => handleBlur("enfermedad")}
               >
                 <option value="">-</option>
@@ -81,6 +92,7 @@ const ClinicalHistory = () => {
                 className="text-1xl text-white"
               />
               <input
+                defaultValue={client.detalleEnfermedad}
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
@@ -103,10 +115,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Tratamiento Médico</label>
               <select
+                defaultValue={client.tratamientoMedico}
                 className="border p-2 rounded w-[17em]"
-                {...register("tratamientoMedico", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("tratamientoMedico")}
                 onBlur={() => handleBlur("tratamientoMedico")}
               >
                 <option value="">-</option>
@@ -125,6 +136,7 @@ const ClinicalHistory = () => {
                 className="text-1xl text-white"
               />
               <input
+                defaultValue={client.detalleTratamiento}
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
@@ -147,10 +159,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Medicación</label>
               <select
+                defaultValue={client.medicacion}
                 className="border p-2 rounded w-[17em]"
-                {...register("medicacion", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("medicacion")}
                 onBlur={() => handleBlur("medicacion")}
               >
                 <option value="">-</option>
@@ -167,6 +178,7 @@ const ClinicalHistory = () => {
                 className="text-1xl text-white"
               />
               <input
+                defaultValue={client.detalleMedicacion}
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
@@ -189,10 +201,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Alergia</label>
               <select
+                defaultValue={client.alergia}
                 className="border p-2 rounded w-[17em]"
-                {...register("alergia", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("alergia")}
                 onBlur={() => handleBlur("alergia")}
               >
                 <option value="">-</option>
@@ -210,6 +221,7 @@ const ClinicalHistory = () => {
                 className="text-1xl text-white"
               />
               <input
+                defaultValue={client.detalleAlergia}
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
@@ -232,10 +244,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Cicatrización</label>
               <select
+                defaultValue={client.cicatrizacion}
                 className="border p-2 rounded w-[17em]"
-                {...register("cicatrizacion", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("cicatrizacion")}
                 onBlur={() => handleBlur("cicatrizacion")}
               >
                 <option value="">-</option>
@@ -249,10 +260,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Fiebre Reumática</label>
               <select
+                defaultValue={client.fiebreReumatica}
                 className="border p-2 rounded w-[17em]"
-                {...register("fiebreReumatica", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("fiebreReumatica")}
                 onBlur={() => handleBlur("fiebreReumatica")}
               >
                 <option value="">-</option>
@@ -268,10 +278,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Diabetes</label>
               <select
+                defaultValue={client.diabetes}
                 className="border p-2 rounded w-[17em]"
-                {...register("diabetes", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("diabetes")}
                 onBlur={() => handleBlur("diabetes")}
               >
                 <option value="">-</option>
@@ -285,10 +294,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Problemas Cardíacos</label>
               <select
+                defaultValue={client.problemasCardiacos}
                 className="border p-2 rounded w-[17em]"
-                {...register("problemasCardiacos", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("problemasCardiacos")}
                 onBlur={() => handleBlur("problemasCardiacos")}
               >
                 <option value="">-</option>
@@ -304,10 +312,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Aspirinas</label>
               <select
+                defaultValue={client.aspirinas}
                 className="border p-2 rounded w-[17em]"
-                {...register("aspirinas", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("aspirinas")}
                 onBlur={() => handleBlur("aspirinas")}
               >
                 <option value="">-</option>
@@ -321,10 +328,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Anticoagulantes</label>
               <select
+                defaultValue={client.anticoagulante}
                 className="border p-2 rounded w-[17em]"
-                {...register("anticoagulante", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("anticoagulante")}
                 onBlur={() => handleBlur("anticoagulante")}
               >
                 <option value="">-</option>
@@ -340,10 +346,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Tabaquísmo</label>
               <select
+                defaultValue={client.tabaquismo}
                 className="border p-2 rounded w-[17em]"
-                {...register("tabaquismo", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("tabaquismo")}
                 onBlur={() => handleBlur("tabaquismo")}
               >
                 <option value="">-</option>
@@ -357,10 +362,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Embarazo</label>
               <select
+                defaultValue={client.embarazo}
                 className="border p-2 rounded w-[17em]"
-                {...register("embarazo", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("embarazo")}
                 onBlur={() => handleBlur("embarazo")}
               >
                 <option value="">-</option>
@@ -377,6 +381,7 @@ const ClinicalHistory = () => {
                 className="text-1xl text-white"
               />
               <input
+                defaultValue={client.mesesEmbarazo}
                 className="border p-2 rounded w-[17em]"
                 type="number"
                 min={0}
@@ -399,10 +404,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Hipertensión</label>
               <select
+                defaultValue={client.hipertension}
                 className="border p-2 rounded w-[17em]"
-                {...register("hipertension", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("hipertension")}
                 onBlur={() => handleBlur("hipertension")}
               >
                 <option value="">-</option>
@@ -416,10 +420,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Hipotensión</label>
               <select
+                defaultValue={client.hipotension}
                 className="border p-2 rounded w-[17em]"
-                {...register("hipotension", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("hipotension")}
                 onBlur={() => handleBlur("hipotension")}
               >
                 <option value="">-</option>
@@ -433,10 +436,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Problemas Renales</label>
               <select
+                defaultValue={client.problemasRenales}
                 className="border p-2 rounded w-[17em]"
-                {...register("problemasRenales", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("problemasRenales")}
                 onBlur={() => handleBlur("problemasRenales")}
               >
                 <option value="">-</option>
@@ -452,10 +454,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Problemas Gástricos</label>
               <select
+                defaultValue={client.problemasGastricos}
                 className="border p-2 rounded w-[17em]"
-                {...register("problemasGastricos", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("problemasGastricos")}
                 onBlur={() => handleBlur("problemasGastricos")}
               >
                 <option value="">-</option>
@@ -474,6 +475,7 @@ const ClinicalHistory = () => {
                 className="text-1xl text-white"
               />
               <input
+                defaultValue={client.detalleGastricos}
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
@@ -496,10 +498,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Convulsiones</label>
               <select
+                defaultValue={client.convulsiones}
                 className="border p-2 rounded w-[17em]"
-                {...register("convulsiones", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("convulsiones")}
                 onBlur={() => handleBlur("convulsiones")}
               >
                 <option value="">-</option>
@@ -513,10 +514,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Epilepsia</label>
               <select
+                defaultValue={client.epilepsia}
                 className="border p-2 rounded w-[17em]"
-                {...register("epilepsia", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("epilepsia")}
                 onBlur={() => handleBlur("epilepsia")}
               >
                 <option value="">-</option>
@@ -532,10 +532,9 @@ const ClinicalHistory = () => {
                 Sifilis? Gonorrea? HIV?
               </label>
               <select
+                defaultValue={client.sifilisGonorreaHIV}
                 className="border p-2 rounded w-[17em]"
-                {...register("sifilisGonorreaHIV", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("sifilisGonorreaHIV")}
                 onBlur={() => handleBlur("sifilisGonorreaHIV")}
               >
                 <option value="">-</option>
@@ -551,10 +550,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Operaciones</label>
               <select
+                defaultValue={client.operacion}
                 className="border p-2 rounded w-[17em]"
-                {...register("operacion", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("operacion")}
                 onBlur={() => handleBlur("operacion")}
               >
                 <option value="">-</option>
@@ -571,6 +569,7 @@ const ClinicalHistory = () => {
                 className="text-1xl text-white"
               />
               <input
+                defaultValue={client.detalleOperacion}
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
@@ -595,10 +594,9 @@ const ClinicalHistory = () => {
                 Problemas Respiratorios
               </label>
               <select
+                defaultValue={client.problemasRespiratorios}
                 className="border p-2 rounded w-[17em]"
-                {...register("problemasRespiratorios", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("problemasRespiratorios")}
                 onBlur={() => handleBlur("problemasRespiratorios")}
               >
                 <option value="">-</option>
@@ -617,6 +615,7 @@ const ClinicalHistory = () => {
                 className="text-1xl text-white"
               />
               <input
+                defaultValue={client.detalleRespiratorios}
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
@@ -639,10 +638,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Tiroides</label>
               <select
+                defaultValue={client.tiroides}
                 className="border p-2 rounded w-[17em]"
-                {...register("tiroides", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("tiroides")}
                 onBlur={() => handleBlur("tiroides")}
               >
                 <option value="">-</option>
@@ -659,6 +657,7 @@ const ClinicalHistory = () => {
                 className="text-1xl text-white"
               />
               <input
+                defaultValue={client.detalleTiroides}
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
@@ -681,10 +680,9 @@ const ClinicalHistory = () => {
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">Otros</label>
               <select
+                defaultValue={client.otros}
                 className="border p-2 rounded w-[17em]"
-                {...register("otros", {
-                  required: "Campo obligatorio",
-                })}
+                {...register("otros")}
                 onBlur={() => handleBlur("otros")}
               >
                 <option value="">-</option>
@@ -701,6 +699,7 @@ const ClinicalHistory = () => {
                 className="text-1xl text-white"
               />
               <input
+                defaultValue={client.detalleOtros}
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Cual?"
@@ -720,12 +719,12 @@ const ClinicalHistory = () => {
             )}
             <div className="flex items-center gap-6">
               <label className="text-1xl text-white">
-                Al registrarme, declaro que todos los datos proporcionados
-                respecto a mi estado de salud son verdaderos y que he
-                comprendido todas las explicaciones que se me han facilitado en
-                el lenguaje claro y sencillo. Se me aclararon todas las dudas,
-                por lo que estoy completamente de acuerdo con los tratamientos
-                que se me van a realizar.
+                Al modificar esta información, declaro que todos los datos
+                proporcionados respecto a mi estado de salud son verdaderos y
+                que he comprendido todas las explicaciones que se me han
+                facilitado en el lenguaje claro y sencillo. Se me aclararon
+                todas las dudas, por lo que estoy completamente de acuerdo con
+                los tratamientos que se me van a realizar.
               </label>
               <input
                 className="border p-2 rounded w-[17em]"
@@ -765,4 +764,4 @@ const ClinicalHistory = () => {
   );
 };
 
-export default ClinicalHistory;
+export default PatientHistory;

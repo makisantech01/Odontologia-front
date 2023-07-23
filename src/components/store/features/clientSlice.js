@@ -25,6 +25,15 @@ export const createClient = createAsyncThunk(
   }
 );
 
+export const updateClient = createAsyncThunk(
+  "userSlice/updateClient",
+  async (client) => {
+    const response = await axios.put(`${pacientesUrl}/${client.dni}`, client);
+    const responseData = response.data;
+    return responseData;
+  }
+);
+
 const clientSlice = createSlice({
   name: "clients",
   initialState: {
@@ -44,6 +53,9 @@ const clientSlice = createSlice({
       state.selectedClient = action.payload;
     });
     builder.addCase(createClient.fulfilled, (state, action) => {
+      state.selectedClient = action.payload;
+    });
+    builder.addCase(updateClient.fulfilled, (state, action) => {
       state.selectedClient = action.payload;
     });
   },
