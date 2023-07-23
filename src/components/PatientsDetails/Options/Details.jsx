@@ -7,7 +7,6 @@ const Details = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const client = useSelector(clientSelector);
-
   useEffect(() => {
     dispatch(fetchClient(id));
   }, [dispatch, id]);
