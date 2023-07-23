@@ -77,7 +77,7 @@ const ClientTable = ({ searchTerm }) => {
     useTable({ columns, data: filteredRows });
 
   return (
-    <div className="calendar-container w-[800px] h-auto border-t border-l scrollbar-thumb-primary scrollbar-rounded-full scrollbar-track-slate-300 scrollbar-thin">
+    <div className=" rounded-lg calendar-container w-[800px] h-auto border-t border-l scrollbar-thumb-primary scrollbar-rounded-full scrollbar-track-slate-300 scrollbar-thin">
       <table {...getTableProps()} className="table-auto w-[800px]">
         <thead className="sticky top-0">
           {headerGroups?.map((headerGroup) => (

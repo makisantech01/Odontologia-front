@@ -11,7 +11,6 @@ export const fetchClient = createAsyncThunk(
   "selectedClient/fetch",
   async (dni) => {
     const response = await axios.get(`${pacientesUrl}/${dni}`);
-    console.log("fetchClient ->", response.data.data);
     return response.data.data;
   }
 );
@@ -48,5 +47,7 @@ const clientSlice = createSlice({
     });
   },
 });
+
+export const clientSelector = (state) => state?.clients?.selectedClient;
 
 export const { actions: clientActions, reducer: clientReducer } = clientSlice;

@@ -32,10 +32,9 @@ const AllProductsTables = ({ productos, handleEdit }) => {
         accessor: "stockMinimo",
       },
       {
-        Header: "", // Empty header for the icons column
-        accessor: "id", // Use a custom accessor for the icons column
+        Header: "",
+        accessor: "id",
         Cell: ({ value, row }) => {
-          // Render the icons in the cell
           const dispatch = useDispatch();
           const onHandleDelete = async () => {
             const result = await Swal.fire({
@@ -79,16 +78,16 @@ const AllProductsTables = ({ productos, handleEdit }) => {
     tableInstance;
 
   return (
-    <div className="max-h-96 w-full overflow-y-scroll scrollbar-thumb-primary scrollbar-rounded-full rounded-md scrollbar-track-slate-300 scrollbar-thin scrollbar-hide">
+    <div className="h-[21em] w-full overflow-y-scroll scrollbar-thumb-primary scrollbar-rounded-full rounded-md scrollbar-track-slate-300 scrollbar-thin scrollbar-hide">
       <table {...getTableProps()} className="border-collapse w-full">
         {/* headers */}
-        <thead className="sticky top-0">
+        <thead className="sticky top-0 rounded-md">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th
                   {...column.getHeaderProps()}
-                  className="py-2 px-4 bg-primary text-white font-medium uppercase text-sm border-r border-black"
+                  className="py-2 px-4 bg-primary text-white font-medium uppercase text-sm"
                 >
                   {column.render("Header")}
                 </th>
@@ -106,7 +105,7 @@ const AllProductsTables = ({ productos, handleEdit }) => {
                   return (
                     <td
                       {...cell.getCellProps()}
-                      className={`bg-slate-300 py-2 px-4 border-b border-black text-sm ${
+                      className={`bg-slate-300 py-2 px-4 border-b  text-sm ${
                         index !== row.cells.length - 1 ? "border-r" : ""
                       }`}
                     >
