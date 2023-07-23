@@ -7,7 +7,7 @@ import MedicalHistory from "./Options/MedicalHistory";
 const Option = ({ title, active, onClick }) => {
   return (
     <button
-      className={`px-2 lg:px-4 w-[100%]  py-2 lg:text-lg ${
+      className={`px-2 lg:px-4 w-[100%] py-2 lg:text-lg ${
         active ? "bg-[#012542] text-white" : "text-gray-600 bg-[#14212A]"
       }`}
       onClick={onClick}
