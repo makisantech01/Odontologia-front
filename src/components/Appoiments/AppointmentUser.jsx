@@ -29,6 +29,29 @@ const AppointmentUser = () => {
     .padStart(2, "0")}/${año}`;
   const currentTime = date.getHours();
 
+  //filtra los dias disponibles pasadas las 12hs
+  const filteredAppointments = appointments.filter((a) => {
+    const currentDate = new Date();
+    const dia = currentDate.getDate();
+    const mes = currentDate.getMonth() + 1;
+    const año = currentDate.getFullYear();
+    const currentDateISO = `${año}-${mes.toString().padStart(2, "0")}-${dia
+      .toString()
+      .padStart(2, "0")}`;
+
+    // Convertir la fecha de "dd/MM/yyyy" a "yyyy-MM-dd"
+    const [diaAp, mesAp, añoAp] = a.fecha.split("/");
+    const appointmentDateISO = `${añoAp}-${mesAp.padStart(
+      2,
+      "0"
+    )}-${diaAp.padStart(2, "0")}`;
+
+    return (
+      appointmentDateISO > currentDateISO ||
+      appointmentDateISO !== currentDateISO
+    );
+  });
+
   const userAppointments = allAppointments.filter((a) => {
     return a.pacienteId === dni.toString() && a.fecha >= currentDateISO;
   });
@@ -136,7 +159,7 @@ const AppointmentUser = () => {
   return (
     <div className="flex flex-col lg:mx-[15vw] mx-4  h-[40em]">
       <ul className=" flex flex-col items-center mt-4 bg-gray-300 text-black h-[30em] w-full rounded-lg lg:rounded-2xl py-5 px-3 overflow-y-auto scrollbar-hide">
-        {appointments.map((item) => (
+        {filteredAppointments.map((item) => (
           <li
             key={item.fecha}
             className=" font-semibold mb-4 shadow-md bg-primary py-2 rounded-lg px-5 flex lg:justify-evenly lg:flex-row flex-col lg:w-full"
@@ -148,10 +171,7 @@ const AppointmentUser = () => {
               name="hora"
             >
               {item?.horasDisponibles.map((h) => {
-                if (
-                  h.disponible ||
-                  (item.fecha === currentDateISO && currentTime <= h.hora)
-                ) {
+                if (h.disponible) {
                   return (
                     <li
                       key={h.hora}

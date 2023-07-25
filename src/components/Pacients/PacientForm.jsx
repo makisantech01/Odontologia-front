@@ -22,6 +22,7 @@ const PacientForm = () => {
     handleSubmit,
     formState: { errors },
     trigger,
+    watch,
   } = useForm();
 
   const userType = useSelector((state) => state.users.type);
@@ -36,6 +37,9 @@ const PacientForm = () => {
 
       // Crear la fecha en el formato deseado (dd/mm/yyyy)
       const fechaFormateada = `${dd}/${mm}/${yyyy}`;
+      if (data.afiliado === "") {
+        data.afiliado = 0;
+      }
 
       // Actualizar el valor de la fecha de vencimiento en los datos
       const newData = { ...data, fechaNacimiento: fechaFormateada };
@@ -231,6 +235,24 @@ const PacientForm = () => {
               />
               <input
                 className="border p-2 rounded w-[17em]"
+                type="text"
+                placeholder="Ingrese su Ocupación/Profesión"
+                {...register("ocupacion", {
+                  required: "Campo obligatorio",
+                })}
+                onBlur={() => handleBlur("ocupacion")}
+              />
+            </div>
+            {errors.ocupacion && (
+              <p className="h-0 text-red-500">{errors.ocupacion.message}</p>
+            )}
+            <div className="flex items-center gap-6">
+              <FontAwesomeIcon
+                icon={faIdCard}
+                className="text-4xl text-white"
+              />
+              <input
+                className="border p-2 rounded w-[17em]"
                 type="number"
                 placeholder="Ingrese su telefono"
                 {...register("telefono1", {
@@ -290,6 +312,75 @@ const PacientForm = () => {
             </div>
             {errors.obraSocial && (
               <p className="h-0 text-red-500">{errors.obraSocial.message}</p>
+            )}
+            <div className="flex items-center gap-6">
+              <FontAwesomeIcon
+                icon={faIdCard}
+                className="text-4xl text-white"
+              />
+              <input
+                className="border p-2 rounded w-[17em]"
+                type="text"
+                placeholder="Ingrese su Plan"
+                {...register("plan", {
+                  validate: (val) => {
+                    if (watch("obraSocial") != "Particular" && !val) {
+                      return "Debe aclarar que plan de obra social posee";
+                    }
+                    return true;
+                  },
+                })}
+                onBlur={() => handleBlur("plan")}
+              />
+            </div>
+            {errors.plan && (
+              <p className="h-0 text-red-500">{errors.plan.message}</p>
+            )}
+            <div className="flex items-center gap-6">
+              <FontAwesomeIcon
+                icon={faIdCard}
+                className="text-4xl text-white"
+              />
+              <input
+                className="border p-2 rounded w-[17em]"
+                type="text"
+                placeholder="Ingrese el titular"
+                {...register("titular", {
+                  validate: (val) => {
+                    if (watch("obraSocial") != "Particular" && !val) {
+                      return "Debe aclarar el titular de su obra social";
+                    }
+                    return true;
+                  },
+                })}
+                onBlur={() => handleBlur("titular")}
+              />
+            </div>
+            {errors.titular && (
+              <p className="h-0 text-red-500">{errors.titular.message}</p>
+            )}
+            <div className="flex items-center gap-6">
+              <FontAwesomeIcon
+                icon={faIdCard}
+                className="text-4xl text-white"
+              />
+              <input
+                className="border p-2 rounded w-[17em]"
+                type="number"
+                placeholder="Ingrese el numero de afiliado"
+                {...register("afiliado", {
+                  validate: (val) => {
+                    if (watch("obraSocial") != "Particular" && !val) {
+                      return "Debe aclarar el numero de afiliado de su obra social";
+                    }
+                    return true;
+                  },
+                })}
+                onBlur={() => handleBlur("afiliado")}
+              />
+            </div>
+            {errors.afiliado && (
+              <p className="h-0 text-red-500">{errors.afiliado.message}</p>
             )}
           </div>
           <div className="flex justify-center py-1">

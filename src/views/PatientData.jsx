@@ -27,6 +27,7 @@ const PatientData = () => {
     handleSubmit,
     formState: { errors },
     trigger,
+    watch,
   } = useForm();
 
   const user = useSelector((state) => state.users.users);
@@ -129,10 +130,7 @@ const PatientData = () => {
           </h2>
           <div className="flex justify-center flex-col items-center gap-6">
             <div className="flex items-center gap-6">
-              <FontAwesomeIcon
-                icon={faIdCard}
-                className="text-4xl text-white"
-              />
+              <label className="text-1xl text-white">DNI</label>
               <input
                 defaultValue={client.dni}
                 className="border p-2 rounded w-[17em]"
@@ -142,10 +140,7 @@ const PatientData = () => {
               />
             </div>
             <div className="flex items-center gap-6">
-              <FontAwesomeIcon
-                icon={faIdCard}
-                className="text-4xl text-white"
-              />
+              <label className="text-1xl text-white">Nombre</label>
               <input
                 defaultValue={client.nombre}
                 className="border p-2 rounded w-[17em]"
@@ -159,10 +154,7 @@ const PatientData = () => {
               <p className="h-0 text-red-500">{errors.nombre.message}</p>
             )}
             <div className="flex items-center gap-6">
-              <FontAwesomeIcon
-                icon={faIdCard}
-                className="text-4xl text-white"
-              />
+              <label className="text-1xl text-white">Apellido</label>
               <input
                 defaultValue={client.apellido}
                 className="border p-2 rounded w-[17em]"
@@ -176,10 +168,7 @@ const PatientData = () => {
               <p className="h-0 text-red-500">{errors.apellido.message}</p>
             )}
             <div className="flex items-center gap-6">
-              <FontAwesomeIcon
-                icon={faIdCard}
-                className="text-4xl text-white"
-              />
+              <label className="text-1xl text-white">Edad</label>
               <input
                 defaultValue={client.edad}
                 className="border p-2 rounded w-[17em]"
@@ -195,10 +184,7 @@ const PatientData = () => {
               <p className="h-0 text-red-500">{errors.edad.message}</p>
             )}
             <div className="flex items-center gap-6">
-              <FontAwesomeIcon
-                icon={faIdCard}
-                className="text-4xl text-white"
-              />
+              <label className="text-1xl text-white">Fecha de Nacimiento</label>
               <input
                 defaultValue={fechaClienteFormateada}
                 className="border p-2 rounded w-[17em]"
@@ -216,10 +202,7 @@ const PatientData = () => {
               </p>
             )}
             <div className="flex items-center gap-6">
-              <FontAwesomeIcon
-                icon={faIdCard}
-                className="text-4xl text-white"
-              />
+              <label className="text-1xl text-white">Domicilio</label>
               <input
                 defaultValue={client.domicilio}
                 className="border p-2 rounded w-[17em]"
@@ -233,10 +216,7 @@ const PatientData = () => {
               <p className="h-0 text-red-500">{errors.domicilio.message}</p>
             )}
             <div className="flex items-center gap-6">
-              <FontAwesomeIcon
-                icon={faIdCard}
-                className="text-4xl text-white"
-              />
+              <label className="text-1xl text-white">Localidad</label>
               <input
                 defaultValue={client.localidad}
                 className="border p-2 rounded w-[17em]"
@@ -249,21 +229,19 @@ const PatientData = () => {
             {errors.localidad && (
               <p className="h-0 text-red-500">{errors.localidad.message}</p>
             )}
-
-            <input
-              defaultValue={client.nroHistoriaClinica}
-              className="border p-2 rounded w-[17em]"
-              type="number"
-              readOnly
-              {...register("nroHistoriaClinica")}
-              onBlur={() => handleBlur("nroHistoriaClinica")}
-            />
-
             <div className="flex items-center gap-6">
-              <FontAwesomeIcon
-                icon={faEnvelope}
-                className="text-4xl text-white"
+              <label className="text-1xl text-white">N° Historia Clínica</label>
+              <input
+                defaultValue={client.nroHistoriaClinica}
+                className="border p-2 rounded w-[17em]"
+                type="number"
+                readOnly
+                {...register("nroHistoriaClinica")}
+                onBlur={() => handleBlur("nroHistoriaClinica")}
               />
+            </div>
+            <div className="flex items-center gap-6">
+              <label className="text-1xl text-white">Email</label>
               <input
                 defaultValue={client.email}
                 className="border p-2 rounded w-[17em]"
@@ -283,10 +261,21 @@ const PatientData = () => {
               <p className="h-0 text-red-500">{errors.email.message}</p>
             )}
             <div className="flex items-center gap-6">
-              <FontAwesomeIcon
-                icon={faIdCard}
-                className="text-4xl text-white"
+              <label className="text-1xl text-white">Ocupación/Profesión</label>
+              <input
+                defaultValue={client.ocupacion}
+                className="border p-2 rounded w-[17em]"
+                type="text"
+                placeholder="Ingrese su Ocupación/Profesión"
+                {...register("ocupacion")}
+                onBlur={() => handleBlur("ocupacion")}
               />
+            </div>
+            {errors.ocupacion && (
+              <p className="h-0 text-red-500">{errors.ocupacion.message}</p>
+            )}
+            <div className="flex items-center gap-6">
+              <label className="text-1xl text-white">Teléfono</label>
               <input
                 defaultValue={client.telefono1}
                 className="border p-2 rounded w-[17em]"
@@ -305,10 +294,9 @@ const PatientData = () => {
               <p className="h-0 text-red-500">{errors.telefono1.message}</p>
             )}
             <div className="flex items-center gap-6">
-              <FontAwesomeIcon
-                icon={faIdCard}
-                className="text-4xl text-white"
-              />
+              <label className="text-1xl text-white">
+                Teléfono Alternativo
+              </label>
               <input
                 defaultValue={client.telefono2}
                 className="border p-2 rounded w-[17em]"
@@ -327,10 +315,7 @@ const PatientData = () => {
               <p className="h-0 text-red-500">{errors.telefono2.message}</p>
             )}
             <div className="flex items-center gap-6">
-              <FontAwesomeIcon
-                icon={faIdCard}
-                className="text-4xl text-white"
-              />
+              <label className="text-1xl text-white">Obra Social</label>
               <select
                 defaultValue={client.obraSocial}
                 className="border p-2 rounded w-[17em]"
@@ -347,6 +332,69 @@ const PatientData = () => {
             </div>
             {errors.obraSocial && (
               <p className="h-0 text-red-500">{errors.obraSocial.message}</p>
+            )}
+            <div className="flex items-center gap-6">
+              <label className="text-1xl text-white">Plan</label>
+              <input
+                defaultValue={client.plan}
+                className="border p-2 rounded w-[17em]"
+                type="text"
+                placeholder="Ingrese su Plan"
+                {...register("plan", {
+                  validate: (val) => {
+                    if (watch("obraSocial") != "Particular" && !val) {
+                      return "Debe aclarar que plan de obra social posee";
+                    }
+                    return true;
+                  },
+                })}
+                onBlur={() => handleBlur("plan")}
+              />
+            </div>
+            {errors.plan && (
+              <p className="h-0 text-red-500">{errors.plan.message}</p>
+            )}
+            <div className="flex items-center gap-6">
+              <label className="text-1xl text-white">Titular</label>
+              <input
+                defaultValue={client.titular}
+                className="border p-2 rounded w-[17em]"
+                type="text"
+                placeholder="Ingrese el titular"
+                {...register("titular", {
+                  validate: (val) => {
+                    if (watch("obraSocial") != "Particular" && !val) {
+                      return "Debe aclarar el titular de su obra social";
+                    }
+                    return true;
+                  },
+                })}
+                onBlur={() => handleBlur("titular")}
+              />
+            </div>
+            {errors.titular && (
+              <p className="h-0 text-red-500">{errors.titular.message}</p>
+            )}
+            <div className="flex items-center gap-6">
+              <label className="text-1xl text-white">N° Afiliado</label>
+              <input
+                defaultValue={client.afiliado}
+                className="border p-2 rounded w-[17em]"
+                type="number"
+                placeholder="Ingrese el numero de afiliado"
+                {...register("afiliado", {
+                  validate: (val) => {
+                    if (watch("obraSocial") != "Particular" && !val) {
+                      return "Debe aclarar el numero de afiliado de su obra social";
+                    }
+                    return true;
+                  },
+                })}
+                onBlur={() => handleBlur("afiliado")}
+              />
+            </div>
+            {errors.afiliado && (
+              <p className="h-0 text-red-500">{errors.afiliado.message}</p>
             )}
           </div>
           <div className="flex justify-center py-1">
