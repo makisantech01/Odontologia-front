@@ -73,7 +73,7 @@ const Details = () => {
             <span className="text-gray-400">{}</span>
           </li>
           <li>
-            <span className="mr-4">N de afiliado:</span>
+            <span className="mr-4">N° de afiliado:</span>
             <span className="text-gray-400">{}</span>
           </li>
         </ul>
