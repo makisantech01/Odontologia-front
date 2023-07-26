@@ -51,7 +51,6 @@ const AllProductsTables = ({ productos, handleEdit }) => {
             }
           };
           const onHandleEdit = () => {
-            console.log(row.original);
             handleEdit(row.original);
           };
           return (
