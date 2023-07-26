@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getLocalStorage, setLocalStorage } from "../../../utils/localStorage";
 
 const pacientesUrl = import.meta.env.VITE_PATIENTS_URL;
 
@@ -18,8 +17,7 @@ export const createClient = createAsyncThunk(
   "client/createClient",
   async (client) => {
     const response = await axios.post(`${pacientesUrl}/${client.dni}`, client);
-    const responseData = response.data;
-    return responseData;
+    return response.data;
   }
 );
 
@@ -27,46 +25,40 @@ export const updateClient = createAsyncThunk(
   "client/updateClient",
   async (client) => {
     const response = await axios.put(`${pacientesUrl}/${client.dni}`, client);
-    const responseData = response.data;
-    return responseData;
+    return response.data;
   }
 );
 
 const initialState = {
   clients: [],
-  selectedClient: {},
+  selectedClient: null,
 };
 
 const clientSlice = createSlice({
   name: "clients",
-  initialState: getLocalStorage("client")
-    ? getLocalStorage("client")
-    : initialState,
+  initialState,
   reducers: {
-    selectedClient: (state, action) => {
+    setselectedClient: (state, action) => {
       state.selectedClient = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchClients.fulfilled, (state, action) => {
-      setLocalStorage("client", state.clients);
-      return action.payload;
+      state.selectedClient = action.payload;
     });
     builder.addCase(fetchClient.fulfilled, (state, action) => {
-      setLocalStorage("client", state.selectedClient);
-      return action.payload;
+      state.selectedClient = action.payload;
     });
     builder.addCase(createClient.fulfilled, (state, action) => {
-      setLocalStorage("client", state.selectedClient);
-      return action.payload;
+      state.selectedClient = action.payload;
     });
     builder.addCase(updateClient.fulfilled, (state, action) => {
-      setLocalStorage("client", state.selectedClient);
-      return action.payload;
+      state.selectedClient = action.payload;
     });
   },
 });
 
 export const clientSelector = (state) => state?.clients?.selectedClient;
+export const clientsSelector = (state) => state?.clients?.clients;
 
 export const { actions: clientActions, reducer: clientReducer } = clientSlice;
