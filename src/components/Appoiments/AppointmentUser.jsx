@@ -19,6 +19,12 @@ const AppointmentUser = () => {
     (state) => state.appointments.appointments
   );
 
+  useEffect(() => {
+    dispatch(fetchData());
+    dispatch(getAppointments());
+    dispatch(fetchClient(dni));
+  }, [dispatch, dni]);
+
   //fecha actual
   const date = new Date();
   const dia = date.getDate();
@@ -55,12 +61,6 @@ const AppointmentUser = () => {
   const userAppointments = allAppointments.filter((a) => {
     return a.pacienteId === dni.toString() && a.fecha >= currentDateISO;
   });
-
-  useEffect(() => {
-    dispatch(fetchData());
-    dispatch(getAppointments());
-    dispatch(fetchClient(dni));
-  }, [dispatch]);
 
   const handleSelectAppointment = async (date, time) => {
     const appointment = { fecha: date, hora: time };

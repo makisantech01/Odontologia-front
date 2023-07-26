@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { LoginUser } from "../components/store/features/usersSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchClient } from "../components/store/features/clientSlice";
 library.add(faIdCard, faLock, faEyeSlash, faEye);
 
 const Login = () => {
@@ -35,7 +36,10 @@ const Login = () => {
   const onSubmit = (data) => {
     try {
       const response = dispatch(LoginUser(data));
-      nav("citas");
+      if (response) {
+        dispatch(fetchClient(data.dni));
+        nav("citas");
+      }
     } catch (error) {
       console.error(error);
     }

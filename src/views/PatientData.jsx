@@ -31,22 +31,22 @@ const PatientData = () => {
   } = useForm();
 
   const user = useSelector((state) => state.users.users);
-  const client = useSelector((state) => state.clients.selectedClient);
+  const client = useSelector((state) => state.clients.selectedClient.data);
+
+  useEffect(() => {
+    dispatch(fetchClient(user));
+  }, [dispatch, client]);
 
   const fechaPartida = client.fechaNacimiento.split("/");
   const fechaNacimiento = new Date(
     parseInt(fechaPartida[2]),
-    parseInt(fechaPartida[1] - 1),
+    parseInt(fechaPartida[1]),
     parseInt(fechaPartida[0])
   );
   const dd = String(fechaNacimiento.getDate()).padStart(2, "0");
   const mm = String(fechaNacimiento.getMonth() + 1).padStart(2, "0");
   const yyyy = fechaNacimiento.getFullYear();
   const fechaClienteFormateada = `${yyyy}-${mm}-${dd}`;
-
-  useEffect(() => {
-    dispatch(fetchClient(user));
-  }, [dispatch]);
 
   const onSubmit = async (data) => {
     try {
