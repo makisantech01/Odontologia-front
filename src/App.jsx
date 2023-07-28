@@ -23,12 +23,12 @@ function App() {
   return (
     <Routes>
       {/* Dashboard routes */}
+      <Route path="/" element={<Login />} />
       <Route path="/citas" element={<Citas />} />
       <Route path="/inventario" element={<Inventory />} />
       <Route path="/registrarse" element={<Register />} />
       <Route path="/pacientes" element={<Patients />} />
       <Route path="/pacientes/:id" element={<PatientDetails />} />
-      <Route path="/" element={<Login />} />
       <Route path="/recuperacion-contraseña" element={<PassRecovery />} />
       <Route path="/restablecer-contrasena" element={<PassRestore />} />
       <Route path="/datos-personales" element={<PacientForm />} />

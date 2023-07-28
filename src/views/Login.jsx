@@ -10,20 +10,28 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LoginUser } from "../components/store/features/usersSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchClient } from "../components/store/features/clientSlice";
+import Swal from 'sweetalert2';
+
 library.add(faIdCard, faLock, faEyeSlash, faEye);
 
 const Login = () => {
   const dispatch = useDispatch();
   const nav = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-
   const handleClick = () => {
     setShowPassword(!showPassword);
   };
+
+  const loading = useSelector((state)=>state.users.loading)
+
+  console.log(loading)
+
+
 
   const {
     register,
@@ -32,10 +40,17 @@ const Login = () => {
     trigger,
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     try {
-      const response = dispatch(LoginUser(data));
-      nav("citas");
+      const response = await dispatch(LoginUser(data));
+      console.log("este es el resposne",response)
+      if(response.type==="user/LoginUser/fulfilled"){
+      nav("/citas")
+      }
+      else{
+        Swal.fire("Hubo un error al iniciar sesión, intentelo nuevamente", "", "error");
+      }
+    
     } catch (error) {
       console.error(error);
     }
@@ -123,7 +138,7 @@ const Login = () => {
               type="submit"
               onClick={handleSubmit(onSubmit)}
             >
-              Login
+              {loading===false ? "Login" : "Cargando.." }
             </button>
           </div>
           <div className="flex justify-center">

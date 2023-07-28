@@ -25,8 +25,9 @@ const PatientHistory = () => {
   } = useForm();
 
   const user = useSelector((state) => state.users.users);
-  const client = useSelector((state) => state.clients.selectedClient.historial);
-  console.log(client);
+  const client = useSelector(
+    (state) => state.clients.selectedClient.data.historial
+  );
 
   useEffect(() => {
     dispatch(fetchClient(user));
