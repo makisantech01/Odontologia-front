@@ -10,18 +10,20 @@ export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
   return data;
 });
 
-export const getUserData = createAsyncThunk("users/getUserData", async (_, { getState }) => {
-  const state = getState().users;
-  const typeData = cookies.get("token");
-  
-  if (typeData) {
-    const decoded = jwt_decode(typeData);
-    return { ...state, type: decoded.admin, users: decoded.id };
-  }
-  
-  return state;
-});
+export const getUserData = createAsyncThunk(
+  "users/getUserData",
+  async (_, { getState }) => {
+    const state = getState().users;
+    const typeData = cookies.get("token");
 
+    if (typeData) {
+      const decoded = jwt_decode(typeData);
+      return { ...state, type: decoded.admin, users: decoded.id };
+    }
+
+    return state;
+  }
+);
 
 export const LoginUser = createAsyncThunk(
   "user/LoginUser",
@@ -95,7 +97,7 @@ const usersSlice = createSlice({
         const { type, users } = action.payload;
         state.type = type;
         state.users = users;
-      })
+      });
   },
 });
 export const { actions: usersActions, reducer: usersReducer } = usersSlice;

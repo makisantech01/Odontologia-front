@@ -11,6 +11,10 @@ import { getUserData } from "./components/store/features/usersSlice";
 import Cookies from "universal-cookie";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import PacientForm from "./components/Pacients/PacientForm";
+import ClinicalHistory from "./components/Pacients/ClinicalHistory";
+import PatientData from "./views/PatientData";
+import PatientHistory from "./views/PatientHistory";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -19,14 +23,18 @@ function App() {
   return (
     <Routes>
       {/* Dashboard routes */}
+      <Route path="/" element={<Login />} />
       <Route path="/citas" element={<Citas />} />
       <Route path="/inventario" element={<Inventory />} />
       <Route path="/registrarse" element={<Register />} />
       <Route path="/pacientes" element={<Patients />} />
       <Route path="/pacientes/:id" element={<PatientDetails />} />
-      <Route path="/" element={<Login />} />
       <Route path="/recuperacion-contraseña" element={<PassRecovery />} />
       <Route path="/restablecer-contrasena" element={<PassRestore />} />
+      <Route path="/datos-personales" element={<PacientForm />} />
+      <Route path="/historial-medico" element={<ClinicalHistory />} />
+      <Route path="/datos" element={<PatientData />} />
+      <Route path="/historial" element={<PatientHistory />} />
       {/* Pacients routes */}
     </Routes>
   );

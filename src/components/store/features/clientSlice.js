@@ -7,43 +7,58 @@ export const fetchClients = createAsyncThunk("clients/fetch", async () => {
   const response = await axios.get(pacientesUrl);
   return response.data;
 });
-export const fetchClient = createAsyncThunk(
-  "selectedClient/fetch",
-  async (dni) => {
-    const response = await axios.get(`${pacientesUrl}/${dni}`);
-    console.log("fetchClient ->", response.data.data);
-    return response.data.data;
+
+export const fetchClient = createAsyncThunk("client/fetch", async (dni) => {
+  const response = await axios.get(`${pacientesUrl}/${dni}`);
+  return response.data;
+});
+
+export const createClient = createAsyncThunk(
+  "client/createClient",
+  async (client) => {
+    const response = await axios.post(`${pacientesUrl}/${client.dni}`, client);
+    return response.data;
   }
 );
 
-export const getUserById = createAsyncThunk(
-  "userSlice/getUserById",
-  async (payload) => {
-    const response = await axios.get(`${pacientesUrl}/${payload}`);
-    const responseData = response.data;
-    return responseData;
+export const updateClient = createAsyncThunk(
+  "client/updateClient",
+  async (client) => {
+    const response = await axios.put(`${pacientesUrl}/${client.dni}`, client);
+    return response.data;
   }
 );
+
+const initialState = {
+  clients: [],
+  selectedClient: null,
+};
 
 const clientSlice = createSlice({
   name: "clients",
-  initialState: {
-    clients: [],
-    selectedClient: {},
-  },
+  initialState,
   reducers: {
-    selectedClient: (state, action) => {
+    setselectedClient: (state, action) => {
       state.selectedClient = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchClients.fulfilled, (state, action) => {
-      return action.payload;
+      state.selectedClient = action.payload;
     });
     builder.addCase(fetchClient.fulfilled, (state, action) => {
       state.selectedClient = action.payload;
     });
+    builder.addCase(createClient.fulfilled, (state, action) => {
+      state.selectedClient = action.payload;
+    });
+    builder.addCase(updateClient.fulfilled, (state, action) => {
+      state.selectedClient = action.payload;
+    });
   },
 });
+
+export const clientSelector = (state) => state?.clients?.selectedClient;
+export const clientsSelector = (state) => state?.clients?.clients;
 
 export const { actions: clientActions, reducer: clientReducer } = clientSlice;

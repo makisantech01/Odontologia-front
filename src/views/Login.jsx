@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { LoginUser } from "../components/store/features/usersSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchClient } from "../components/store/features/clientSlice";
 import Swal from 'sweetalert2';
 
 library.add(faIdCard, faLock, faEyeSlash, faEye);
