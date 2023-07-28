@@ -92,8 +92,6 @@ const usersSlice = createSlice({
         state.error = "hubo un error al iniciar sesión";
       })
       .addCase(getUserData.fulfilled, (state, action)=>{
-        console.log("estado: fullfilled")
-        console.log("estado",state.type)
         const { type, users } = action.payload;
         state.type = type;
         state.users = users;

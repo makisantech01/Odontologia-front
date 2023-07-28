@@ -26,6 +26,10 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
+  const loading = useSelector((state)=>state.users.loading)
+
+  console.log(loading)
+
 
 
   const {
@@ -133,7 +137,7 @@ const Login = () => {
               type="submit"
               onClick={handleSubmit(onSubmit)}
             >
-              Login
+              {loading===false ? "Login" : "Cargando.." }
             </button>
           </div>
           <div className="flex justify-center">
