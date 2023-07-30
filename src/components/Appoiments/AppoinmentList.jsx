@@ -177,9 +177,9 @@ const AppoinmentList = () => {
             {searchResult.length > 0 && <span>{searchResult}</span>}
           </p>
         </div>
-        <div>
-          <DateFilter onSelect={handleCreatePatient} />
-        </div>
+
+        <DateFilter onSelect={handleCreatePatient} />
+
         <div className="flex gap-4">
           <select
             className="bg-secondary-100 text-white py-2 px-3 rounded-lg"
