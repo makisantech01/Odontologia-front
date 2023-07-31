@@ -73,7 +73,7 @@ const PacientForm = () => {
           <h2 className="text-4xl font-bold text-center italic text-white pb-10">
             Datos Personales
           </h2>
-          <div className="flex gap-10 h-[33em] overflow-y-auto scrollbar-hide">
+          <div className="flex lg:flex-row flex-col gap-10 h-[33em] overflow-y-auto scrollbar-hide">
             <div className="flex flex-col items-center gap-7">
               <div className="flex items-center gap-2">
                 <input
