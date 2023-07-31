@@ -4,11 +4,10 @@ import { useSelector } from "react-redux";
 import { clientSelector } from "../../store/features/clientSlice.js";
 import ModalH from "./ModalH.jsx";
 
-const MedicalHistoryForm = () => {
+const MedicalHistoryForm = ({ isModalOpen }) => {
   const client = useSelector(clientSelector);
   const paciente = client?.historial;
   const pacienteInicial = paciente;
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [pacienteIni, setPacienteIni] = useState(pacienteInicial);
   const preguntas = [
     {
@@ -112,21 +111,17 @@ const MedicalHistoryForm = () => {
   ];
 
   const handleSaveChanges = (nuevoPaciente) => {
-    // Hacemos la petición PUT usando Axios
     axios
       .put(
         `https://api-sist-odontologico-production.up.railway.app/historiales/${nuevoPaciente.id}`,
         nuevoPaciente
       )
       .then((response) => {
-        // Si la petición es exitosa, actualizamos el estado del paciente
         setPacienteIni(nuevoPaciente);
         setIsModalOpen(false);
       })
       .catch((error) => {
-        // Si ocurre un error, puedes manejarlo aquí
         console.error("Error al realizar la petición PUT:", error);
-        // También puedes mostrar mensajes de error al usuario, si es necesario
       });
   };
 
@@ -151,32 +146,40 @@ const MedicalHistoryForm = () => {
   );
 
   return (
-    <Formik initialValues={paciente}>
-      {({ values }) => (
-        <div className="flex flex-col items-center flex-end w-full gap-5">
-          <Form className=" w-[70%] h-[25em] overflow-y-auto p-5 shadow-2xl rounded-lg bg-[#14212a] scrollbar-hide">
-            {preguntas.map((preguntaObj, index) => {
-              const { campo, pregunta, detalle } = preguntaObj;
-              const valor = values[campo];
-              return detalle ? (
-                <div key={index}>
-                  <Pregunta pregunta={pregunta} valor={valor} />
-                  {valor && (
-                    <PreguntaConDetalle
-                      pregunta="¿Cuál?"
-                      valor={true}
-                      detalle={values[detalle]}
-                    />
-                  )}
-                </div>
-              ) : (
-                <Pregunta pregunta={pregunta} valor={valor} key={index} />
-              );
-            })}
-          </Form>
-        </div>
-      )}
-    </Formik>
+    <>
+      <Formik initialValues={paciente}>
+        {({ values }) => (
+          <div className="flex flex-col items-center flex-end w-full gap-5">
+            <Form className=" w-[70%] h-[25em] overflow-y-auto p-5 shadow-2xl rounded-lg bg-[#14212a] scrollbar-hide">
+              {preguntas.map((preguntaObj, index) => {
+                const { campo, pregunta, detalle } = preguntaObj;
+                const valor = values[campo];
+                return detalle ? (
+                  <div key={index}>
+                    <Pregunta pregunta={pregunta} valor={valor} />
+                    {valor && (
+                      <PreguntaConDetalle
+                        pregunta="¿Cuál?"
+                        valor={true}
+                        detalle={values[detalle]}
+                      />
+                    )}
+                  </div>
+                ) : (
+                  <Pregunta pregunta={pregunta} valor={valor} key={index} />
+                );
+              })}
+            </Form>
+          </div>
+        )}
+      </Formik>
+      <ModalH
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSave={handleSaveChanges}
+        paciente={paciente}
+      />
+    </>
   );
 };
 
