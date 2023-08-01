@@ -42,7 +42,7 @@ export const AppointmentSlice = createSlice({
       state.appointments = action.payload;
     });
     builder.addCase(deleteAppointments.fulfilled, (state, action) => {
-      Swal.fire("Turno elminado con exito!", "", "success");
+      Swal.fire("Turno eliminado con exito!", "", "success");
     });
     builder.addCase(deleteAppointments.rejected, (state, action) => {
       Swal.fire(

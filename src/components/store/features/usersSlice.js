@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import jwt_decode from "jwt-decode";
-const cookies = new Cookies();
+import { useEffect } from "react";
+const cookies = new Cookies()
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
   const response = await fetch("https://jsonplaceholder.typicode.com/users");
   const data = await response.json();
@@ -32,6 +33,7 @@ export const LoginUser = createAsyncThunk(
       formData
     );
     const data = response.data.token;
+
     return data;
   }
 );
@@ -91,9 +93,7 @@ const usersSlice = createSlice({
       .addCase(LoginUser.rejected, (state, action) => {
         state.error = "hubo un error al iniciar sesión";
       })
-      .addCase(getUserData.fulfilled, (state, action) => {
-        console.log("estado: fullfilled");
-        console.log("estado", state.type);
+      .addCase(getUserData.fulfilled, (state, action)=>{
         const { type, users } = action.payload;
         state.type = type;
         state.users = users;
