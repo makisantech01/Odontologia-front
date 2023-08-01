@@ -22,6 +22,7 @@ const AppoinmentList = () => {
   const [dni, setDni] = useState("");
   const appointments = useSelector((state) => state.appointments.appointments);
   const dispatch = useDispatch();
+  console.log("citas --->", appointments);
 
   //fecha actual
   const date = new Date();
