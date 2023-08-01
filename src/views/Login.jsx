@@ -14,8 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { LoginUser } from "../components/store/features/usersSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchClient } from "../components/store/features/clientSlice";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 library.add(faIdCard, faLock, faEyeSlash, faEye);
 
@@ -27,11 +26,9 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  const loading = useSelector((state)=>state.users.loading)
+  const loading = useSelector((state) => state.users.loading);
 
-  console.log(loading)
-
-
+  console.log(loading);
 
   const {
     register,
@@ -40,17 +37,19 @@ const Login = () => {
     trigger,
   } = useForm();
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     try {
       const response = await dispatch(LoginUser(data));
-      console.log("este es el resposne",response)
-      if(response.type==="user/LoginUser/fulfilled"){
-      nav("/citas")
+      console.log("este es el resposne", response);
+      if (response.type === "user/LoginUser/fulfilled") {
+        nav("/citas");
+      } else {
+        Swal.fire(
+          "Hubo un error al iniciar sesión, intentelo nuevamente",
+          "",
+          "error"
+        );
       }
-      else{
-        Swal.fire("Hubo un error al iniciar sesión, intentelo nuevamente", "", "error");
-      }
-    
     } catch (error) {
       console.error(error);
     }
@@ -138,7 +137,7 @@ const Login = () => {
               type="submit"
               onClick={handleSubmit(onSubmit)}
             >
-              {loading===false ? "Login" : "Cargando.." }
+              {loading === false ? "Login" : "Cargando.."}
             </button>
           </div>
           <div className="flex justify-center">
