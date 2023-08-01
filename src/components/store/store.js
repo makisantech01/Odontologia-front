@@ -10,8 +10,6 @@ const cookies = new Cookies();
 
 const clientsFromCookies = cookies.get("selectedClient");
 const userstokenCookie = cookies.get("token");
-const usersFromCookies = jwt_decode(userstokenCookie);
-console.log(usersFromCookies);
 
 let initialClientsState = clientReducer.initialState;
 let initialUsersState = usersReducer.initialState;
@@ -28,8 +26,9 @@ if (clientsFromCookies) {
   }
 }
 
-if (usersFromCookies) {
+if (userstokenCookie) {
   try {
+    const usersFromCookies = jwt_decode(userstokenCookie);
     initialUsersState = usersFromCookies.id;
   } catch (error) {
     console.error(
