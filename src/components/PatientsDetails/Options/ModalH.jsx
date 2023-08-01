@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { clientSelector } from "../../store/features/clientSlice";
 
 const ModalH = ({ isOpen, onClose, children }) => {
-  const client = useSelector(clientSelector);
+  const client = useSelector((state) => state?.clients?.selectedClient.data);
   const paciente = client?.historial;
   const preguntas = [
     {

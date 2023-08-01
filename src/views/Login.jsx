@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { LoginUser } from "../components/store/features/usersSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchClient } from "../components/store/features/clientSlice";
+import Swal from 'sweetalert2';
 library.add(faIdCard, faLock, faEyeSlash, faEye);
 
 const Login = () => {
@@ -33,12 +33,15 @@ const Login = () => {
     trigger,
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     try {
-      const response = dispatch(LoginUser(data));
-      if (response) {
-        dispatch(fetchClient(data.dni));
-        nav("citas");
+      const response = await dispatch(LoginUser(data));
+      console.log("este es el resposne",response)
+      if(response.type==="user/LoginUser/fulfilled"){
+      nav("/citas")
+      }
+      else{
+        Swal.fire("Hubo un error al iniciar sesión, intentelo nuevamente", "", "error");
       }
     } catch (error) {
       console.error(error);
