@@ -10,7 +10,8 @@ import { Link } from "react-router-dom";
 library.add(faCheck, faEdit, faTrash);
 
 const ClientTable = ({ searchTerm }) => {
-  const clients = useSelector((state) => state.clients);
+  const clients = useSelector((state) => state.clients.clients);
+ 
 
   const dispatch = useDispatch();
 

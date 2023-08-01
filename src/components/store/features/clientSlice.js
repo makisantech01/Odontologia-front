@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 const pacientesUrl = import.meta.env.VITE_PATIENTS_URL;
 
@@ -44,10 +46,13 @@ const clientSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchClients.fulfilled, (state, action) => {
-      state.selectedClient = action.payload;
+      state.clients = action.payload;
     });
     builder.addCase(fetchClient.fulfilled, (state, action) => {
       state.selectedClient = action.payload;
+      cookies.set("selectedClient", JSON.stringify(action.payload), {
+        path: "/datos",
+      });
     });
     builder.addCase(createClient.fulfilled, (state, action) => {
       state.selectedClient = action.payload;
