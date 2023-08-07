@@ -27,7 +27,7 @@ const History = () => {
     values.otros = values.otros === "si";
     values.consentimiento = values.consentimiento === "si";
 
-    const endpointUrl = `https://api-sist-odontologico-production.up.railway.app/historiales/${id}`;
+    const endpointUrl = `https://api-sist-odontologico-production-889e.up.railway.app/historiales/${id}`;
     if (isEditing) {
       axios
         .put(endpointUrl, values)

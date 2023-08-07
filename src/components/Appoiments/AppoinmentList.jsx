@@ -70,7 +70,7 @@ const AppoinmentList = () => {
     };
 
     const appointmentsUrl =
-      "https://api-sist-odontologico-production.up.railway.app/turnos";
+      "https://api-sist-odontologico-production-889e.up.railway.app/turnos";
 
     axios
       .post(`${appointmentsUrl}/${clientInfo.dni}`, clientInfo)
