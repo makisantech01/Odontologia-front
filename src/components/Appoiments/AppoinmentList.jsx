@@ -13,6 +13,7 @@ import {
   getAppointments,
   deleteAppointments,
   cleanAppointments,
+  postAppointment,
 } from "../store/features/appointmentsSlice";
 import Swal from "sweetalert2";
 
@@ -22,7 +23,6 @@ const AppoinmentList = () => {
   const [dni, setDni] = useState("");
   const appointments = useSelector((state) => state.appointments.appointments);
   const dispatch = useDispatch();
-  console.log("citas --->", appointments);
 
   //fecha actual
   const date = new Date();
@@ -36,6 +36,8 @@ const AppoinmentList = () => {
   const currentAppointments = appointments.filter((a) => {
     return a.fecha >= currentDateISO;
   });
+
+  console.log("-->", appointments);
 
   //eliminacion de turnos antiguos pasados los 2 meses
   appointments.map(async (a) => {
@@ -70,17 +72,8 @@ const AppoinmentList = () => {
       estado: true,
     };
 
-    const appointmentsUrl =
-      "https://api-sist-odontologico-production.up.railway.app/turnos";
-
-    axios
-      .post(`${appointmentsUrl}/${clientInfo.dni}`, clientInfo)
-      .then((response) => {
-        console.log("Response ->", response.data);
-      })
-      .catch((error) => {
-        console.error("Error ->", error);
-      });
+    const response = dispatch(postAppointment(clientInfo));
+    console.log("response --->", response?.data);
   };
 
   const handleCreatePatient = React.useCallback(
