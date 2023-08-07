@@ -30,7 +30,7 @@ const PassRestore = () => {
       const token = urlParams.get("token");
       await axios
         .post(
-          "https://api-sist-odontologico-production.up.railway.app/restablecer-contrasena",
+          "https://api-sist-odontologico-production-889e.up.railway.app/restablecer-contrasena",
           { token, password: data.password }
         )
         .then(async (response) => {

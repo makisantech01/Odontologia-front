@@ -66,7 +66,7 @@ const ClientTable = ({ searchTerm }) => {
 
   const filteredRows = React.useMemo(() => {
     if (Array.isArray(clients?.data)) {
-      return clients?.data.filter((client) =>
+      return clients.data.filter((client) =>
         client.nombre.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }

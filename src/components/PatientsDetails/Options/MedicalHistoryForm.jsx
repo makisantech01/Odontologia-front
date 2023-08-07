@@ -113,7 +113,7 @@ const MedicalHistoryForm = ({ isModalOpen }) => {
   const handleSaveChanges = (nuevoPaciente) => {
     axios
       .put(
-        `https://api-sist-odontologico-production.up.railway.app/historiales/${nuevoPaciente.id}`,
+        `https://api-sist-odontologico-production-889e.up.railway.app/historiales/${nuevoPaciente.id}`,
         nuevoPaciente
       )
       .then((response) => {
