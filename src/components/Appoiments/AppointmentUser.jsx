@@ -65,7 +65,7 @@ const AppointmentUser = () => {
   const handleSelectAppointment = async (date, time) => {
     const appointment = { fecha: date, hora: time };
     const appointmentsUrl =
-      "https://api-sist-odontologico-production.up.railway.app";
+      "https://api-sist-odontologico-production-889e.up.railway.app";
 
     if (userAppointments.length > 0) {
       await Swal.fire({

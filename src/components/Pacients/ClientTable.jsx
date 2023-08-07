@@ -11,7 +11,6 @@ library.add(faCheck, faEdit, faTrash);
 
 const ClientTable = ({ searchTerm }) => {
   const clients = useSelector((state) => state.clients.clients);
- 
 
   const dispatch = useDispatch();
 
@@ -66,7 +65,7 @@ const ClientTable = ({ searchTerm }) => {
   );
 
   const filteredRows = React.useMemo(() => {
-    if (Array.isArray(clients.data)) {
+    if (Array.isArray(clients?.data)) {
       return clients.data.filter((client) =>
         client.nombre.toLowerCase().includes(searchTerm.toLowerCase())
       );

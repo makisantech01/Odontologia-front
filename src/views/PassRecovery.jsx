@@ -24,7 +24,7 @@ const PassRecovery = () => {
     try {
       await axios
         .post(
-          `https://api-sist-odontologico-production.up.railway.app/solicitar-restablecimiento/${data.dni}`,
+          `https://api-sist-odontologico-production-889e.up.railway.app/solicitar-restablecimiento/${data.dni}`,
           { email: data.email }
         )
         .then(async (response) => {

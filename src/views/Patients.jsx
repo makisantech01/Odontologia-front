@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import ClientTable from "../components/Pacients/ClientTable";
 import SearchBar from "../components/Pacients/SearchBar";
-import AddButton from "../components/Pacients/AddButton";
 
 const Patients = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,7 +17,6 @@ const Patients = () => {
       <div className="bg-secondary-100 flex flex-col h-[100vh] w-[100vw] justify-center overflow-auto items-center gap-6  mx-4">
         <SearchBar searchTerm={searchTerm} onSearch={handleSearch} />
         <ClientTable searchTerm={searchTerm} />
-        <AddButton />
       </div>
     </div>
   );
