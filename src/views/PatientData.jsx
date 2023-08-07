@@ -31,7 +31,14 @@ const PatientData = () => {
   } = useForm();
 
   const user = useSelector((state) => state.users.users);
-  const client = useSelector((state) => state.clients.selectedClient.data);
+  // const client = useSelector((state) => state?.clients?.selectedClient?.data);
+
+  const client = {
+    nombre: "Cristopher",
+    domicilio: "RD",
+    fechaNacimiento: "12/23/1997",
+  };
+  console.log("--->", client);
 
   useEffect(() => {
     dispatch(fetchClient(user));

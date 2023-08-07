@@ -157,7 +157,7 @@ const AppointmentUser = () => {
   };
 
   return (
-    <div className="flex flex-col lg:mx-[15vw] mx-4  h-[40em]">
+    <div className="flex flex-col lg:mx-[15vw] mx-4  h-[40em] bg-green-200">
       <ul className=" flex flex-col items-center mt-4 bg-gray-300 text-black h-[30em] w-full rounded-lg lg:rounded-2xl py-5 px-3 overflow-y-auto scrollbar-hide">
         {filteredAppointments.map((item) => (
           <li
