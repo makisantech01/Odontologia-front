@@ -38,7 +38,7 @@ const AppointmentUser = () => {
   //filtra los dias disponibles pasadas las 12hs
   const filteredAppointments = appointments.filter((a) => {
     const currentDate = new Date();
-    const dia = currentDate.getDate();
+    const dia = currentDate.getUTCDate();
     const mes = currentDate.getMonth() + 1;
     const año = currentDate.getFullYear();
     const currentDateISO = `${año}-${mes.toString().padStart(2, "0")}-${dia
