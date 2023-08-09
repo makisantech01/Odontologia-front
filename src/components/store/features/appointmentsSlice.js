@@ -11,6 +11,7 @@ export const getAppointments = createAsyncThunk(
   "appointment/getAppointments",
   async () => {
     const response = await axios(`${appointmentUrl}`);
+    console.log("hola  --->", response.data);
     return response.data.data;
   }
 );
@@ -33,6 +34,20 @@ export const cleanAppointments = createAsyncThunk(
   }
 );
 
+export const postAppointment = createAsyncThunk(
+  "appointments/postAppointment",
+  async (payload, { dispatch }) => {
+    const { dni, fecha, hora, estado } = payload;
+    const clientDni = payload.dni;
+    const response = await axios.post(
+      `${appointmentUrl}/${clientDni}`,
+      payload
+    );
+    dispatch(getAppointments());
+    return response.data;
+  }
+);
+
 export const AppointmentSlice = createSlice({
   name: "appointments",
   initialState,
@@ -50,6 +65,13 @@ export const AppointmentSlice = createSlice({
         "",
         "error"
       );
+    });
+    builder.addCase(postAppointment.fulfilled, (state, action) => {
+      Swal.fire("Turno creado con exito", "", "success");
+    });
+    builder.addCase(postAppointment.rejected, (state, action) => {
+      console.log(action.payload);
+      Swal.fire("Hubo un error al crear el turno", "", "error");
     });
   },
 });
