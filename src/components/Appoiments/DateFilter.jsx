@@ -11,6 +11,7 @@ function DateFilter(props) {
 
   const handleValueChange = (newValue) => {
     const formattedDate = moment(newValue).format("DD/MM/YYYY");
+    console.log("la fecha --->", formattedDate);
     setStartDate(newValue);
     onSelect({ date: formattedDate });
   };

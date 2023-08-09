@@ -7,13 +7,11 @@ import AppointmentUser from "../components/Appoiments/AppointmentUser";
 
 const Citas = () => {
   const dispatch = useDispatch();
- 
   const userType = useSelector((state) => state.users.type);
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
-
 
   return (
     <div className="flex flex-row h-screen w-screen overflow-hidden bg-secondary-100">
