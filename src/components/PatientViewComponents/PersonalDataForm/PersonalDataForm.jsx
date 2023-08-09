@@ -118,13 +118,13 @@ const PersonalDataForm = () => {
   };
   return (
     <>
-      <form className="w-[350px] h-[85vh] mx-auto bg-blue-600 p-4 rounded-3xl shadow-2xl z-10">
-        <h2 className="text-6xl font-bold text-center italic text-white mb-[1.8em] mt-5">
+      <form className="w-[900px] mx-4 lg:mx-0 lg:h-auto h-[82vh] bg-primary p-4 rounded-3xl shadow-2xl z-10">
+        <h2 className="lg:text-6xl text-4xl font-bold text-center italic text-white my-5">
           Datos Personales
         </h2>
-        <div className="flex gap-6">
-          <div className="bg-green-400">
-            <div className="flex items-center gap-6">
+        <div className="flex flex-col lg:flex-row md:flex-row overflow-y-auto overflow-x-hidden lg:h-auto h-[500px]">
+          <div className=" p-3 flex flex-col gap-4">
+            <div className="flex items-center justify-between">
               <label className="text-1xl text-white">DNI</label>
               <input
                 defaultValue={client?.dni}
@@ -134,10 +134,10 @@ const PersonalDataForm = () => {
                 readOnly
               />
             </div>
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-between">
               <label className="text-1xl text-white">Nombre</label>
               <input
-                defaultValue={client.nombre}
+                defaultValue={client?.nombre}
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Ingrese su Nombre"
@@ -148,10 +148,10 @@ const PersonalDataForm = () => {
             {errors.nombre && (
               <p className="h-0 text-red-500">{errors.nombre.message}</p>
             )}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-between">
               <label className="text-1xl text-white">Apellido</label>
               <input
-                defaultValue={client.apellido}
+                defaultValue={client?.apellido}
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Ingrese su Apellido"
@@ -162,10 +162,10 @@ const PersonalDataForm = () => {
             {errors.apellido && (
               <p className="h-0 text-red-500">{errors.apellido.message}</p>
             )}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-between">
               <label className="text-1xl text-white">Edad</label>
               <input
-                defaultValue={client.edad}
+                defaultValue={client?.edad}
                 className="border p-2 rounded w-[17em]"
                 type="number"
                 min={3}
@@ -178,11 +178,13 @@ const PersonalDataForm = () => {
             {errors.edad && (
               <p className="h-0 text-red-500">{errors.edad.message}</p>
             )}
-            <div className="flex items-center gap-6">
-              <label className="text-1xl text-white">Fecha de Nacimiento</label>
+            <div className="flex items-center justify-between">
+              <label className="text-1xl text-white w-auto">
+                Fecha de Nacimiento
+              </label>
               <input
                 defaultValue={fechaClienteFormateada}
-                className="border p-2 rounded w-[17em]"
+                className="border p-2 rounded lg:w-[320px] md:w-[320px] w-[270px]"
                 type="date"
                 placeholder="Ingrese su fecha de Nacimiento"
                 {...register("fechaNacimiento", {
@@ -196,10 +198,10 @@ const PersonalDataForm = () => {
                 {errors.fechaNacimiento.message}
               </p>
             )}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-between">
               <label className="text-1xl text-white">Domicilio</label>
               <input
-                defaultValue={client.domicilio}
+                defaultValue={client?.domicilio}
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Ingrese su Domicilio"
@@ -210,10 +212,10 @@ const PersonalDataForm = () => {
             {errors.domicilio && (
               <p className="h-0 text-red-500">{errors.domicilio.message}</p>
             )}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-between">
               <label className="text-1xl text-white">Localidad</label>
               <input
-                defaultValue={client.localidad}
+                defaultValue={client?.localidad}
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Ingrese su Localidad"
@@ -224,10 +226,10 @@ const PersonalDataForm = () => {
             {errors.localidad && (
               <p className="h-0 text-red-500">{errors.localidad.message}</p>
             )}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-between">
               <label className="text-1xl text-white">N° Historia Clínica</label>
               <input
-                defaultValue={client.nroHistoriaClinica}
+                defaultValue={client?.nroHistoriaClinica}
                 className="border p-2 rounded w-[17em]"
                 type="number"
                 readOnly
@@ -235,10 +237,12 @@ const PersonalDataForm = () => {
                 onBlur={() => handleBlur("nroHistoriaClinica")}
               />
             </div>
-            <div className="flex items-center gap-6">
+          </div>
+          <div className=" p-3 flex flex-col gap-4">
+            <div className="flex items-center justify-between">
               <label className="text-1xl text-white">Email</label>
               <input
-                defaultValue={client.email}
+                defaultValue={client?.email}
                 className="border p-2 rounded w-[17em]"
                 type="email"
                 placeholder="Ingrese su Email"
@@ -255,12 +259,10 @@ const PersonalDataForm = () => {
             {errors.email && (
               <p className="h-0 text-red-500">{errors.email.message}</p>
             )}
-          </div>
-          <div className="bg-red-400">
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-between gap-3">
               <label className="text-1xl text-white">Ocupación/Profesión</label>
               <input
-                defaultValue={client.ocupacion}
+                defaultValue={client?.ocupacion}
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Ingrese su Ocupación/Profesión"
@@ -271,10 +273,10 @@ const PersonalDataForm = () => {
             {errors.ocupacion && (
               <p className="h-0 text-red-500">{errors.ocupacion.message}</p>
             )}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-between">
               <label className="text-1xl text-white">Teléfono</label>
               <input
-                defaultValue={client.telefono1}
+                defaultValue={client?.telefono1}
                 className="border p-2 rounded w-[17em]"
                 type="number"
                 placeholder="Ingrese su telefono"
@@ -290,12 +292,12 @@ const PersonalDataForm = () => {
             {errors.telefono1 && (
               <p className="h-0 text-red-500">{errors.telefono1.message}</p>
             )}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-between">
               <label className="text-1xl text-white">
                 Teléfono Alternativo
               </label>
               <input
-                defaultValue={client.telefono2}
+                defaultValue={client?.telefono2}
                 className="border p-2 rounded w-[17em]"
                 type="number"
                 placeholder="Ingrese otro telefono"
@@ -311,10 +313,10 @@ const PersonalDataForm = () => {
             {errors.telefono2 && (
               <p className="h-0 text-red-500">{errors.telefono2.message}</p>
             )}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-between">
               <label className="text-1xl text-white">Obra Social</label>
               <select
-                defaultValue={client.obraSocial}
+                defaultValue={client?.obraSocial}
                 className="border p-2 rounded w-[17em]"
                 placeholder="Seleccione su Obra Social"
                 {...register("obraSocial")}
@@ -330,10 +332,10 @@ const PersonalDataForm = () => {
             {errors.obraSocial && (
               <p className="h-0 text-red-500">{errors.obraSocial.message}</p>
             )}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-between">
               <label className="text-1xl text-white">Plan</label>
               <input
-                defaultValue={client.plan}
+                defaultValue={client?.plan}
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Ingrese su Plan"
@@ -351,10 +353,10 @@ const PersonalDataForm = () => {
             {errors.plan && (
               <p className="h-0 text-red-500">{errors.plan.message}</p>
             )}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-between">
               <label className="text-1xl text-white">Titular</label>
               <input
-                defaultValue={client.titular}
+                defaultValue={client?.titular}
                 className="border p-2 rounded w-[17em]"
                 type="text"
                 placeholder="Ingrese el titular"
@@ -372,10 +374,10 @@ const PersonalDataForm = () => {
             {errors.titular && (
               <p className="h-0 text-red-500">{errors.titular.message}</p>
             )}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-between">
               <label className="text-1xl text-white">N° Afiliado</label>
               <input
-                defaultValue={client.afiliado}
+                defaultValue={client?.afiliado}
                 className="border p-2 rounded w-[17em]"
                 type="number"
                 placeholder="Ingrese el numero de afiliado"
@@ -395,9 +397,9 @@ const PersonalDataForm = () => {
             )}
           </div>
         </div>
-        <div className="flex justify-center py-1">
+        <div className="flex justify-center mt-2 ">
           <button
-            className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
+            className="font-bold w-[8em] border-none rounded-2xl py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
             type="submit"
             onClick={handleSubmit(onSubmit)}
           >
