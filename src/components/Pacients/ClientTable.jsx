@@ -11,7 +11,8 @@ library.add(faCheck, faEdit, faTrash);
 
 const ClientTable = ({ searchTerm }) => {
   const clients = useSelector((state) => state.clients.clients);
-
+   
+  console.log(clients)
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -50,12 +51,9 @@ const ClientTable = ({ searchTerm }) => {
         accessor: "telefono1",
       },
       {
-        Header: "Opciones",
         accessor: "opciones",
         Cell: () => (
           <div className="flex gap-1 justify-evenly">
-            <FontAwesomeIcon icon="check" className="text-green-600 text-2xl" />
-            <FontAwesomeIcon icon="edit" className="text-blue-600 text-2xl" />
             <FontAwesomeIcon icon="trash" className="text-red-600 text-2xl" />
           </div>
         ),

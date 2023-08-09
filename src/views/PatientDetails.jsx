@@ -9,7 +9,6 @@ const PatientDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const selectedClient = useSelector((state) => state.clients.selectedClient);
-
   useEffect(() => {
     dispatch(fetchClient(id));
   }, [dispatch, id]);
@@ -20,7 +19,7 @@ const PatientDetails = () => {
       </div>
       <div className="bg-secondary-100 flex flex-col h-[100vh] w-[100vw] justify-center items-center gap-6  mx-4">
         <header className="text-[#FB8C00] text-3xl font-bold pt-[3em] lg:pt-0">
-          {selectedClient?.nombre + " " + selectedClient?.apellido}
+          {selectedClient?.data.nombre + " " + selectedClient?.data.apellido}
         </header>
         <div className="w-[100%] lg:w-[90%]">
           <PatientMenu />
