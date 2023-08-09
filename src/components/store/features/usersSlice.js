@@ -3,6 +3,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import jwt_decode from "jwt-decode";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 const cookies = new Cookies()
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
   const response = await fetch("https://jsonplaceholder.typicode.com/users");
@@ -91,7 +92,13 @@ const usersSlice = createSlice({
         }
       })
       .addCase(LoginUser.rejected, (state, action) => {
+        state.loading = false
         state.error = "hubo un error al iniciar sesión";
+        Swal.fire(
+          "Hubo un error al iniciar sesión, inténtelo nuevamente",
+          "",
+          "error"
+        );
       })
       .addCase(getUserData.fulfilled, (state, action)=>{
         const { type, users } = action.payload;
