@@ -29,7 +29,7 @@ export const LoginUser = createAsyncThunk(
   "user/LoginUser",
   async (formData) => {
     const response = await axios.post(
-      "https://api-sist-odontologico-production.up.railway.app/login",
+      "https://api-sist-odontologico-production-889e.up.railway.app/login",
       formData
     );
     const data = response.data.token;
@@ -42,7 +42,7 @@ export const RegisterUser = createAsyncThunk(
   "user/RegisterUser",
   async (formData) => {
     const response = await axios.post(
-      "https://api-sist-odontologico-production.up.railway.app/usuarios",
+      "https://api-sist-odontologico-production-889e.up.railway.app/usuarios",
       formData
     );
     const data = response.data;

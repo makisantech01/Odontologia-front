@@ -7,13 +7,21 @@ import {
   faIdCard,
   faLock,
   faEnvelope,
+  faUser,
+  faCalendar,
+  faHouse,
+  faCity,
+  faUserTie,
+  faPhone,
+  faIdCardClip
 } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { createClient } from "../store/features/clientSlice";
 import DateOfBirth from "./DateOfBirth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-library.add(faIdCard, faLock, faEnvelope);
+library.add(faIdCard, faLock, faEnvelope, faUser);
 
 const PacientForm = () => {
   const dispatch = useDispatch();
@@ -66,16 +74,18 @@ const PacientForm = () => {
   };
 
   return (
-    <div className="bg-secondary-100 flex items-center justify-center h-[100vh]">
+    <div className="bg-secondary-100 flex items-center justify-center h-auto">
       <div className=" flex flex-col justify-center">
-        <img src={topWave} className=" absolute z-[1] top-0 right-0 w-[40%]" />
-        <form className="w-auto h-[90vh] bg-primary py-5 px-10 rounded-3xl shadow-2xl z-10">
+        <form className="w-auto h-auto bg-primary p-5 m-1 rounded-3xl shadow-2xl z-10">
           <h2 className="text-4xl font-bold text-center italic text-white pb-10">
             Datos Personales
           </h2>
-          <div className="flex lg:flex-row flex-col gap-10 h-[33em] overflow-y-auto scrollbar-hide">
+          <div className="flex lg:flex-row flex-row gap-10 h-[33em] overflow-y-auto scrollbar-hide">
             <div className="flex flex-col items-center gap-7">
-              <div className="flex items-center gap-2">
+              <div className="flex flex-row items-center gap-2">
+                <FontAwesomeIcon icon={faIdCard} />
+                <div className="flex flex-col items-center">
+                  <h1>DNI</h1>
                 <input
                   defaultValue={toString(user)}
                   className="border p-2 rounded w-[17em]"
@@ -86,9 +96,13 @@ const PacientForm = () => {
                   onBlur={() => handleBlur("dni")}
                   readOnly
                 />
+                </div>
               </div>
-              <div className="flex flex-col items-center gap-2">
-                <input
+              <div className="flex flex-row items-center gap-2">
+              <FontAwesomeIcon icon={faUser} />
+              <div className="flex flex-col items-center">
+              <h1>Nombre</h1>
+              <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
                   placeholder="Ingrese su Nombre"
@@ -103,7 +117,12 @@ const PacientForm = () => {
                   </label>
                 )}
               </div>
-              <div className="flex flex-col items-center gap-2">
+              
+              </div>
+              <div className="flex flex-row items-center gap-2">
+              <FontAwesomeIcon icon={faUser} />
+              <div className="flex flex-col items-center">
+              <h1>Apellido</h1>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
@@ -115,9 +134,13 @@ const PacientForm = () => {
                 />
                 {errors.apellido && (
                   <p className="h-0 text-red-500">{errors.apellido.message}</p>
-                )}
+                )} 
               </div>
-              <div className="flex flex-col items-center gap-2">
+              </div>
+              <div className="flex  flex-row items-center gap-2">
+              <FontAwesomeIcon icon={faUser} />
+              <div className="flex flex-col items-center">
+              <h1>Edad</h1>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="number"
@@ -133,7 +156,11 @@ const PacientForm = () => {
                   <p className="h-0 text-red-500">{errors.edad.message}</p>
                 )}
               </div>
-              <div className="flex flex-col items-center gap-2 w-full rounded">
+              </div>
+              <div className="flex  flex-row items-center gap-2 w-full rounded">
+              <FontAwesomeIcon icon={faCalendar} />
+              <div className="flex flex-col items-center">
+              <h1>Fecha de nacimiento</h1>
                 <DateOfBirth />
                 {errors.fechaNacimiento && (
                   <p className="h-0 text-red-500">
@@ -141,8 +168,13 @@ const PacientForm = () => {
                   </p>
                 )}
               </div>
-              <div className="flex flex-col items-center gap-2">
-                <input
+                
+              </div>
+              <div className="flex  flex-row items-center gap-2">
+              <FontAwesomeIcon icon={faHouse} />
+              <div className="flex flex-col items-center">
+                  <h1>Domicilio</h1>
+                  <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
                   placeholder="Ingrese su Domicilio"
@@ -155,7 +187,12 @@ const PacientForm = () => {
                   <p className="h-0 text-red-500">{errors.domicilio.message}</p>
                 )}
               </div>
-              <div className="flex flex-col items-center gap-2">
+              
+              </div>
+              <div className="flex  flex-row items-center gap-2">
+              <FontAwesomeIcon icon={faCity} />
+              <div className="flex flex-col items-center">
+              <h1>Localidad</h1>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
@@ -169,9 +206,11 @@ const PacientForm = () => {
                   <p className="h-0 text-red-500">{errors.localidad.message}</p>
                 )}
               </div>
+                
+              </div>
             </div>
-            <div className="flex flex-col items-center gap-7">
-              {/* <div className="flex-col flex justify-center gap-2">
+            <div className="flex  flex-col items-center gap-7">
+              {/* <div className=" flex-row flex justify-center gap-2">
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="number"
@@ -186,7 +225,10 @@ const PacientForm = () => {
                 )}
               </div> */}
 
-              <div className="flex flex-col items-center gap-2">
+              <div className="flex  flex-row items-center gap-2">
+              <FontAwesomeIcon icon={faEnvelope} />
+              <div className="flex flex-col items-center">
+              <h1>Email</h1>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="email"
@@ -205,7 +247,12 @@ const PacientForm = () => {
                   <p className="h-0 text-red-500">{errors.email.message}</p>
                 )}
               </div>
-              <div className="flex flex-col items-center gap-2">
+                
+              </div>
+              <div className="flex  flex-row items-center gap-2">
+              <FontAwesomeIcon icon={faUserTie} />
+              <div className="flex flex-col items-center">
+              <h1>Ocupación/Profesión</h1>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
@@ -217,9 +264,14 @@ const PacientForm = () => {
                 />
                 {errors.ocupacion && (
                   <p className="h-0 text-red-500">{errors.ocupacion.message}</p>
-                )}
+                )} 
               </div>
-              <div className="flex flex-col items-center gap-2">
+               
+              </div>
+              <div className="flex  flex-row items-center gap-2">
+              <FontAwesomeIcon icon={faPhone} />
+              <div className="flex flex-col items-center">
+              <h1>Numero de teléfono</h1>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="number"
@@ -237,7 +289,11 @@ const PacientForm = () => {
                   <p className="h-0 text-red-500">{errors.telefono1.message}</p>
                 )}
               </div>
-              <div className="flex flex-col items-center gap-2">
+              </div>
+              <div className="flex  flex-row items-center gap-2">
+              <FontAwesomeIcon icon={faPhone} />
+              <div className="flex flex-col items-center">
+              <h1>Otro teléfono</h1>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="number"
@@ -255,8 +311,12 @@ const PacientForm = () => {
                   <p className="h-0 text-red-500">{errors.telefono2.message}</p>
                 )}
               </div>
-              <div className="flex flex-col items-center gap-2">
-                <select
+              </div>
+              <div className="flex  flex-row items-center gap-2">
+              <FontAwesomeIcon icon={faIdCardClip} />
+              <div className="flex flex-col items-center">
+              <h1>Obra social</h1>
+               <select
                   className="border p-2 rounded w-[17em] text-gray-400"
                   {...register("obraSocial", {
                     required: "Campo obligatorio",
@@ -275,9 +335,13 @@ const PacientForm = () => {
                   <p className="h-0 text-red-500">
                     {errors.obraSocial.message}
                   </p>
-                )}
+                )} 
               </div>
-              <div className="flex flex-col items-center gap-2">
+              </div>
+              <div className="flex flex-row items-center gap-2">
+              <FontAwesomeIcon icon={faIdCardClip} />
+              <div className="flex flex-col items-center">
+              <h1>Plan</h1>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
@@ -296,8 +360,13 @@ const PacientForm = () => {
                   <p className="h-0 text-red-500">{errors.plan.message}</p>
                 )}
               </div>
-              <div className="flex flex-col items-center gap-2">
-                <input
+                
+              </div>
+              <div className="flex flex-row items-center gap-2">
+              <FontAwesomeIcon icon={faIdCard} />
+              <div className="flex flex-col items-center">
+              <h1>Titular</h1>
+                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
                   placeholder="Ingrese el titular"
@@ -315,8 +384,13 @@ const PacientForm = () => {
                   <p className="h-0 text-red-500">{errors.titular.message}</p>
                 )}
               </div>
-              <div className="flex flex-col items-center gap-2">
-                <input
+              </div>
+              <div className="flex flex-row items-center gap-2">
+                
+                <FontAwesomeIcon icon={faIdCard} />
+              <div className="flex flex-col items-center">
+                  <h1>Numero de afiliado</h1>
+                  <input
                   className="border p-2 rounded w-[17em]"
                   type="number"
                   placeholder="Ingrese el numero de afiliado"
@@ -333,6 +407,7 @@ const PacientForm = () => {
                 {errors.afiliado && (
                   <p className="h-0 text-red-500">{errors.afiliado.message}</p>
                 )}
+                </div>
               </div>
             </div>
           </div>
@@ -346,10 +421,6 @@ const PacientForm = () => {
             </button>
           </div>
         </form>
-        <img
-          src={bottonWave}
-          className=" absolute z-[1] bottom-0 left-0 w-[40%]"
-        />
       </div>
     </div>
   );

@@ -28,7 +28,7 @@ const Login = () => {
 
   const loading = useSelector((state) => state.users.loading);
 
-  console.log(loading);
+  console.log("este es el loading",loading);
 
   const {
     register,
@@ -63,17 +63,20 @@ const Login = () => {
     <div className="bg-secondary-100 h-screen overflow-hidden flex items-center justify-center">
       <div className=" flex flex-col justify-center">
         <img src={topWave} className=" absolute z-[1] top-0 right-0 w-[40%]" />
-        <form className="w-[500px] mx-auto bg-primary p-4 rounded-3xl shadow-2xl shadow-black z-10">
+        <form className="w-[500px] mx-auto bg-primary p-4 rounded-3xl shadow-black shadow-2xl z-10">
           <h2 className="text-6xl font-bold text-center italic text-white mb-[1.8em] mt-5">
             Conident
           </h2>
           <div className="flex justify-center flex-col items-center gap-10">
             <div className="flex items-center gap-6">
+            
+              <div className="flex flex-row items-center gap-2">
               <FontAwesomeIcon
                 icon={faIdCard}
                 className="text-4xl text-white"
               />
-              <input
+              <div className="flex flex-col items-center gap-2">
+                <input
                 className="border p-2 rounded w-[17em]"
                 type="number"
                 min="0"
@@ -87,17 +90,23 @@ const Login = () => {
                 })}
                 onBlur={() => handleBlur("dni")}
               />
-            </div>
-            {errors.dni && (
+               {errors.dni && (
               <p className="h-0 text-red-500">{errors.dni.message}</p>
             )}
+              </div>
+              </div>
+            </div>
+           
             <div className="flex items-center gap-6 flex-row">
-              <FontAwesomeIcon
+             
+              <div className="relative flex-grow">
+                <div className="flex flex-row items-center">
+                <FontAwesomeIcon
                 icon={faLock}
                 className="text-4xl text-white mr-2"
               />
-              <div className="relative flex-grow">
-                <input
+              <div className="flex flex-col items-center gap-2">
+              <input
                   className="border p-2 rounded w-[17em]"
                   type={showPassword ? "text" : "password"}
                   placeholder="Ingrese su contraseña"
@@ -118,12 +127,16 @@ const Login = () => {
                     className="absolute top-1/2 right-2 transform -translate-y-1/2 text-xl cursor-pointer text-secondary"
                     onClick={() => setShowPassword(!showPassword)}
                   />
+
                 )}
-              </div>
-            </div>
-            {errors.password && (
+                 {errors.password && (
               <p className="h-0 text-red-500">{errors.password.message}</p>
             )}
+              </div>
+                </div>
+              </div>
+            </div>
+           
             <span
               className="text-white hover:text-gray-200 cursor-pointer"
               onClick={() => nav("recuperacion-contraseña")}
@@ -137,7 +150,7 @@ const Login = () => {
               type="submit"
               onClick={handleSubmit(onSubmit)}
             >
-              {loading === false ? "Login" : "Cargando.."}
+              {loading === true ? "Cargando..." : "Ingresar"}
             </button>
           </div>
           <div className="flex justify-center">

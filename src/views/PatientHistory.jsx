@@ -33,7 +33,7 @@ const PatientHistory = () => {
     dispatch(fetchClient(user));
   }, [dispatch]);
 
-  const api = "https://api-sist-odontologico-production.up.railway.app";
+  const api = "https://api-sist-odontologico-production-889e.up.railway.app";
 
   const onSubmit = async (data) => {
     try {

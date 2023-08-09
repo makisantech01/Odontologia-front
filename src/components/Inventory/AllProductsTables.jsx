@@ -96,26 +96,34 @@ const AllProductsTables = ({ productos, handleEdit }) => {
         </thead>
         {/* datos */}
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
+  {productos.length === 0 ? (
+    <tr>
+      <td className="bg-white items-center text-center m-auto" colSpan={columns.length}>
+        No se encontraron productos
+      </td>
+    </tr>
+  ) : (
+    rows.map((row) => {
+      prepareRow(row);
+      return (
+        <tr {...row.getRowProps()}>
+          {row.cells.map((cell, index) => {
             return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell, index) => {
-                  return (
-                    <td
-                      {...cell.getCellProps()}
-                      className={`bg-slate-300 py-2 px-4 border-b  text-sm ${
-                        index !== row.cells.length - 1 ? "border-r" : ""
-                      }`}
-                    >
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
-              </tr>
+              <td
+                {...cell.getCellProps()}
+                className={`bg-slate-300 py-2 px-4 border-b  text-sm ${
+                  index !== row.cells.length - 1 ? "border-r" : ""
+                }`}
+              >
+                {cell.render("Cell")}
+              </td>
             );
           })}
-        </tbody>
+        </tr>
+      );
+    })
+  )}
+</tbody>
       </table>
     </div>
   );
