@@ -22,6 +22,7 @@ const AppoinmentList = () => {
   const [searchResult, setSearchResult] = useState("");
   const [dni, setDni] = useState("");
   const appointments = useSelector((state) => state.appointments.appointments);
+  console.log("appoin --->", appointments);
   const dispatch = useDispatch();
 
   //fecha actual
@@ -37,7 +38,7 @@ const AppoinmentList = () => {
     return a.fecha >= currentDateISO;
   });
 
-  console.log("-->", appointments);
+  console.log("-->", currentAppointments);
 
   //eliminacion de turnos antiguos pasados los 2 meses
   appointments.map(async (a) => {
