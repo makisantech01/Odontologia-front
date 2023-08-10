@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import bottonWave from "../../assets/botton_wave.png";
 import topWave from "../../assets/topwave.png";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import Swal from "sweetalert2";
 import {
   faIdCard,
   faLock,
@@ -55,14 +56,17 @@ const PacientForm = () => {
       if (data.afiliado === "") {
         data.afiliado = 0;
       }
-
+      console.log("fecha formateada ----->",fechaFormateada);
       // Actualizar el valor de la fecha de vencimiento en los datos
       const newData = { ...data, fechaNacimiento: fechaFormateada };
       console.log(newData);
       const response = await dispatch(createClient(newData));
-      if (response) {
-        console.log(response);
+      if (response.type === "client/createClient/fulfilled" ) {
+        console.log(response.type);
         nav("/historial-medico");
+      }
+      else{
+        Swal.fire("Hubo un error al realizar la operación, verifique que los datos sean correctos.", "", "error");
       }
     } catch (error) {
       console.error(error);
@@ -85,7 +89,7 @@ const PacientForm = () => {
               <div className="flex flex-row items-center gap-2">
                 <FontAwesomeIcon icon={faIdCard} />
                 <div className="flex flex-col items-center">
-                  <h1>DNI</h1>
+                  <label>DNI</label>
                 <input
                   defaultValue={user}
                   className="border p-2 rounded w-[17em]"
@@ -101,7 +105,7 @@ const PacientForm = () => {
               <div className="flex flex-row items-center gap-2">
               <FontAwesomeIcon icon={faUser} />
               <div className="flex flex-col items-center">
-              <h1>Nombre</h1>
+              <label>Nombre</label>
               <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
@@ -122,7 +126,7 @@ const PacientForm = () => {
               <div className="flex flex-row items-center gap-2">
               <FontAwesomeIcon icon={faUser} />
               <div className="flex flex-col items-center">
-              <h1>Apellido</h1>
+              <label>Apellido</label>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
@@ -140,7 +144,7 @@ const PacientForm = () => {
               <div className="flex  flex-row items-center gap-2">
               <FontAwesomeIcon icon={faUser} />
               <div className="flex flex-col items-center">
-              <h1>Edad</h1>
+              <label>Edad</label>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="number"
@@ -160,8 +164,16 @@ const PacientForm = () => {
               <div className="flex  flex-row items-center gap-2 w-full rounded">
               <FontAwesomeIcon icon={faCalendar} />
               <div className="flex flex-col items-center">
-              <h1>Fecha de nacimiento</h1>
-                <DateOfBirth />
+              <label>Fecha de nacimiento</label>
+              <input
+                  type="date"
+                  id="fechaNacimiento"
+                  placeholder="DD/MM/AA"
+                  className="border p-2 rounded w-[17em]"
+                  {...register("fechaNacimiento", {
+                    required: "Campo obligatorio",
+                  })}
+                />
                 {errors.fechaNacimiento && (
                   <p className="h-0 text-red-500">
                     {errors.fechaNacimiento.message}
@@ -173,7 +185,7 @@ const PacientForm = () => {
               <div className="flex  flex-row items-center gap-2">
               <FontAwesomeIcon icon={faHouse} />
               <div className="flex flex-col items-center">
-                  <h1>Domicilio</h1>
+                  <label>Domicilio</label>
                   <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
@@ -192,11 +204,11 @@ const PacientForm = () => {
               <div className="flex  flex-row items-center gap-2">
               <FontAwesomeIcon icon={faCity} />
               <div className="flex flex-col items-center">
-              <h1>Localidad</h1>
+              <label>Localidad</label>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
-                  placeholder="Ingrese su Localidad"
+                  placeholder="Ingrese SOLO el nombre de su localidad"
                   {...register("localidad", {
                     required: "Campo obligatorio",
                   })}
@@ -210,25 +222,10 @@ const PacientForm = () => {
               </div>
             </div>
             <div className="flex  flex-col items-center gap-7">
-              {/* <div className=" flex-row flex justify-center gap-2">
-                <input
-                  className="border p-2 rounded w-[17em]"
-                  type="number"
-                  defaultValue={0}
-                  readOnly
-                  hidden
-                  {...register("nroHistoriaClinica")}
-                  onBlur={() => handleBlur("nroHistoriaClinica")}
-                />
-                {errors.email && (
-                  <p className="h-0 text-red-500">{errors.email.message}</p>
-                )}
-              </div> */}
-
               <div className="flex  flex-row items-center gap-2">
               <FontAwesomeIcon icon={faEnvelope} />
               <div className="flex flex-col items-center">
-              <h1>Email</h1>
+              <label>Email</label>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="email"
@@ -252,7 +249,7 @@ const PacientForm = () => {
               <div className="flex  flex-row items-center gap-2">
               <FontAwesomeIcon icon={faUserTie} />
               <div className="flex flex-col items-center">
-              <h1>Ocupación/Profesión</h1>
+              <label>Ocupación/Profesión</label>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
@@ -271,7 +268,7 @@ const PacientForm = () => {
               <div className="flex  flex-row items-center gap-2">
               <FontAwesomeIcon icon={faPhone} />
               <div className="flex flex-col items-center">
-              <h1>Numero de teléfono</h1>
+              <label>Numero de teléfono</label>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="number"
@@ -293,7 +290,7 @@ const PacientForm = () => {
               <div className="flex  flex-row items-center gap-2">
               <FontAwesomeIcon icon={faPhone} />
               <div className="flex flex-col items-center">
-              <h1>Otro teléfono</h1>
+              <label>Otro teléfono</label>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="number"
@@ -315,7 +312,7 @@ const PacientForm = () => {
               <div className="flex  flex-row items-center gap-2">
               <FontAwesomeIcon icon={faIdCardClip} />
               <div className="flex flex-col items-center">
-              <h1>Obra social</h1>
+              <label>Obra social</label>
                <select
                   className="border p-2 rounded w-[17em] text-gray-400"
                   {...register("obraSocial", {
@@ -341,7 +338,7 @@ const PacientForm = () => {
               <div className="flex flex-row items-center gap-2">
               <FontAwesomeIcon icon={faIdCardClip} />
               <div className="flex flex-col items-center">
-              <h1>Plan</h1>
+              <label>Plan</label>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
@@ -365,7 +362,7 @@ const PacientForm = () => {
               <div className="flex flex-row items-center gap-2">
               <FontAwesomeIcon icon={faIdCard} />
               <div className="flex flex-col items-center">
-              <h1>Titular</h1>
+              <label>Titular</label>
                  <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
@@ -389,8 +386,9 @@ const PacientForm = () => {
                 
                 <FontAwesomeIcon icon={faIdCard} />
               <div className="flex flex-col items-center">
-                  <h1>Numero de afiliado</h1>
+                  <label>Numero de afiliado</label>
                   <input
+                  maxLength="10"
                   className="border p-2 rounded w-[17em]"
                   type="number"
                   placeholder="Ingrese el numero de afiliado"
