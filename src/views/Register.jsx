@@ -50,14 +50,15 @@ const Register = () => {
 
   return (
     <div className="bg-secondary-100 h-screen flex items-center justify-center">
-      <div className=" flex flex-col justify-center">
+      <div className=" flex flex-col gap-10 justify-center">
         <img src={topWave} className=" absolute z-[1] top-0 right-0 w-[40%]" />
         <form className="w-[500px] mx-auto bg-primary p-4 rounded-3xl shadow-2xl z-10">
-          <h2 className="text-6xl font-bold text-center italic text-white mb-[1.8em] mt-5">
+          <h2 className="text-6xl font-bold underline text-center italic text-white mb-[1.8em] mt-5">
             Registro
           </h2>
           <div className="flex justify-center flex-col items-center gap-6">
-            <div className="flex items-center gap-6">
+            <div className="flex flex-col items-center gap-3">
+              <div className="flex flex-row items-center gap-2">
               <FontAwesomeIcon
                 icon={faIdCard}
                 className="text-4xl text-white"
@@ -77,16 +78,19 @@ const Register = () => {
                 })}
                 onBlur={() => handleBlur("dni")}
               />
-            </div>
-            {errors.dni && (
+              
+              </div>
+              {errors.dni && (
               <p className="h-0 text-red-500">{errors.dni.message}</p>
             )}
-            <div className="flex items-center gap-6 flex-row">
-              <FontAwesomeIcon
+            </div>
+            <div className="flex items-center gap-3 flex-row">
+              <div className="flex items-center flex-col">
+                <div className="relative flex-grow items-center ">
+                <FontAwesomeIcon
                 icon={faLock}
                 className="text-4xl text-white mr-2"
               />
-              <div className="relative flex-grow">
                 <input
                   className="border p-2 rounded w-[17em]"
                   type={showPassword ? "text" : "password"}
@@ -109,10 +113,17 @@ const Register = () => {
                     onClick={() => setShowPassword(!showPassword)}
                   />
                 )}
+                </div>
+                  {errors.password && (
+              <p className="h-0 text-red-500">{errors.password.message}</p>
+            )}
               </div>
             </div>
-            <div className="flex items-center gap-6 flex-row">
-              <FontAwesomeIcon
+
+            <div className="flex items-center gap-1">
+              <div className="flex flex-col items-center gap-1">
+                <div className="flex flex-row">
+                <FontAwesomeIcon
                 icon={faLock}
                 className="text-4xl text-white mr-2"
               />
@@ -145,20 +156,21 @@ const Register = () => {
                   />
                 )}
               </div>
-            </div>
-            {errors.password && (
-              <p className="h-0 text-red-500">{errors.password.message}</p>
-            )}
-            {errors.confirm_password && (
-              <p className="h-0 text-red-500">
+              </div>
+              {errors.confirm_password && (
+              <p className="h-0 mb-10 text-red-500">
                 {errors.confirm_password.message}
               </p>
             )}
+                </div>
+            </div>
+
           </div>
+          <div className="flex flex-col gap-4">
           <div className="flex justify-center py-1">
             <Link to={"/datos-personales"}>
               <button
-                className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
+                className="font-bold w-[8em] border-none rounded-2xl p-3  bg-button-100 hover:bg-button-100/80 text-white text-2xl"
                 type="submit"
                 onClick={handleSubmit(onSubmit)}
               >
@@ -168,10 +180,11 @@ const Register = () => {
           </div>
           <div className="flex justify-center">
             <Link to={"/"}>
-              <button className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl">
+              <button className="font-bold w-[8em] border-none rounded-2xl p-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl">
                 Atrás
               </button>
             </Link>
+          </div>
           </div>
         </form>
         <img
