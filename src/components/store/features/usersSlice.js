@@ -4,7 +4,11 @@ import Cookies from "universal-cookie";
 import jwt_decode from "jwt-decode";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import { fetchClients } from "./clientSlice";
 const cookies = new Cookies()
+
+const userUrl = import.meta.env.VITE_ENDPOINT;
+
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
   const response = await fetch("https://jsonplaceholder.typicode.com/users");
   const data = await response.json();
@@ -51,6 +55,15 @@ export const RegisterUser = createAsyncThunk(
   }
 );
 
+export const deleteUser = createAsyncThunk(
+  "client/deleteClient",
+  async (dni, {dispatch}) => {
+    const response = await axios.delete(`${userUrl}/usuarios/${dni}`)
+    console.log(response)
+    return response.data
+  }
+)
+
 const initialState = {
   users: null,
   login: {},
@@ -82,6 +95,7 @@ const usersSlice = createSlice({
         state.loading = true;
       })
       .addCase(LoginUser.fulfilled, (state, action) => {
+        state.loading=false
         const responseData = action.payload;
         cookies.set("token", responseData, { path: "/" });
         const typeData = cookies.get("token");
@@ -104,7 +118,15 @@ const usersSlice = createSlice({
         const { type, users } = action.payload;
         state.type = type;
         state.users = users;
-      });
+      })
+      .addCase(deleteUser.fulfilled, (state, action)=>{
+         console.log("usuario eliminado con exito")
+
+      })
+      .addCase(deleteUser.rejected, (state, action)=>{
+        console.log("error")
+        
+     });  
   },
 });
 export const { actions: usersActions, reducer: usersReducer } = usersSlice;

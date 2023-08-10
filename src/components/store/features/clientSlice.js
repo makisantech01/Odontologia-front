@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import Swal from "sweetalert2";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -31,6 +32,18 @@ export const updateClient = createAsyncThunk(
   }
 );
 
+export const deleteClient = createAsyncThunk(
+  "client/deleteClient",
+  async (dni, {dispatch}) => {
+    const response = await axios.delete(`${pacientesUrl}/${dni}`)
+    console.log(response)
+    dispatch(fetchClients());
+    return response.data
+  }
+)
+
+
+
 const initialState = {
   clients: [],
   selectedClient: null,
@@ -59,6 +72,20 @@ const clientSlice = createSlice({
     });
     builder.addCase(updateClient.fulfilled, (state, action) => {
       state.selectedClient = action.payload;
+    });
+    builder.addCase(deleteClient.fulfilled, (state, action) => {
+      Swal.fire(
+        "El paciente se eliminó correctamente.",
+        "",
+        "success"
+      );
+    });
+    builder.addCase(deleteClient.rejected, (state, action) => {
+      Swal.fire(
+        "Hubo un error al eliminar al paciente, intentelo nuevamente.",
+        "",
+        "error"
+      );
     });
   },
 });
