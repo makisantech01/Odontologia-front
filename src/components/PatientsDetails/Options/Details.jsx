@@ -6,7 +6,7 @@ import { clientSelector } from "../../store/features/clientSlice";
 const Details = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const client = useSelector((state) => state?.clients?.selectedClient.data);
+  const client = useSelector((state) => state?.clients?.selectedClient?.data);
   console.log("cliente -->", client);
   useEffect(() => {
     dispatch(fetchClient(id));
