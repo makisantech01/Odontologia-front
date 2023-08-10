@@ -22,7 +22,7 @@ const ClinicalHistory = () => {
 
   const user = useSelector((state) => state.users.users);
 
-  const [showCualInput, setShowCualInput] = useState(false);
+  const [showCualInput, setShowCualInput] = useState("");
 
   const handleChange = (event) => {
     const selectedValue = event.target.value;
@@ -60,35 +60,35 @@ const ClinicalHistory = () => {
     <div className="bg-secondary-100 h-[100vh] flex items-center justify-center">
       <div className=" flex flex-col justify-center">
         <img src={topWave} className=" absolute z-[1] top-0 right-0 w-[40%]" />
-        <form className=" bg-primary p-4 rounded-3xl shadow-2xl z-10 w-[80vw] h-[90vh]">
+        <form className=" bg-primary p-4 rounded-3xl shadow-2xl z-10 w-[90vw] lg:w-[50vw] h-[90vh]">
           <h2 className="text-4xl font-bold text-center italic text-white mb-5">
             Historial Médico
           </h2>
           <div className="flex flex-col justify-center gap-6">
-            <div className="flex lg:flex-row flex-col w-100 h-[30em] overflow-y-auto scrollbar-hide">
-              <div className="flex flex-col lg:w-[50%] gap-3">
-                <div className="flex flex-col lg:flex-row gap-1">
-                  <div className="flex flex-col lg:w-1/2 w-full p-1">
-                    <div className=" flex gap-2 justify-between">
+            <div className="flex lg:flex-row flex-col w-100 lg:h-[27em] md:h-[29em] h-[24em] overflow-y-auto">
+              <div className="flex flex-col lg:w-[50%] gap-7">
+                {/* Enfermedades */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex flex-col w-full p-1 ">
+                    <div className="flex self-center gap-12">
                       <label className="text-1xl text-white">
                         Enfermedades
                       </label>
-                      <div>
-                        <select
-                          className="border rounded w-[3em]"
-                          onChange={handleChange}
-                          {...register("enfermedad", {
-                            required: "Campo obligatorio",
-                          })}
-                          onBlur={() => handleBlur("enfermedad")}
-                        >
-                          <option value="">-</option>
-                          <option value="true">SI</option>
-                          <option value="false">NO</option>
-                        </select>
-                      </div>
+
+                      <select
+                        className="border rounded w-[3em]"
+                        onChange={handleChange}
+                        {...register("enfermedad", {
+                          required: "Campo obligatorio",
+                        })}
+                        onBlur={() => handleBlur("enfermedad")}
+                      >
+                        <option value="">-</option>
+                        <option value="true">SI</option>
+                        <option value="false">NO</option>
+                      </select>
                     </div>
-                    <div className=" w-full justify-start">
+                    <div className="w-full text-center">
                       {errors.enfermedad && (
                         <label className="h-0 text-red-500">
                           {errors.enfermedad.message}
@@ -96,10 +96,10 @@ const ClinicalHistory = () => {
                       )}
                     </div>
                   </div>
-                  {showCualInput ? (
-                    <div className="flex flex-col">
+                  {watch("enfermedad") === "true" && (
+                    <div className="flex flex-col items-center">
                       <input
-                        className="border p-1 rounded w-[17em]"
+                        className="border p-1 rounded w-[13em] outline-none"
                         type="text"
                         placeholder="Cual?"
                         {...register("detalleEnfermedad", {
@@ -118,688 +118,675 @@ const ClinicalHistory = () => {
                         </p>
                       )}
                     </div>
-                  ) : null}
+                  )}
                 </div>
-
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">
-                    Tratamiento Médico
-                  </label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("tratamientoMedico", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("tratamientoMedico")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
+                {/* Tratamiento Medico */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-3">
+                    <label className="text-1xl text-white">
+                      Tratamiento Médico
+                    </label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("tratamientoMedico", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("tratamientoMedico")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.tratamientoMedico && (
+                      <p className="h-0 text-red-500">
+                        {errors.tratamientoMedico.message}
+                      </p>
+                    )}
+                  </div>
+                  {watch("tratamientoMedico") === "true" && (
+                    <div className="flex flex-col items-center gap-3">
+                      <input
+                        className="border p-1 rounded w-[13em] outline-none"
+                        type="text"
+                        placeholder="Cual?"
+                        {...register("detalleTratamiento", {
+                          validate: (val) => {
+                            if (watch("tratamientoMedico") == "true" && !val) {
+                              return "Debe aclarar que tratamiento/s";
+                            }
+                            return true;
+                          },
+                        })}
+                        onBlur={() => handleBlur("detalleTratamiento")}
+                      />
+                      {errors.detalleTratamiento && (
+                        <p className="h-0 text-red-500">
+                          {errors.detalleTratamiento.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
-                {errors.tratamientoMedico && (
-                  <p className="h-0 text-red-500">
-                    {errors.tratamientoMedico.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <FontAwesomeIcon
-                    icon={faIdCard}
-                    className="text-1xl text-white"
-                  />
-                  <input
-                    className="border p-2 rounded w-[17em]"
-                    type="text"
-                    placeholder="Cual?"
-                    {...register("detalleTratamiento", {
-                      validate: (val) => {
-                        if (watch("tratamientoMedico") == "true" && !val) {
-                          return "Debe aclarar que tratamiento/s";
-                        }
-                        return true;
-                      },
-                    })}
-                    onBlur={() => handleBlur("detalleTratamiento")}
-                  />
+                {/* Medicacion */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-[4.5em]">
+                    <label className="text-1xl text-white">Médicacion</label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("medicacion", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("medicacion")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.medicacion && (
+                      <p className="h-0 text-red-500">
+                        {errors.medicacion.message}
+                      </p>
+                    )}
+                  </div>
+                  {watch("medicacion") === "true" && (
+                    <div className="flex flex-col items-center gap-3">
+                      <input
+                        className="border p-1 rounded w-[13em] outline-none"
+                        type="text"
+                        placeholder="Cual?"
+                        {...register("detalleMedicacion", {
+                          validate: (val) => {
+                            if (watch("medicacion") == "true" && !val) {
+                              return "Debe aclarar que tratamiento/s";
+                            }
+                            return true;
+                          },
+                        })}
+                        onBlur={() => handleBlur("detalleMedicacion")}
+                      />
+                      {errors.detalleMedicacion && (
+                        <p className="h-0 text-red-500">
+                          {errors.detalleMedicacion.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
-                {errors.detalleTratamiento && (
-                  <p className="h-0 text-red-500">
-                    {errors.detalleTratamiento.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">Medicación</label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("medicacion", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("medicacion")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
+                {/* Alergia */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-[6.5em]">
+                    <label className="text-1xl text-white">Alergia</label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("alergia", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("alergia")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.alergia && (
+                      <p className="h-0 text-red-500">
+                        {errors.alergia.message}
+                      </p>
+                    )}
+                  </div>
+                  {watch("alergia") === "true" && (
+                    <div className="flex flex-col items-center gap-3">
+                      <input
+                        className="border p-1 rounded w-[13em] outline-none"
+                        type="text"
+                        placeholder="Cual?"
+                        {...register("detalleAlergia", {
+                          validate: (val) => {
+                            if (watch("alergia") == "true" && !val) {
+                              return "Debe aclarar que tratamiento/s";
+                            }
+                            return true;
+                          },
+                        })}
+                        onBlur={() => handleBlur("detalleAlergia")}
+                      />
+                      {errors.detalleAlergia && (
+                        <p className="h-0 text-red-500">
+                          {errors.detalleAlergia.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
-                {errors.medicacion && (
-                  <p className="h-0 text-red-500">
-                    {errors.medicacion.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <FontAwesomeIcon
-                    icon={faIdCard}
-                    className="text-1xl text-white"
-                  />
-                  <input
-                    className="border p-2 rounded w-[17em]"
-                    type="text"
-                    placeholder="Cual?"
-                    {...register("detalleMedicacion", {
-                      validate: (val) => {
-                        if (watch("medicacion") == "true" && !val) {
-                          return "Debe aclarar que medicacion/es";
-                        }
-                        return true;
-                      },
-                    })}
-                    onBlur={() => handleBlur("detalleMedicacion")}
-                  />
+                {/* Cicatrizacion */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-[4em]">
+                    <label className="text-1xl text-white">Cicatrización</label>
+                    <select
+                      className="border rounded w-[3em]"
+                      {...register("cicatrizacion", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("cicatrizacion")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.cicatrizacion && (
+                      <p className="h-0 text-red-500">
+                        {errors.cicatrizacion.message}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                {errors.detalleMedicacion && (
-                  <p className="h-0 text-red-500">
-                    {errors.detalleMedicacion.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">Alergia</label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("alergia", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("alergia")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
+                {/* Fiebre Reumatica */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-7">
+                    <label className="text-1xl text-white">
+                      Fiebre Reumática
+                    </label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("fiebreReumatica", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("fiebreReumatica")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.fiebreReumatica && (
+                      <p className="h-0 text-red-500">
+                        {errors.fiebreReumatica.message}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                {errors.alergia && (
-                  <p className="h-0 text-red-500">{errors.alergia.message}</p>
-                )}
-
-                <div className="flex items-center gap-6">
-                  <FontAwesomeIcon
-                    icon={faIdCard}
-                    className="text-1xl text-white"
-                  />
-                  <input
-                    className="border p-2 rounded w-[17em]"
-                    type="text"
-                    placeholder="Cual?"
-                    {...register("detalleAlergia", {
-                      validate: (val) => {
-                        if (watch("alergia") == "true" && !val) {
-                          return "Debe aclarar que alergia/s";
-                        }
-                        return true;
-                      },
-                    })}
-                    onBlur={() => handleBlur("detalleAlergia")}
-                  />
+                {/* Diabetes */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-[6em]">
+                    <label className="text-1xl text-white">Diabetes</label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("diabetes", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("diabetes")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.diabetes && (
+                      <p className="h-0 text-red-500">
+                        {errors.diabetes.message}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                {errors.detalleAlergia && (
-                  <p className="h-0 text-red-500">
-                    {errors.detalleAlergia.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">Cicatrización</label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("cicatrizacion", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("cicatrizacion")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
+                {/* Problemas Cardiacos */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-3">
+                    <label className="text-1xl text-white">
+                      Problemas Cardíacos
+                    </label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("problemasCardiacos", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("problemasCardiacos")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.problemasCardiacos && (
+                      <p className="h-0 text-red-500">
+                        {errors.problemasCardiacos.message}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                {errors.cicatrizacion && (
-                  <p className="h-0 text-red-500">
-                    {errors.cicatrizacion.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">
-                    Fiebre Reumática
-                  </label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("fiebreReumatica", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("fiebreReumatica")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
+                {/* Aspirinas */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-[6em]">
+                    <label className="text-1xl text-white">Aspirinas</label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("aspirinas", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("aspirinas")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.aspirinas && (
+                      <p className="h-0 text-red-500">
+                        {errors.aspirinas.message}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                {errors.fiebreReumatica && (
-                  <p className="h-0 text-red-500">
-                    {errors.fiebreReumatica.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">Diabetes</label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("diabetes", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("diabetes")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
+                {/* Tabaquismo */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-[5em]">
+                    <label className="text-1xl text-white">Tabaquismo</label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("tabaquismo", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("tabaquismo")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.tabaquismo && (
+                      <p className="h-0 text-red-500">
+                        {errors.tabaquismo.message}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                {errors.diabetes && (
-                  <p className="h-0 text-red-500">{errors.diabetes.message}</p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">
-                    Problemas Cardíacos
-                  </label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("problemasCardiacos", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("problemasCardiacos")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
+                {/* Embarazo */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-[5.5em]">
+                    <label className="text-1xl text-white">Embarazo</label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("embarazo", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("embarazo")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.embarazo && (
+                      <p className="h-0 text-red-500">
+                        {errors.embarazo.message}
+                      </p>
+                    )}
+                  </div>
+                  {watch("embarazo") === "true" && (
+                    <div className="flex flex-col items-center gap-3">
+                      <input
+                        className="border p-1 rounded w-[13em] outline-none"
+                        type="number"
+                        placeholder="Meses de embarazo"
+                        {...register("mesesEmbarazo", {
+                          validate: (val) => {
+                            if (watch("embarazo") === "true" && !val) {
+                              return "Debe especificar los meses de embarazo";
+                            }
+                            return true;
+                          },
+                        })}
+                        onBlur={() => handleBlur("mesesEmbarazo")}
+                      />
+                      {errors.mesesEmbarazo && (
+                        <p className="h-0 text-red-500">
+                          {errors.mesesEmbarazo.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
-                {errors.problemasCardiacos && (
-                  <p className="h-0 text-red-500">
-                    {errors.problemasCardiacos.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">Aspirinas</label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("aspirinas", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("aspirinas")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
-                </div>
-                {errors.aspirinas && (
-                  <p className="h-0 text-red-500">{errors.aspirinas.message}</p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">Anticoagulantes</label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("anticoagulante", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("anticoagulante")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
-                </div>
-                {errors.anticoagulante && (
-                  <p className="h-0 text-red-500">
-                    {errors.anticoagulante.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">Tabaquísmo</label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("tabaquismo", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("tabaquismo")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
-                </div>
-                {errors.tabaquismo && (
-                  <p className="h-0 text-red-500">
-                    {errors.tabaquismo.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">Embarazo</label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("embarazo", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("embarazo")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
-                </div>
-                {errors.embarazo && (
-                  <p className="h-0 text-red-500">{errors.embarazo.message}</p>
-                )}
-                <div className="flex items-center gap-6">
-                  <FontAwesomeIcon
-                    icon={faIdCard}
-                    className="text-1xl text-white"
-                  />
-                  <input
-                    className="border p-2 rounded w-[17em]"
-                    type="number"
-                    min={0}
-                    max={9}
-                    placeholder="Cuantos Meses?"
-                    {...register("mesesEmbarazo", {
-                      validate: (val) => {
-                        if (watch("embarazo") == "true" && !val) {
-                          return "Debe aclarar cuantos meses";
-                        }
-                        return true;
-                      },
-                    })}
-                    onBlur={() => handleBlur("mesesEmbarazo")}
-                  />
-                </div>
-                {errors.mesesEmbarazo && (
-                  <p className="h-0 text-red-500">
-                    {errors.mesesEmbarazo.message}
-                  </p>
-                )}
               </div>
-              <div className="flex flex-col bg-green-200 lg:w-[50%] ">
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">Hipertensión</label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("hipertension", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("hipertension")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
+              <div className="flex flex-col lg:w-[50%] gap-7 ">
+                {/* Hipertension */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-[4em]">
+                    <label className="text-1xl text-white">Hipertensión</label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("hipertension", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("hipertension")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.hipertension && (
+                      <p className="h-0 text-red-500">
+                        {errors.hipertension.message}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                {errors.hipertension && (
+                {/* Hipotension */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-[4.5em]">
+                    <label className="text-1xl text-white">Hipotensión</label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("hipotension", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("hipotension")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.hipotension && (
+                      <p className="h-0 text-red-500">
+                        {errors.hipotension.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                {/* Problemas Renales */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-5">
+                    <label className="text-1xl text-white">
+                      Problemas Renales
+                    </label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("problemasRenales", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("problemasRenales")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.problemasRenales && (
+                      <p className="h-0 text-red-500">
+                        {errors.problemasRenales.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                {/* Problemas Gastricos */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-2">
+                    <label className="text-1xl text-white">
+                      Problemas Gástricos
+                    </label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("problemasGastricos", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("problemasGastricos")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.problemasGastricos && (
+                      <p className="h-0 text-red-500">
+                        {errors.problemasGastricos.message}
+                      </p>
+                    )}
+                  </div>
+                  {watch("problemasGastricos") === "true" && (
+                    <div className="flex flex-col items-center gap-3">
+                      <input
+                        className="border p-1 rounded w-[13em] outline-none"
+                        type="text"
+                        placeholder="Detalle"
+                        {...register("detalleGastricos")}
+                        onBlur={() => handleBlur("detalleGastricos")}
+                      />
+                      {errors.detalleGastricos && (
+                        <p className="h-0 text-red-500">
+                          {errors.detalleGastricos.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+                {/* Convulsiones */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-16">
+                    <label className="text-1xl text-white">Convulsiones</label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("convulsiones", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("convulsiones")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.convulsiones && (
+                      <p className="h-0 text-red-500">
+                        {errors.convulsiones.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                {/* Epilepsia */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-[6em]">
+                    <label className="text-1xl text-white">Epilepsia</label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("epilepsia", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("epilepsia")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.epilepsia && (
+                      <p className="h-0 text-red-500">
+                        {errors.epilepsia.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                {/* Sifilis */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-2">
+                    <label className="text-1xl text-white">
+                      Sífilis, Gonorrea, VIH
+                    </label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("sifilisGonorreaHIV", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("sifilisGonorreaHIV")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.sifilisGonorreaHIV && (
+                      <p className="h-0 text-red-500">
+                        {errors.sifilisGonorreaHIV.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                {/* Operaciones */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-[5.5em]">
+                    <label className="text-1xl text-white">Operación</label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("operacion", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("operacion")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.operacion && (
+                      <p className="h-0 text-red-500">
+                        {errors.operacion.message}
+                      </p>
+                    )}
+                  </div>
+                  {watch("operacion") === "true" && (
+                    <div className="flex flex-col items-center gap-3">
+                      <input
+                        className="border p-1 rounded w-[13em] outline-none"
+                        type="text"
+                        placeholder="Detalle"
+                        {...register("detalleOperacion")}
+                        onBlur={() => handleBlur("detalleOperacion")}
+                      />
+                      {errors.detalleOperacion && (
+                        <p className="h-0 text-red-500">
+                          {errors.detalleOperacion.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+                {/* Problemas Respiratorios */}
+                <div className="flex flex-col gap-1">
+                  <div className="flex self-center gap-3">
+                    <label className="text-1xl text-white">
+                      Problemas Respiratorios
+                    </label>
+                    <select
+                      className="border rounded w-[3em]"
+                      onChange={handleChange}
+                      {...register("problemasRespiratorios", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("problemasRespiratorios")}
+                    >
+                      <option value="">-</option>
+                      <option value={true}>SI</option>
+                      <option value={false}>NO</option>
+                    </select>
+                  </div>
+                  <div className="w-full text-center">
+                    {errors.problemasRespiratorios && (
+                      <p className="h-0 text-red-500">
+                        {errors.problemasRespiratorios.message}
+                      </p>
+                    )}
+                  </div>
+                  {watch("problemasRespiratorios") === "true" && (
+                    <div className="flex flex-col items-center gap-3">
+                      <input
+                        className="border p-1 rounded w-[13em] outline-none"
+                        type="text"
+                        placeholder="Detalle"
+                        {...register("detalleRespiratorios")}
+                        onBlur={() => handleBlur("detalleRespiratorios")}
+                      />
+                      {errors.detalleRespiratorios && (
+                        <p className="h-0 text-red-500">
+                          {errors.detalleRespiratorios.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col items-center px-5">
+              <div className="flex items-center">
+                <label className="text-1xl text-white">
+                  Al registrarme, declaro que todos los datos proporcionados
+                  respecto a mi estado de salud son verdaderos y que he
+                  comprendido todas las explicaciones que se me han facilitado
+                  en el lenguaje claro y sencillo. Se me aclararon todas las
+                  dudas, por lo que estoy completamente de acuerdo con los
+                  tratamientos que se me van a realizar.
+                </label>
+                <input
+                  className="border p-2 rounded w-[17em]"
+                  type="checkbox"
+                  {...register("consentimiento", {
+                    required: "Debe aceptar el consentimiento",
+                  })}
+                  defaultChecked={false}
+                  onBlur={() => handleBlur("consentimiento")}
+                  onClick={(e) => {
+                    console.log(e.target.checked);
+                  }}
+                />
+              </div>
+              <div className="">
+                {errors.consentimiento && (
                   <p className="h-0 text-red-500">
-                    {errors.hipertension.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">Hipotensión</label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("hipotension", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("hipotension")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
-                </div>
-                {errors.hipotension && (
-                  <p className="h-0 text-red-500">
-                    {errors.hipotension.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">
-                    Problemas Renales
-                  </label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("problemasRenales", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("problemasRenales")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
-                </div>
-                {errors.problemasRenales && (
-                  <p className="h-0 text-red-500">
-                    {errors.problemasRenales.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">
-                    Problemas Gástricos
-                  </label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("problemasGastricos", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("problemasGastricos")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
-                </div>
-                {errors.problemasGastricos && (
-                  <p className="h-0 text-red-500">
-                    {errors.problemasGastricos.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <FontAwesomeIcon
-                    icon={faIdCard}
-                    className="text-1xl text-white"
-                  />
-                  <input
-                    className="border p-2 rounded w-[17em]"
-                    type="text"
-                    placeholder="Cual?"
-                    {...register("detalleGastricos", {
-                      validate: (val) => {
-                        if (watch("problemasGastricos") == "true" && !val) {
-                          return "Debe aclarar que problema/s";
-                        }
-                        return true;
-                      },
-                    })}
-                    onBlur={() => handleBlur("detalleGastricos")}
-                  />
-                </div>
-                {errors.detalleGastricos && (
-                  <p className="h-0 text-red-500">
-                    {errors.detalleGastricos.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">Convulsiones</label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("convulsiones", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("convulsiones")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
-                </div>
-                {errors.convulsiones && (
-                  <p className="h-0 text-red-500">
-                    {errors.convulsiones.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">Epilepsia</label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("epilepsia", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("epilepsia")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
-                </div>
-                {errors.epilepsia && (
-                  <p className="h-0 text-red-500">{errors.epilepsia.message}</p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">
-                    Sifilis? Gonorrea? HIV?
-                  </label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("sifilisGonorreaHIV", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("sifilisGonorreaHIV")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
-                </div>
-                {errors.sifilisGonorreaHIV && (
-                  <p className="h-0 text-red-500">
-                    {errors.sifilisGonorreaHIV.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">Operaciones</label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("operacion", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("operacion")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
-                </div>
-                {errors.operacion && (
-                  <p className="h-0 text-red-500">{errors.operacion.message}</p>
-                )}
-                <div className="flex items-center gap-6">
-                  <FontAwesomeIcon
-                    icon={faIdCard}
-                    className="text-1xl text-white"
-                  />
-                  <input
-                    className="border p-2 rounded w-[17em]"
-                    type="text"
-                    placeholder="Cual?"
-                    {...register("detalleOperacion", {
-                      validate: (val) => {
-                        if (watch("operacion") == "true" && !val) {
-                          return "Debe aclarar que operacion/es";
-                        }
-                        return true;
-                      },
-                    })}
-                    onBlur={() => handleBlur("detalleOperacion")}
-                  />
-                </div>
-                {errors.detalleOperacion && (
-                  <p className="h-0 text-red-500">
-                    {errors.detalleOperacion.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">
-                    Problemas Respiratorios
-                  </label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("problemasRespiratorios", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("problemasRespiratorios")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
-                </div>
-                {errors.problemasRespiratorios && (
-                  <p className="h-0 text-red-500">
-                    {errors.problemasRespiratorios.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <FontAwesomeIcon
-                    icon={faIdCard}
-                    className="text-1xl text-white"
-                  />
-                  <input
-                    className="border p-2 rounded w-[17em]"
-                    type="text"
-                    placeholder="Cual?"
-                    {...register("detalleRespiratorios", {
-                      validate: (val) => {
-                        if (watch("problemasRespiratorios") == "true" && !val) {
-                          return "Debe aclarar que problema/s";
-                        }
-                        return true;
-                      },
-                    })}
-                    onBlur={() => handleBlur("detalleRespiratorios")}
-                  />
-                </div>
-                {errors.detalleRespiratorios && (
-                  <p className="h-0 text-red-500">
-                    {errors.detalleRespiratorios.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">Tiroides</label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("tiroides", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("tiroides")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
-                </div>
-                {errors.tiroides && (
-                  <p className="h-0 text-red-500">{errors.tiroides.message}</p>
-                )}
-                <div className="flex items-center gap-6">
-                  <FontAwesomeIcon
-                    icon={faIdCard}
-                    className="text-1xl text-white"
-                  />
-                  <input
-                    className="border p-2 rounded w-[17em]"
-                    type="text"
-                    placeholder="Cual?"
-                    {...register("detalleTiroides", {
-                      validate: (val) => {
-                        if (watch("tiroides") == "true" && !val) {
-                          return "Debe aclarar que tipo/s";
-                        }
-                        return true;
-                      },
-                    })}
-                    onBlur={() => handleBlur("detalleTiroides")}
-                  />
-                </div>
-                {errors.detalleTiroides && (
-                  <p className="h-0 text-red-500">
-                    {errors.detalleTiroides.message}
-                  </p>
-                )}
-                <div className="flex items-center gap-6">
-                  <label className="text-1xl text-white">Otros</label>
-                  <select
-                    className="border p-2 rounded w-[17em]"
-                    {...register("otros", {
-                      required: "Campo obligatorio",
-                    })}
-                    onBlur={() => handleBlur("otros")}
-                  >
-                    <option value="">-</option>
-                    <option value={true}>SI</option>
-                    <option value={false}>NO</option>
-                  </select>
-                </div>
-                {errors.otros && (
-                  <p className="h-0 text-red-500">{errors.otros.message}</p>
-                )}
-                <div className="flex items-center gap-6">
-                  <FontAwesomeIcon
-                    icon={faIdCard}
-                    className="text-1xl text-white"
-                  />
-                  <input
-                    className="border p-2 rounded w-[17em]"
-                    type="text"
-                    placeholder="Cual?"
-                    {...register("detalleOtros", {
-                      validate: (val) => {
-                        if (watch("otros") == "true" && !val) {
-                          return "Debe aclarar que otro/s detalle/s";
-                        }
-                        return true;
-                      },
-                    })}
-                    onBlur={() => handleBlur("detalleOtros")}
-                  />
-                </div>
-                {errors.detalleOtros && (
-                  <p className="h-0 text-red-500">
-                    {errors.detalleOtros.message}
+                    {errors.consentimiento.message}
                   </p>
                 )}
               </div>
             </div>
-            <div className="flex items-center bg-purple-200">
-              <label className="text-1xl text-white">
-                Al registrarme, declaro que todos los datos proporcionados
-                respecto a mi estado de salud son verdaderos y que he
-                comprendido todas las explicaciones que se me han facilitado en
-                el lenguaje claro y sencillo. Se me aclararon todas las dudas,
-                por lo que estoy completamente de acuerdo con los tratamientos
-                que se me van a realizar.
-              </label>
-              <input
-                className="border p-2 rounded w-[17em]"
-                type="checkbox"
-                {...register("consentimiento", {
-                  required: "Deber aceptar el consentimiento!",
-                })}
-                defaultChecked={false}
-                onBlur={() => handleBlur("consentimiento")}
-                onClick={(e) => {
-                  console.log(e.target.checked);
-                }}
-              />
-            </div>
-            {errors.consentimiento && (
-              <p className="h-0 text-red-500">
-                {errors.consentimiento.message}
-              </p>
-            )}
           </div>
-          <div className="flex justify-center py-1">
+          <div className="flex justify-center mt-3">
             <button
-              className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
+              className="font-bold w-[8em] border-none rounded-2xl py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
               type="submit"
               onClick={handleSubmit(onSubmit)}
             >

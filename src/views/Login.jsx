@@ -28,7 +28,7 @@ const Login = () => {
 
   const loading = useSelector((state) => state.users.loading);
 
-  console.log("este es el loading",loading);
+  console.log("este es el loading", loading);
 
   const {
     register,
@@ -63,80 +63,79 @@ const Login = () => {
     <div className="bg-secondary-100 h-screen overflow-hidden flex items-center justify-center">
       <div className=" flex flex-col justify-center">
         <img src={topWave} className=" absolute z-[1] top-0 right-0 w-[40%]" />
-        <form className="w-[500px] mx-auto bg-primary p-4 rounded-3xl shadow-black shadow-2xl z-10">
+        <form className="lg:w-[500px] w-[450px] bg-primary p-4 rounded-3xl shadow-black shadow-2xl z-10">
           <h2 className="text-6xl font-bold text-center italic text-white mb-[1.8em] mt-5">
             Conident
           </h2>
           <div className="flex justify-center flex-col items-center gap-10">
             <div className="flex items-center gap-6">
-            
               <div className="flex flex-row items-center gap-2">
-              <FontAwesomeIcon
-                icon={faIdCard}
-                className="text-4xl text-white"
-              />
-              <div className="flex flex-col items-center gap-2">
-                <input
-                className="border p-2 rounded w-[17em]"
-                type="number"
-                min="0"
-                placeholder="Ingrese su DNI"
-                {...register("dni", {
-                  required: "Campo obligatorio",
-                  pattern: {
-                    value: /^\d{8}$/,
-                    message: "El DNI debe tener 8 números",
-                  },
-                })}
-                onBlur={() => handleBlur("dni")}
-              />
-               {errors.dni && (
-              <p className="h-0 text-red-500">{errors.dni.message}</p>
-            )}
-              </div>
-              </div>
-            </div>
-           
-            <div className="flex items-center gap-6 flex-row">
-             
-              <div className="relative flex-grow">
-                <div className="flex flex-row items-center">
                 <FontAwesomeIcon
-                icon={faLock}
-                className="text-4xl text-white mr-2"
-              />
-              <div className="flex flex-col items-center gap-2">
-              <input
-                  className="border p-2 rounded w-[17em]"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Ingrese su contraseña"
-                  {...register("password", {
-                    required: "Campo obligatorio",
-                  })}
-                  onBlur={() => handleBlur("password")}
+                  icon={faIdCard}
+                  className="text-4xl text-white"
                 />
-                {showPassword ? (
-                  <FontAwesomeIcon
-                    icon={faEye}
-                    className="absolute top-1/2 right-2 transform -translate-y-1/2 text-xl cursor-pointer text-secondary"
-                    onClick={() => setShowPassword(!showPassword)}
+                <div className="flex flex-col items-center gap-2">
+                  <input
+                    className="border p-2 rounded w-[17em]"
+                    type="number"
+                    min="0"
+                    placeholder="Ingrese su DNI"
+                    {...register("dni", {
+                      required: "Campo obligatorio",
+                      pattern: {
+                        value: /^\d{8}$/,
+                        message: "El DNI debe tener 8 números",
+                      },
+                    })}
+                    onBlur={() => handleBlur("dni")}
                   />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faEyeSlash}
-                    className="absolute top-1/2 right-2 transform -translate-y-1/2 text-xl cursor-pointer text-secondary"
-                    onClick={() => setShowPassword(!showPassword)}
-                  />
-
-                )}
-                 {errors.password && (
-              <p className="h-0 text-red-500">{errors.password.message}</p>
-            )}
-              </div>
+                  {errors.dni && (
+                    <p className="h-0 text-red-500">{errors.dni.message}</p>
+                  )}
                 </div>
               </div>
             </div>
-           
+
+            <div className="flex items-center gap-6 flex-row">
+              <div className="relative flex-grow">
+                <div className="flex flex-row items-center">
+                  <FontAwesomeIcon
+                    icon={faLock}
+                    className="text-4xl text-white mr-2"
+                  />
+                  <div className="flex flex-col items-center gap-2">
+                    <input
+                      className="border p-2 rounded w-[17em]"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Ingrese su contraseña"
+                      {...register("password", {
+                        required: "Campo obligatorio",
+                      })}
+                      onBlur={() => handleBlur("password")}
+                    />
+                    {showPassword ? (
+                      <FontAwesomeIcon
+                        icon={faEye}
+                        className="absolute top-1/2 right-2 transform -translate-y-1/2 text-xl cursor-pointer text-secondary"
+                        onClick={() => setShowPassword(!showPassword)}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faEyeSlash}
+                        className="absolute top-1/2 right-2 transform -translate-y-1/2 text-xl cursor-pointer text-secondary"
+                        onClick={() => setShowPassword(!showPassword)}
+                      />
+                    )}
+                    {errors.password && (
+                      <p className="h-0 text-red-500">
+                        {errors.password.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <span
               className="text-white hover:text-gray-200 cursor-pointer"
               onClick={() => nav("recuperacion-contraseña")}
@@ -144,7 +143,7 @@ const Login = () => {
               Olvidaste tu contraseña?
             </span>
           </div>
-          <div className="flex justify-center py-2">
+          <div className="flex justify-center pt-2">
             <button
               className="w-[7em] transition-all duration-300 ease-in-out border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
               type="submit"

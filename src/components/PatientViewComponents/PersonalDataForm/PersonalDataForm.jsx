@@ -122,7 +122,7 @@ const PersonalDataForm = () => {
         <h2 className="lg:text-6xl text-4xl font-bold text-center italic text-white my-5">
           Datos Personales
         </h2>
-        <div className="flex flex-col lg:flex-row md:flex-row overflow-y-auto overflow-x-hidden lg:h-auto h-[500px]">
+        <div className="flex justify-center lg:flex-row flex-col items-center h-[500px] overflow-y-auto overflow-x-hidden">
           <div className=" p-3 flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <label className="text-1xl text-white">DNI</label>

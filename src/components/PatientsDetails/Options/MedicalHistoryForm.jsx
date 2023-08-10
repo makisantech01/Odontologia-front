@@ -4,8 +4,9 @@ import { useSelector } from "react-redux";
 import { clientSelector } from "../../store/features/clientSlice.js";
 import ModalH from "./ModalH.jsx";
 
-const MedicalHistoryForm = ({ isModalOpen }) => {
+const MedicalHistoryForm = ({ isModalOpen, setIsModalOpen }) => {
   const client = useSelector(clientSelector);
+  console.log(" el cliente --->", client);
   const paciente = client?.historial;
   const pacienteInicial = paciente;
   const [pacienteIni, setPacienteIni] = useState(pacienteInicial);
@@ -147,38 +148,44 @@ const MedicalHistoryForm = ({ isModalOpen }) => {
 
   return (
     <>
-      <Formik initialValues={paciente}>
-        {({ values }) => (
-          <div className="flex flex-col items-center flex-end w-full gap-5">
-            <Form className=" w-[70%] h-[25em] overflow-y-auto p-5 shadow-2xl rounded-lg bg-[#14212a] scrollbar-hide">
-              {preguntas.map((preguntaObj, index) => {
-                const { campo, pregunta, detalle } = preguntaObj;
-                const valor = values[campo];
-                return detalle ? (
-                  <div key={index}>
-                    <Pregunta pregunta={pregunta} valor={valor} />
-                    {valor && (
-                      <PreguntaConDetalle
-                        pregunta="¿Cuál?"
-                        valor={true}
-                        detalle={values[detalle]}
-                      />
-                    )}
-                  </div>
-                ) : (
-                  <Pregunta pregunta={pregunta} valor={valor} key={index} />
-                );
-              })}
-            </Form>
-          </div>
-        )}
-      </Formik>
-      <ModalH
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSave={handleSaveChanges}
-        paciente={paciente}
-      />
+      {client.historial ? (
+        <>
+          <Formik initialValues={paciente}>
+            {({ values }) => (
+              <div className="flex flex-col items-center flex-end w-full gap-5">
+                <Form className=" w-[70%] h-[25em] overflow-y-auto p-5 shadow-2xl rounded-lg bg-[#14212a] scrollbar-hide">
+                  {preguntas?.map((preguntaObj, index) => {
+                    const { campo, pregunta, detalle } = preguntaObj;
+                    const valor = values[campo];
+                    return detalle ? (
+                      <div key={index}>
+                        <Pregunta pregunta={pregunta} valor={valor} />
+                        {valor && (
+                          <PreguntaConDetalle
+                            pregunta="¿Cuál?"
+                            valor={true}
+                            detalle={values[detalle]}
+                          />
+                        )}
+                      </div>
+                    ) : (
+                      <Pregunta pregunta={pregunta} valor={valor} key={index} />
+                    );
+                  })}
+                </Form>
+              </div>
+            )}
+          </Formik>
+          <ModalH
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onSave={handleSaveChanges}
+            paciente={paciente}
+          />
+        </>
+      ) : (
+        <>Aun no posee un historial medico</>
+      )}
     </>
   );
 };
