@@ -13,7 +13,7 @@ import {
   faCity,
   faUserTie,
   faPhone,
-  faIdCardClip
+  faIdCardClip,
 } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -74,35 +74,31 @@ const PacientForm = () => {
   };
 
   return (
-    <div className="bg-secondary-100 flex items-center justify-center h-auto">
-      <div className=" flex flex-col justify-center">
-        <form className="w-auto h-auto bg-primary p-5 m-1 rounded-3xl shadow-2xl z-10">
-          <h2 className="text-4xl font-bold text-center italic text-white pb-10">
-            Datos Personales
-          </h2>
-          <div className="flex lg:flex-row flex-row gap-10 h-[33em] overflow-y-auto scrollbar-hide">
-            <div className="flex flex-col items-center gap-7">
-              <div className="flex flex-row items-center gap-2">
-                <FontAwesomeIcon icon={faIdCard} />
-                <div className="flex flex-col items-center">
-                  <h1>DNI</h1>
-                <input
-                  defaultValue={toString(user)}
-                  className="border p-2 rounded w-[17em]"
-                  placeholder="Ingrese su DNI"
-                  {...register("dni", {
-                    required: "Campo obligatorio",
-                  })}
-                  onBlur={() => handleBlur("dni")}
-                  readOnly
-                />
-                </div>
-              </div>
-              <div className="flex flex-row items-center gap-2">
-              <FontAwesomeIcon icon={faUser} />
-              <div className="flex flex-col items-center">
-              <h1>Nombre</h1>
+    <div className="bg-secondary-100 flex items-center justify-center h-[100vh]">
+      <form className="w-[900px] h-[700px] bg-primary p-5 mx-3 rounded-3xl shadow-2xl z-10">
+        <h2 className="text-4xl font-bold text-center italic text-white pb-10">
+          Datos Personales
+        </h2>
+        <div className="flex lg:flex-row md:flex-row flex-col h-[30em] overflow-y-auto scrollbar-hide">
+          <div className="flex flex-col lg:w-1/2 items-center gap-5 px-3 pt-5 ">
+            <div className="flex justify-between w-full items-center">
+              <label className="text-white ">DNI</label>
               <input
+                defaultValue={toString(user)}
+                className="border p-2 rounded w-[17em]"
+                placeholder="Ingrese su DNI"
+                {...register("dni", {
+                  required: "Campo obligatorio",
+                })}
+                onBlur={() => handleBlur("dni")}
+                readOnly
+              />
+            </div>
+
+            <div className="flex flex-col w-full items-center justify-between ">
+              <div className="flex justify-between items-center w-full">
+                <label className="text-white ">Nombre</label>
+                <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
                   placeholder="Ingrese su Nombre"
@@ -111,18 +107,19 @@ const PacientForm = () => {
                   })}
                   onBlur={() => handleBlur("nombre")}
                 />
+              </div>
+              <div className="ml-10">
                 {errors.nombre && (
-                  <label className="bg-purple-500 h-0 text-red-500">
+                  <label className=" h-0 text-red-500">
                     {errors.nombre.message}
                   </label>
                 )}
               </div>
-              
-              </div>
-              <div className="flex flex-row items-center gap-2">
-              <FontAwesomeIcon icon={faUser} />
-              <div className="flex flex-col items-center">
-              <h1>Apellido</h1>
+            </div>
+
+            <div className="flex flex-col w-full items-center justify-between ">
+              <div className="flex justify-between items-center w-full">
+                <label className="text-white ">Apellido</label>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
@@ -132,67 +129,63 @@ const PacientForm = () => {
                   })}
                   onBlur={() => handleBlur("apellido")}
                 />
+              </div>
+              <div className="ml-10">
                 {errors.apellido && (
-                  <p className="h-0 text-red-500">{errors.apellido.message}</p>
-                )} 
+                  <label className=" h-0 text-red-500">
+                    {errors.apellido.message}
+                  </label>
+                )}
               </div>
-              </div>
-              <div className="flex  flex-row items-center gap-2">
-              <FontAwesomeIcon icon={faUser} />
-              <div className="flex flex-col items-center">
-              <h1>Edad</h1>
+            </div>
+
+            <div className="flex flex-col w-full items-center justify-between ">
+              <div className="flex justify-between items-center w-full">
+                <label className="text-white ">Edad</label>
                 <input
                   className="border p-2 rounded w-[17em]"
-                  type="number"
-                  min={3}
-                  max={99}
-                  placeholder="Ingrese su edad"
+                  type="text"
+                  placeholder="Ingrese su Edad"
                   {...register("edad", {
                     required: "Campo obligatorio",
                   })}
                   onBlur={() => handleBlur("edad")}
                 />
+              </div>
+              <div className="ml-10">
                 {errors.edad && (
-                  <p className="h-0 text-red-500">{errors.edad.message}</p>
+                  <label className=" h-0 text-red-500">
+                    {errors.edad.message}
+                  </label>
                 )}
               </div>
-              </div>
-              <div className="flex  flex-row items-center gap-2 w-full rounded">
-              <FontAwesomeIcon icon={faCalendar} />
-              <div className="flex flex-col items-center">
-              <h1>Fecha de nacimiento</h1>
-                <DateOfBirth />
-                {errors.fechaNacimiento && (
-                  <p className="h-0 text-red-500">
-                    {errors.fechaNacimiento.message}
-                  </p>
-                )}
-              </div>
-                
-              </div>
-              <div className="flex  flex-row items-center gap-2">
-              <FontAwesomeIcon icon={faHouse} />
-              <div className="flex flex-col items-center">
-                  <h1>Domicilio</h1>
-                  <input
+            </div>
+
+            <div className="flex flex-col w-full items-center justify-between ">
+              <div className="flex justify-between items-center w-full">
+                <label className="text-white ">Fecha</label>
+                <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
-                  placeholder="Ingrese su Domicilio"
-                  {...register("domicilio", {
+                  placeholder="Ingrese su Fecha de Nacimiento"
+                  {...register("fechaNacimiento", {
                     required: "Campo obligatorio",
                   })}
-                  onBlur={() => handleBlur("domicilio")}
+                  onBlur={() => handleBlur("fechaNacimiento")}
                 />
-                {errors.domicilio && (
-                  <p className="h-0 text-red-500">{errors.domicilio.message}</p>
+              </div>
+              <div className="ml-10">
+                {errors.fechaNacimiento && (
+                  <label className=" h-0 text-red-500">
+                    {errors.fechaNacimiento.message}
+                  </label>
                 )}
               </div>
-              
-              </div>
-              <div className="flex  flex-row items-center gap-2">
-              <FontAwesomeIcon icon={faCity} />
-              <div className="flex flex-col items-center">
-              <h1>Localidad</h1>
+            </div>
+
+            <div className="flex flex-col w-full items-center justify-between ">
+              <div className="flex justify-between items-center w-full">
+                <label className="text-white ">Localidad</label>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
@@ -202,15 +195,40 @@ const PacientForm = () => {
                   })}
                   onBlur={() => handleBlur("localidad")}
                 />
+              </div>
+              <div className="ml-10">
                 {errors.localidad && (
-                  <p className="h-0 text-red-500">{errors.localidad.message}</p>
+                  <label className=" h-0 text-red-500">
+                    {errors.localidad.message}
+                  </label>
                 )}
               </div>
-                
+            </div>
+
+            <div className="flex flex-col w-full items-center justify-between ">
+              <div className="flex justify-between items-center w-full">
+                <label className="text-white ">Email</label>
+                <input
+                  className="border p-2 rounded w-[17em]"
+                  type="text"
+                  placeholder="Ingrese su Email"
+                  {...register("email", {
+                    required: "Campo obligatorio",
+                  })}
+                  onBlur={() => handleBlur("email")}
+                />
+              </div>
+              <div className="ml-10">
+                {errors.email && (
+                  <label className=" h-0 text-red-500">
+                    {errors.email.message}
+                  </label>
+                )}
               </div>
             </div>
-            <div className="flex  flex-col items-center gap-7">
-              {/* <div className=" flex-row flex justify-center gap-2">
+          </div>
+          <div className="flex  flex-col lg:w-1/2 items-center gap-5 px-3 pt-5 ">
+            {/* <div className=" flex-row flex justify-center gap-2">
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="number"
@@ -225,98 +243,76 @@ const PacientForm = () => {
                 )}
               </div> */}
 
-              <div className="flex  flex-row items-center gap-2">
-              <FontAwesomeIcon icon={faEnvelope} />
-              <div className="flex flex-col items-center">
-              <h1>Email</h1>
-                <input
-                  className="border p-2 rounded w-[17em]"
-                  type="email"
-                  placeholder="Ingrese su Email"
-                  {...register("email", {
-                    required: "Campo obligatorio",
-                    pattern: {
-                      value:
-                        /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
-                      message: "Formato de email inválido",
-                    },
-                  })}
-                  onBlur={() => handleBlur("email")}
-                />
-                {errors.email && (
-                  <p className="h-0 text-red-500">{errors.email.message}</p>
-                )}
-              </div>
-                
-              </div>
-              <div className="flex  flex-row items-center gap-2">
-              <FontAwesomeIcon icon={faUserTie} />
-              <div className="flex flex-col items-center">
-              <h1>Ocupación/Profesión</h1>
+            <div className="flex flex-col w-full items-center justify-between ">
+              <div className="flex justify-between items-center w-full">
+                <label className="text-white ">Ocupacion</label>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
-                  placeholder="Ingrese su Ocupación/Profesión"
+                  placeholder="Ingrese su Ocupacion / Profesion"
                   {...register("ocupacion", {
                     required: "Campo obligatorio",
                   })}
                   onBlur={() => handleBlur("ocupacion")}
                 />
+              </div>
+              <div className="ml-10">
                 {errors.ocupacion && (
-                  <p className="h-0 text-red-500">{errors.ocupacion.message}</p>
-                )} 
+                  <label className=" h-0 text-red-500">
+                    {errors.ocupacion.message}
+                  </label>
+                )}
               </div>
-               
-              </div>
-              <div className="flex  flex-row items-center gap-2">
-              <FontAwesomeIcon icon={faPhone} />
-              <div className="flex flex-col items-center">
-              <h1>Numero de teléfono</h1>
+            </div>
+
+            <div className="flex flex-col w-full items-center justify-between ">
+              <div className="flex justify-between items-center w-full">
+                <label className="text-white ">Telefono</label>
                 <input
                   className="border p-2 rounded w-[17em]"
-                  type="number"
-                  placeholder="Ingrese su telefono"
+                  type="text"
+                  placeholder="Ingrese su Numero de Telefono"
                   {...register("telefono1", {
                     required: "Campo obligatorio",
-                    pattern: {
-                      value: /^\d{8,15}$/,
-                      message: "El telefono debe tener entre 8 y 15 números",
-                    },
                   })}
                   onBlur={() => handleBlur("telefono1")}
                 />
+              </div>
+              <div className="ml-10">
                 {errors.telefono1 && (
-                  <p className="h-0 text-red-500">{errors.telefono1.message}</p>
+                  <label className=" h-0 text-red-500">
+                    {errors.telefono1.message}
+                  </label>
                 )}
               </div>
-              </div>
-              <div className="flex  flex-row items-center gap-2">
-              <FontAwesomeIcon icon={faPhone} />
-              <div className="flex flex-col items-center">
-              <h1>Otro teléfono</h1>
+            </div>
+
+            <div className="flex flex-col w-full items-center justify-between ">
+              <div className="flex justify-between items-center w-full">
+                <label className="text-white ">Telefono 2</label>
                 <input
                   className="border p-2 rounded w-[17em]"
-                  type="number"
-                  placeholder="Ingrese otro telefono"
-                  {...register("telefono2", {
+                  type="text"
+                  placeholder="Ingrese Otro Numero de Telefono"
+                  {...register("nombre", {
                     required: "Campo obligatorio",
-                    pattern: {
-                      value: /^\d{8,15}$/,
-                      message: "El telefono debe tener entre 8 y 15 números",
-                    },
                   })}
-                  onBlur={() => handleBlur("telefono2")}
+                  onBlur={() => handleBlur("nombre")}
                 />
-                {errors.telefono2 && (
-                  <p className="h-0 text-red-500">{errors.telefono2.message}</p>
+              </div>
+              <div className="ml-10">
+                {errors.nombre && (
+                  <label className=" h-0 text-red-500">
+                    {errors.nombre.message}
+                  </label>
                 )}
               </div>
-              </div>
-              <div className="flex  flex-row items-center gap-2">
-              <FontAwesomeIcon icon={faIdCardClip} />
-              <div className="flex flex-col items-center">
-              <h1>Obra social</h1>
-               <select
+            </div>
+
+            <div className="flex  flex-row items-center gap-2 w-full">
+              <div className="flex items-center justify-between w-full">
+                <label className="text-white ">Obra social</label>
+                <select
                   className="border p-2 rounded w-[17em] text-gray-400"
                   {...register("obraSocial", {
                     required: "Campo obligatorio",
@@ -335,13 +331,13 @@ const PacientForm = () => {
                   <p className="h-0 text-red-500">
                     {errors.obraSocial.message}
                   </p>
-                )} 
+                )}
               </div>
-              </div>
-              <div className="flex flex-row items-center gap-2">
-              <FontAwesomeIcon icon={faIdCardClip} />
-              <div className="flex flex-col items-center">
-              <h1>Plan</h1>
+            </div>
+
+            <div className="flex flex-row items-center gap-2 w-full">
+              <div className="flex items-center justify-between w-full">
+                <label className="text-white ">Plan</label>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
@@ -360,13 +356,12 @@ const PacientForm = () => {
                   <p className="h-0 text-red-500">{errors.plan.message}</p>
                 )}
               </div>
-                
-              </div>
-              <div className="flex flex-row items-center gap-2">
-              <FontAwesomeIcon icon={faIdCard} />
-              <div className="flex flex-col items-center">
-              <h1>Titular</h1>
-                 <input
+            </div>
+
+            <div className="flex flex-row items-center gap-2 w-full">
+              <div className="flex justify-between items-center w-full">
+                <label className="text-white ">Titular</label>
+                <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
                   placeholder="Ingrese el titular"
@@ -384,13 +379,11 @@ const PacientForm = () => {
                   <p className="h-0 text-red-500">{errors.titular.message}</p>
                 )}
               </div>
-              </div>
-              <div className="flex flex-row items-center gap-2">
-                
-                <FontAwesomeIcon icon={faIdCard} />
-              <div className="flex flex-col items-center">
-                  <h1>Numero de afiliado</h1>
-                  <input
+            </div>
+            <div className="flex flex-row items-center gap-2 w-full">
+              <div className="flex items-center justify-between w-full">
+                <label className="text-white ">N° de afiliado</label>
+                <input
                   className="border p-2 rounded w-[17em]"
                   type="number"
                   placeholder="Ingrese el numero de afiliado"
@@ -407,21 +400,20 @@ const PacientForm = () => {
                 {errors.afiliado && (
                   <p className="h-0 text-red-500">{errors.afiliado.message}</p>
                 )}
-                </div>
               </div>
             </div>
           </div>
-          <div className="flex justify-center py-1">
-            <button
-              className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
-              type="submit"
-              onClick={handleSubmit(onSubmit)}
-            >
-              Siguiente
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div className="flex justify-center py-1">
+          <button
+            className="font-bold w-[8em] border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white "
+            type="submit"
+            onClick={handleSubmit(onSubmit)}
+          >
+            Siguiente
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

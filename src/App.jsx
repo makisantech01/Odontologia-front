@@ -38,6 +38,7 @@ function App() {
       <Route path="/historial-medico" element={<ClinicalHistory />} />
       <Route path="/datos" element={<PatientData />} />
       <Route path="/historial" element={<PatientHistory />} />
+      {/* <Route path="/turnos" element={<PatientData />} /> */}
       {/* Pacients routes */}
       <Route path="/diente" element={<Diente />} />
       <Route path="/odontograma" element={<Odontograma />} />
