@@ -21,7 +21,7 @@ function DateOfBirth(props) {
       selected={startDate}
       onChange={handleValueChange}
       isClearable
-      placeholderText="Ingrese fecha de nacimiento"
+      placeholderText="dd/mm/aa"
       className="text-center py-2 rounded w-[17em]"
       dateFormat="dd/MM/yyy"
     />

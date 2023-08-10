@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import Swal from "sweetalert2"
 library.add(faIdCard);
 
 const ClinicalHistory = () => {
@@ -43,9 +44,13 @@ const ClinicalHistory = () => {
       data.mesesEmbarazo === "" ? (data.mesesEmbarazo = 0) : data.mesesEmbarazo;
       console.log(data);
       const response = await axios.post(`${api}/historiales/${user}`, data);
-      if (response) {
+      console.log(response.status)
+      if (response.status === 200) {
         console.log(response);
         nav("/citas");
+      }
+      else{
+        Swal.fire("Hubo un error al realizar la operación, verifique que los datos sean correctos.", "", "error");
       }
     } catch (error) {
       console.error(error);

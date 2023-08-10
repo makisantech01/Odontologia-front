@@ -91,6 +91,7 @@ const AppointmentUser = () => {
           .post(`${appointmentsUrl}/turnos/${dni}`, appointment)
           .then((response) => {
             console.log("Response ->", response.data);
+            dispatch(getAppointments())
             const Toast = Swal.mixin({
               toast: true,
               position: "top-end",
