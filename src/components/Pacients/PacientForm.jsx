@@ -87,7 +87,7 @@ const PacientForm = () => {
                 <div className="flex flex-col items-center">
                   <h1>DNI</h1>
                 <input
-                  defaultValue={toString(user)}
+                  defaultValue={user}
                   className="border p-2 rounded w-[17em]"
                   placeholder="Ingrese su DNI"
                   {...register("dni", {

@@ -52,7 +52,7 @@ export const RegisterUser = createAsyncThunk(
 );
 
 const initialState = {
-  users: {},
+  users: null,
   login: {},
   loading: false,
   error: null,

@@ -151,7 +151,7 @@ const MedicalHistoryForm = ({ isModalOpen }) => {
         {({ values }) => (
           <div className="flex flex-col items-center flex-end w-full gap-5">
             <Form className=" w-[70%] h-[25em] overflow-y-auto p-5 shadow-2xl rounded-lg bg-[#14212a] scrollbar-hide">
-              {preguntas.map((preguntaObj, index) => {
+              {preguntas?.map((preguntaObj, index) => {
                 const { campo, pregunta, detalle } = preguntaObj;
                 const valor = values[campo];
                 return detalle ? (

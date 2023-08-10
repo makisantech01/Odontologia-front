@@ -432,7 +432,7 @@ const ClinicalHistory = () => {
                   </p>
                 )}
               </div>
-              <div className="flex flex-col bg-green-200 lg:w-[50%] ">
+              <div className="flex flex-col lg:w-[50%] ">
                 <div className="flex items-center gap-6">
                   <label className="text-1xl text-white">Hipertensión</label>
                   <select
@@ -769,7 +769,7 @@ const ClinicalHistory = () => {
                 )}
               </div>
             </div>
-            <div className="flex items-center bg-purple-200">
+            <div className="flex items-cente">
               <label className="text-1xl text-white">
                 Al registrarme, declaro que todos los datos proporcionados
                 respecto a mi estado de salud son verdaderos y que he
@@ -782,7 +782,7 @@ const ClinicalHistory = () => {
                 className="border p-2 rounded w-[17em]"
                 type="checkbox"
                 {...register("consentimiento", {
-                  required: "Deber aceptar el consentimiento!",
+                  required: "Debes aceptar el consentimiento",
                 })}
                 defaultChecked={false}
                 onBlur={() => handleBlur("consentimiento")}
