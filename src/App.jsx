@@ -15,6 +15,9 @@ import PacientForm from "./components/Pacients/PacientForm";
 import ClinicalHistory from "./components/Pacients/ClinicalHistory";
 import PatientData from "./views/PatientData";
 import PatientHistory from "./views/PatientHistory";
+import Diente from "./views/Diente";
+import Odontograma from "./views/Odontograma";
+
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -37,6 +40,9 @@ function App() {
       <Route path="/historial" element={<PatientHistory />} />
       {/* <Route path="/turnos" element={<PatientData />} /> */}
       {/* Pacients routes */}
+      <Route path="/diente" element={<Diente />} />
+      <Route path="/odontograma" element={<Odontograma />} />
+
     </Routes>
   );
 }

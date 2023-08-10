@@ -56,11 +56,11 @@ export const AppointmentSlice = createSlice({
       state.appointments = action.payload;
     });
     builder.addCase(deleteAppointments.fulfilled, (state, action) => {
-      Swal.fire("Turno eliminado con exito!", "", "success");
+      Swal.fire("Turno eliminado con éxito!", "", "success");
     });
     builder.addCase(deleteAppointments.rejected, (state, action) => {
       Swal.fire(
-        "Hubo un error al eliminar el turno, intente nuevamente",
+        "Hubo un error al eliminar el turno, inténtelo nuevamente",
         "",
         "error"
       );

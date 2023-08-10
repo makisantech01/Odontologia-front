@@ -43,13 +43,7 @@ const Login = () => {
       console.log("este es el resposne", response);
       if (response.type === "user/LoginUser/fulfilled") {
         nav("/citas");
-      } else {
-        Swal.fire(
-          "Hubo un error al iniciar sesión, intentelo nuevamente",
-          "",
-          "error"
-        );
-      }
+      } 
     } catch (error) {
       console.error(error);
     }
@@ -154,7 +148,7 @@ const Login = () => {
           </div>
           <div className="flex justify-center">
             <Link to={"/registrarse"}>
-              <button className="w-[7em] transition-all duration-300 ease-in-out border-none rounded-2xl my-5 py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl">
+              <button className="w-[7em] transition-all duration-300 ease-in-out border-none rounded-2xl p-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl">
                 Registro
               </button>
             </Link>

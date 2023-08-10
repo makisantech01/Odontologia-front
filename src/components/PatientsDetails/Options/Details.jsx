@@ -9,7 +9,7 @@ const Details = () => {
   const client = useSelector((state) => state?.clients?.selectedClient?.data);
   useEffect(() => {
     dispatch(fetchClient(id));
-  }, [dispatch, id]);
+  }, [dispatch]);
   return (
     <div className="bg-[#012542] flex flex-col lg:flex-row md:flex-row items-center lg:h-[70vh] text-lg text-white font-bold py-4">
       <div className="h-[100%] w-[50%] flex justify-center">
@@ -48,7 +48,7 @@ const Details = () => {
         <ul className="h-full flex flex-col justify-center pl-4 gap-3">
           <li>
             <span className="mr-4">Ocupacion / Profesion:</span>
-            <span className="text-gray-400">{}</span>
+            <span className="text-gray-400">{client?.ocupacion}</span>
           </li>
           <li>
             <span className="mr-4">Telefono del paciente:</span>
@@ -65,15 +65,15 @@ const Details = () => {
 
           <li>
             <span className="mr-4">Plan:</span>
-            <span className="text-gray-400">{}</span>
+            <span className="text-gray-400">{client?.plan}</span>
           </li>
           <li>
             <span className="mr-4">Titular de la obra social:</span>
-            <span className="text-gray-400">{}</span>
+            <span className="text-gray-400">{client?.titular}</span>
           </li>
           <li>
             <span className="mr-4">N° de afiliado:</span>
-            <span className="text-gray-400">{}</span>
+            <span className="text-gray-400">{client?.afiliado}</span>
           </li>
         </ul>
       </div>
