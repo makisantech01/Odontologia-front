@@ -5,6 +5,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 const pacientesUrl = import.meta.env.VITE_PATIENTS_URL;
+const userUrl = import.meta.env.VITE_ENDPOINT;
 
 export const fetchClients = createAsyncThunk("clients/fetch", async () => {
   const response = await axios.get(pacientesUrl);
@@ -36,7 +37,7 @@ export const deleteClient = createAsyncThunk(
   "client/deleteClient",
   async (dni, {dispatch}) => {
     const response = await axios.delete(`${pacientesUrl}/${dni}`)
-    console.log(response)
+    const responseUser = await axios.delete(`${userUrl}/usuarios/${dni}`)
     dispatch(fetchClients());
     return response.data
   }

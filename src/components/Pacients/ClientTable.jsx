@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2"
 library.add(faCheck, faEdit, faTrash);
 import { deleteClient } from "../store/features/clientSlice";
-import { deleteUser } from "../store/features/usersSlice";
 
 const ClientTable = ({ searchTerm }) => {
   const clients = useSelector((state) => state.clients.clients);
@@ -69,9 +68,7 @@ const ClientTable = ({ searchTerm }) => {
             });
             if (result.isConfirmed) {
              const response =  await dispatch(deleteClient(row.original.dni));
-             const responseUser = await dispatch(deleteUser(row.original.dni))
               console.log(response)
-              console.log(responseUser)
             }
           }
           return(

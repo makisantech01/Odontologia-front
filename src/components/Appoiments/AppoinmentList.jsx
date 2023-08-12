@@ -37,8 +37,6 @@ const AppoinmentList = () => {
     return a.fecha >= currentDateISO;
   });
 
-  console.log("-->", currentAppointments);
-
   //eliminacion de turnos antiguos pasados los 2 meses
   appointments.map(async (a) => {
     const [day, month, year] = a.fecha.split("/");
@@ -73,7 +71,6 @@ const AppoinmentList = () => {
     };
 
     const response = dispatch(postAppointment(clientInfo));
-    console.log("response --->", response?.data);
   };
 
   const handleCreatePatient = React.useCallback(
@@ -88,7 +85,6 @@ const AppoinmentList = () => {
     try {
       if (dni !== "") {
         const response = await dispatch(fetchClient(dni));
-        console.log("que dice el response ->", response);
 
         const result = response.payload.data;
 
@@ -105,7 +101,6 @@ const AppoinmentList = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("values ->", values);
 
     if (values.dni) {
       setList((prev) => prev.concat(values));
@@ -122,7 +117,6 @@ const AppoinmentList = () => {
     });
   };
   const handleDelete = async (id) => {
-    console.log("ID del turno:", id);
     const result = await Swal.fire({
       title: "¿Quieres eliminar este turno?",
       icon: "warning",

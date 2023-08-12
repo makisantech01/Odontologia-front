@@ -28,7 +28,6 @@ const PersonalDataForm = () => {
 
   const user = useSelector((state) => state.users.users);
   const client = useSelector((state) => state?.clients?.selectedClient?.data);
-  console.log("--->", client);
 
   useEffect(() => {
     dispatch(fetchClient(user));

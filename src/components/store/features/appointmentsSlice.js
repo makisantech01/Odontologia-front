@@ -11,7 +11,6 @@ export const getAppointments = createAsyncThunk(
   "appointment/getAppointments",
   async () => {
     const response = await axios(`${appointmentUrl}`);
-    console.log("hola  --->", response.data);
     return response.data.data;
   }
 );

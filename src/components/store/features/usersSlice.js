@@ -46,6 +46,7 @@ export const LoginUser = createAsyncThunk(
 export const RegisterUser = createAsyncThunk(
   "user/RegisterUser",
   async (formData) => {
+    console.log("Form data ----->",formData)
     const response = await axios.post(
       "https://api-sist-odontologico-production-889e.up.railway.app/usuarios",
       formData
@@ -55,19 +56,13 @@ export const RegisterUser = createAsyncThunk(
   }
 );
 
-export const deleteUser = createAsyncThunk(
-  "client/deleteClient",
-  async (dni, {dispatch}) => {
-    const response = await axios.delete(`${userUrl}/usuarios/${dni}`)
-    console.log(response)
-    return response.data
-  }
-)
+
 
 const initialState = {
   users: null,
   login: {},
   loading: false,
+  regLoading:false,
   error: null,
   type: null,
 };
@@ -79,15 +74,15 @@ const usersSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(RegisterUser.pending, (state) => {
-        state.loading = true;
+        state.regLoading = true;
         state.error = null;
       })
       .addCase(RegisterUser.fulfilled, (state, action) => {
-        state.loading = false;
+        state.regLoading = false;
         state.users = action.payload;
       })
       .addCase(RegisterUser.rejected, (state, action) => {
-        state.loading = false;
+        state.regLoading = false;
         state.error = action.error.message;
       });
     builder
@@ -119,14 +114,7 @@ const usersSlice = createSlice({
         state.type = type;
         state.users = users;
       })
-      .addCase(deleteUser.fulfilled, (state, action)=>{
-         console.log("usuario eliminado con exito")
 
-      })
-      .addCase(deleteUser.rejected, (state, action)=>{
-        console.log("error")
-        
-     });  
   },
 });
 export const { actions: usersActions, reducer: usersReducer } = usersSlice;
