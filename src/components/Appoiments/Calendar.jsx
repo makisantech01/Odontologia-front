@@ -27,8 +27,6 @@ const Calendar = ({ value = new Date(), onChange }) => {
 
   const dispatch = useDispatch();
 
-  console.log("la data -->", data);
-
   React.useEffect(() => {
     dispatch(fetchData());
   }, [dispatch]);

@@ -19,6 +19,8 @@ import {
 library.add(faIdCard, faLock, faEyeSlash, faEye);
 
 const Register = () => {
+  const loading = useSelector((state)=> state.users.regLoading)
+
   const dispatch = useDispatch();
   const nav = useNavigate();
   const {
@@ -49,7 +51,7 @@ const Register = () => {
   };
 
   return (
-    <div className="bg-secondary-100 h-screen flex items-center justify-center">
+    <div className="bg-secondary-100 h-screen w-screen flex items-center justify-center">
       <div className=" flex flex-col gap-10 justify-center">
         <img src={topWave} className=" absolute z-[1] top-0 right-0 w-[40%]" />
         <form className="w-[500px] mx-auto bg-primary p-4 rounded-3xl shadow-2xl z-10">
@@ -174,7 +176,7 @@ const Register = () => {
                 type="submit"
                 onClick={handleSubmit(onSubmit)}
               >
-                Registrarse
+                {loading === true ? "Cargando..." : "Registrarse"}
               </button>
             </Link>
           </div>
