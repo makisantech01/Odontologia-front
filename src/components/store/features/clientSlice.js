@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import Swal from "sweetalert2";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 const pacientesUrl = import.meta.env.VITE_PATIENTS_URL;
+const userUrl = import.meta.env.VITE_ENDPOINT;
 
 export const fetchClients = createAsyncThunk("clients/fetch", async () => {
   const response = await axios.get(pacientesUrl);
@@ -30,6 +32,18 @@ export const updateClient = createAsyncThunk(
     return response.data;
   }
 );
+
+export const deleteClient = createAsyncThunk(
+  "client/deleteClient",
+  async (dni, {dispatch}) => {
+    const response = await axios.delete(`${pacientesUrl}/${dni}`)
+    const responseUser = await axios.delete(`${userUrl}/usuarios/${dni}`)
+    dispatch(fetchClients());
+    return response.data
+  }
+)
+
+
 
 const initialState = {
   clients: [],
@@ -59,6 +73,20 @@ const clientSlice = createSlice({
     });
     builder.addCase(updateClient.fulfilled, (state, action) => {
       state.selectedClient = action.payload;
+    });
+    builder.addCase(deleteClient.fulfilled, (state, action) => {
+      Swal.fire(
+        "El paciente se eliminó correctamente.",
+        "",
+        "success"
+      );
+    });
+    builder.addCase(deleteClient.rejected, (state, action) => {
+      Swal.fire(
+        "Hubo un error al eliminar al paciente, intentelo nuevamente.",
+        "",
+        "error"
+      );
     });
   },
 });

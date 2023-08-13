@@ -6,8 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchClient, fetchClients } from "../store/features/clientSlice";
 import { Link } from "react-router-dom";
-
+import Swal from "sweetalert2"
 library.add(faCheck, faEdit, faTrash);
+import { deleteClient } from "../store/features/clientSlice";
 
 const ClientTable = ({ searchTerm }) => {
   const clients = useSelector((state) => state.clients.clients);
@@ -24,6 +25,7 @@ const ClientTable = ({ searchTerm }) => {
       {
         Header: "DNI",
         accessor: "dni",
+        
       },
       {
         Header: "Nombre",
@@ -52,11 +54,30 @@ const ClientTable = ({ searchTerm }) => {
       },
       {
         accessor: "opciones",
-        Cell: () => (
-          <div className="flex gap-1 justify-evenly">
-            <FontAwesomeIcon icon="trash" className="text-red-600 text-2xl" />
-          </div>
-        ),
+        Cell: ({row}) => {
+          const dispatch = useDispatch();
+          const onHandleDelete = async () => {
+            const result = await Swal.fire({
+              title:
+                "¿Estás segur@ que quieres eliminar este paciente? Esta acción no se puede deshacer.",
+              icon: "question",
+              showCancelButton: true,
+              confirmButtonText: "Sí, eliminar",
+              cancelButtonText: "Cancelar",
+              reverseButtons: true,
+            });
+            if (result.isConfirmed) {
+             const response =  await dispatch(deleteClient(row.original.dni));
+              console.log(response)
+            }
+          }
+          return(
+            <div className="flex gap-1 justify-evenly">
+          <FontAwesomeIcon icon="trash" onClick={onHandleDelete} className="text-red-600 cursor-pointer text-2xl" />
+        </div>
+          )
+          
+        },
       },
     ],
     []

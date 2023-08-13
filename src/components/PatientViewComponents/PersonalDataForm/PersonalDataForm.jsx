@@ -31,7 +31,7 @@ const PersonalDataForm = () => {
 
   useEffect(() => {
     dispatch(fetchClient(user));
-  }, [dispatch, client]);
+  }, [dispatch, user]);
 
   const fechaPartida = client?.fechaNacimiento
     ? client.fechaNacimiento.split("/")
@@ -225,17 +225,6 @@ const PersonalDataForm = () => {
             {errors.localidad && (
               <p className="h-0 text-red-500">{errors.localidad.message}</p>
             )}
-            <div className="flex items-center justify-between">
-              <label className="text-1xl text-white">N° Historia Clínica</label>
-              <input
-                defaultValue={client?.nroHistoriaClinica}
-                className="border p-2 rounded w-[17em]"
-                type="number"
-                readOnly
-                {...register("nroHistoriaClinica")}
-                onBlur={() => handleBlur("nroHistoriaClinica")}
-              />
-            </div>
           </div>
           <div className=" p-3 flex flex-col gap-4">
             <div className="flex items-center justify-between">

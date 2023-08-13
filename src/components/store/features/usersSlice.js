@@ -4,7 +4,11 @@ import Cookies from "universal-cookie";
 import jwt_decode from "jwt-decode";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import { fetchClients } from "./clientSlice";
 const cookies = new Cookies()
+
+const userUrl = import.meta.env.VITE_ENDPOINT;
+
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
   const response = await fetch("https://jsonplaceholder.typicode.com/users");
   const data = await response.json();
@@ -42,6 +46,7 @@ export const LoginUser = createAsyncThunk(
 export const RegisterUser = createAsyncThunk(
   "user/RegisterUser",
   async (formData) => {
+    console.log("Form data ----->",formData)
     const response = await axios.post(
       "https://api-sist-odontologico-production-889e.up.railway.app/usuarios",
       formData
@@ -51,10 +56,13 @@ export const RegisterUser = createAsyncThunk(
   }
 );
 
+
+
 const initialState = {
-  users: {},
+  users: null,
   login: {},
   loading: false,
+  regLoading:false,
   error: null,
   type: null,
 };
@@ -66,15 +74,15 @@ const usersSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(RegisterUser.pending, (state) => {
-        state.loading = true;
+        state.regLoading = true;
         state.error = null;
       })
       .addCase(RegisterUser.fulfilled, (state, action) => {
-        state.loading = false;
+        state.regLoading = false;
         state.users = action.payload;
       })
       .addCase(RegisterUser.rejected, (state, action) => {
-        state.loading = false;
+        state.regLoading = false;
         state.error = action.error.message;
       });
     builder
@@ -82,6 +90,7 @@ const usersSlice = createSlice({
         state.loading = true;
       })
       .addCase(LoginUser.fulfilled, (state, action) => {
+        state.loading=false
         const responseData = action.payload;
         cookies.set("token", responseData, { path: "/" });
         const typeData = cookies.get("token");
@@ -104,7 +113,8 @@ const usersSlice = createSlice({
         const { type, users } = action.payload;
         state.type = type;
         state.users = users;
-      });
+      })
+
   },
 });
 export const { actions: usersActions, reducer: usersReducer } = usersSlice;

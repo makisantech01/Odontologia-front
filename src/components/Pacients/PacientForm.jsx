@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import bottonWave from "../../assets/botton_wave.png";
 import topWave from "../../assets/topwave.png";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import Swal from "sweetalert2";
 import {
   faIdCard,
   faLock,
@@ -55,14 +56,17 @@ const PacientForm = () => {
       if (data.afiliado === "") {
         data.afiliado = 0;
       }
-
+      console.log("fecha formateada ----->",fechaFormateada);
       // Actualizar el valor de la fecha de vencimiento en los datos
       const newData = { ...data, fechaNacimiento: fechaFormateada };
       console.log(newData);
       const response = await dispatch(createClient(newData));
-      if (response) {
-        console.log(response);
+      if (response.type === "client/createClient/fulfilled" ) {
+        console.log(response.type);
         nav("/historial-medico");
+      }
+      else{
+        Swal.fire("Hubo un error al realizar la operación, verifique que los datos sean correctos.", "", "error");
       }
     } catch (error) {
       console.error(error);
@@ -84,7 +88,7 @@ const PacientForm = () => {
             <div className="flex justify-between w-full items-center">
               <label className="text-white ">DNI</label>
               <input
-                defaultValue={toString(user)}
+                defaultValue={user}
                 className="border p-2 rounded w-[17em]"
                 placeholder="Ingrese su DNI"
                 {...register("dni", {
@@ -144,7 +148,7 @@ const PacientForm = () => {
                 <label className="text-white ">Edad</label>
                 <input
                   className="border p-2 rounded w-[17em]"
-                  type="text"
+                  type="number"
                   placeholder="Ingrese su Edad"
                   {...register("edad", {
                     required: "Campo obligatorio",
@@ -166,7 +170,7 @@ const PacientForm = () => {
                 <label className="text-white ">Fecha</label>
                 <input
                   className="border p-2 rounded w-[17em]"
-                  type="text"
+                  type="date"
                   placeholder="Ingrese su Fecha de Nacimiento"
                   {...register("fechaNacimiento", {
                     required: "Campo obligatorio",
@@ -189,11 +193,32 @@ const PacientForm = () => {
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
-                  placeholder="Ingrese su Localidad"
+                  placeholder="Ingrese SOLO el nombre de su localidad"
                   {...register("localidad", {
                     required: "Campo obligatorio",
                   })}
                   onBlur={() => handleBlur("localidad")}
+                />
+              </div>
+              <div className="ml-10">
+                {errors.localidad && (
+                  <label className=" h-0 text-red-500">
+                    {errors.localidad.message}
+                  </label>
+                )}
+              </div>
+            </div>
+            <div className="flex flex-col w-full items-center justify-between ">
+              <div className="flex justify-between items-center w-full">
+                <label className="text-white ">Domicilio</label>
+                <input
+                  className="border p-2 rounded w-[17em]"
+                  type="text"
+                  placeholder="Domicilio"
+                  {...register("domicilio", {
+                    required: "Campo obligatorio",
+                  })}
+                  onBlur={() => handleBlur("domicilio")}
                 />
               </div>
               <div className="ml-10">
@@ -289,19 +314,19 @@ const PacientForm = () => {
 
             <div className="flex flex-col w-full items-center justify-between ">
               <div className="flex justify-between items-center w-full">
-                <label className="text-white ">Telefono 2</label>
+                <label className="text-white ">Otro telefono</label>
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
                   placeholder="Ingrese Otro Numero de Telefono"
-                  {...register("nombre", {
+                  {...register("telefono2", {
                     required: "Campo obligatorio",
                   })}
-                  onBlur={() => handleBlur("nombre")}
+                  onBlur={() => handleBlur("telefono2")}
                 />
               </div>
               <div className="ml-10">
-                {errors.nombre && (
+                {errors.telefono2 && (
                   <label className=" h-0 text-red-500">
                     {errors.nombre.message}
                   </label>

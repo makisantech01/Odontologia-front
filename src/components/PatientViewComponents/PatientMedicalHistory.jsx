@@ -102,13 +102,13 @@ const PatientMedicalHistory = () => {
     trigger(fieldName);
   };
   return (
-    <form className="w-[900px] mx-4 lg:mx-0 lg:h-auto h-[82vh] bg-primary p-4 rounded-3xl shadow-2xl z-10">
+    <form className="w-[95vw] lg:w-[70vw] mx-4 lg:h-[80vh] h-[89vh] bg-primary py-4 rounded-3xl shadow-2xl z-10">
       <h2 className="lg:text-6xl text-4xl font-bold text-center italic text-white my-5">
         Historial Médico
       </h2>
-      <div className="flex justify-center lg:flex-row flex-col items-center h-[430px] overflow-y-auto overflow-x-hidden">
-        <div className="bg-red-300 p-6 flex flex-col gap-4">
-          <div className="flex items-center justify-between mt-[35em]">
+      <div className="flex  lg:flex-row md:flex-row flex-col h-[55%] w-full overflow-y-auto overflow-x-hidden mb-3">
+        <div className=" p-6 flex flex-col gap-4 lg:w-1/2">
+          <div className="flex items-center justify-between">
             <label className="text-1xl text-white">Enfermedades</label>
             <select
               defaultValue={client?.enfermedad}
@@ -154,7 +154,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Tratamiento Médico</label>
             <select
               defaultValue={client?.tratamientoMedico}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("tratamientoMedico")}
               onBlur={() => handleBlur("tratamientoMedico")}
             >
@@ -198,7 +198,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Medicación</label>
             <select
               defaultValue={client?.medicacion}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("medicacion")}
               onBlur={() => handleBlur("medicacion")}
             >
@@ -240,7 +240,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Alergia</label>
             <select
               defaultValue={client?.alergia}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("alergia")}
               onBlur={() => handleBlur("alergia")}
             >
@@ -281,7 +281,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Cicatrización</label>
             <select
               defaultValue={client?.cicatrizacion}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("cicatrizacion")}
               onBlur={() => handleBlur("cicatrizacion")}
             >
@@ -297,7 +297,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Fiebre Reumática</label>
             <select
               defaultValue={client?.fiebreReumatica}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("fiebreReumatica")}
               onBlur={() => handleBlur("fiebreReumatica")}
             >
@@ -313,7 +313,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Diabetes</label>
             <select
               defaultValue={client?.diabetes}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("diabetes")}
               onBlur={() => handleBlur("diabetes")}
             >
@@ -329,7 +329,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Problemas Cardíacos</label>
             <select
               defaultValue={client?.problemasCardiacos}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("problemasCardiacos")}
               onBlur={() => handleBlur("problemasCardiacos")}
             >
@@ -347,7 +347,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Aspirinas</label>
             <select
               defaultValue={client?.aspirinas}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("aspirinas")}
               onBlur={() => handleBlur("aspirinas")}
             >
@@ -363,7 +363,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Anticoagulantes</label>
             <select
               defaultValue={client?.anticoagulante}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("anticoagulante")}
               onBlur={() => handleBlur("anticoagulante")}
             >
@@ -379,7 +379,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Tabaquísmo</label>
             <select
               defaultValue={client?.tabaquismo}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("tabaquismo")}
               onBlur={() => handleBlur("tabaquismo")}
             >
@@ -395,7 +395,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Embarazo</label>
             <select
               defaultValue={client?.embarazo}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("embarazo")}
               onBlur={() => handleBlur("embarazo")}
             >
@@ -437,7 +437,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Hipertensión</label>
             <select
               defaultValue={client?.hipertension}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("hipertension")}
               onBlur={() => handleBlur("hipertension")}
             >
@@ -450,12 +450,12 @@ const PatientMedicalHistory = () => {
             <p className="h-0 text-red-500">{errors.hipertension.message}</p>
           )}
         </div>
-        <div className="bg-green-300 p-6 flex flex-col gap-4">
-          <div className="flex items-center justify-between mt-[25em]">
+        <div className=" p-6 flex flex-col gap-4 lg:w-1/2">
+          <div className="flex items-center justify-between">
             <label className="text-1xl text-white">Hipotensión</label>
             <select
               defaultValue={client?.hipotension}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("hipotension")}
               onBlur={() => handleBlur("hipotension")}
             >
@@ -471,7 +471,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Problemas Renales</label>
             <select
               defaultValue={client?.problemasRenales}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("problemasRenales")}
               onBlur={() => handleBlur("problemasRenales")}
             >
@@ -489,7 +489,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Problemas Gástricos</label>
             <select
               defaultValue={client?.problemasGastricos}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("problemasGastricos")}
               onBlur={() => handleBlur("problemasGastricos")}
             >
@@ -533,7 +533,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Convulsiones</label>
             <select
               defaultValue={client?.convulsiones}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("convulsiones")}
               onBlur={() => handleBlur("convulsiones")}
             >
@@ -549,7 +549,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Epilepsia</label>
             <select
               defaultValue={client?.epilepsia}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("epilepsia")}
               onBlur={() => handleBlur("epilepsia")}
             >
@@ -567,7 +567,7 @@ const PatientMedicalHistory = () => {
             </label>
             <select
               defaultValue={client?.sifilisGonorreaHIV}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("sifilisGonorreaHIV")}
               onBlur={() => handleBlur("sifilisGonorreaHIV")}
             >
@@ -585,7 +585,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Operaciones</label>
             <select
               defaultValue={client?.operacion}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("operacion")}
               onBlur={() => handleBlur("operacion")}
             >
@@ -629,7 +629,7 @@ const PatientMedicalHistory = () => {
             </label>
             <select
               defaultValue={client?.problemasRespiratorios}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("problemasRespiratorios")}
               onBlur={() => handleBlur("problemasRespiratorios")}
             >
@@ -673,7 +673,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Tiroides</label>
             <select
               defaultValue={client?.tiroides}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("tiroides")}
               onBlur={() => handleBlur("tiroides")}
             >
@@ -713,7 +713,7 @@ const PatientMedicalHistory = () => {
             <label className="text-1xl text-white">Otros</label>
             <select
               defaultValue={client?.otros}
-              className="border p-2 rounded w-[17em]"
+              className="border p-2 rounded w-[4em]"
               {...register("otros")}
               onBlur={() => handleBlur("otros")}
             >
@@ -751,7 +751,7 @@ const PatientMedicalHistory = () => {
           )}
         </div>
       </div>
-      <div className="bg-purple-200">
+      <div className="px-5">
         <div className="flex items-center justify-between">
           <label className="text-1xl text-white">
             Al modificar esta información, declaro que todos los datos
