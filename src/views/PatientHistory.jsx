@@ -11,8 +11,8 @@ const PatientHistory = () => {
       <div className="lg:w-[20%] m-0 z-50">
         <Sidebar />
       </div>
-      <div className="lg:w-[80%] w-[100vw] m-0 flex justify-center items-center">
-        {/* <PatientMedicalHistory /> */}
+      <div className="lg:w-[80%] w-[100vw] m-0 flex justify-center lg:items-center mt-4">
+        <PatientMedicalHistory />
       </div>
     </div>
   );

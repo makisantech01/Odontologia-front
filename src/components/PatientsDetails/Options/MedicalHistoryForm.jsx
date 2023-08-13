@@ -6,8 +6,7 @@ import ModalH from "./ModalH.jsx";
 
 const MedicalHistoryForm = ({ isModalOpen, setIsModalOpen }) => {
   const client = useSelector(clientSelector);
-  console.log(" el cliente --->", client);
-  const paciente = client?.historial;
+  const paciente = client?.data?.historial;
   const pacienteInicial = paciente;
   const [pacienteIni, setPacienteIni] = useState(pacienteInicial);
   const preguntas = [
@@ -148,12 +147,12 @@ const MedicalHistoryForm = ({ isModalOpen, setIsModalOpen }) => {
 
   return (
     <>
-      {client.historial ? (
+      {pacienteInicial ? (
         <>
           <Formik initialValues={paciente}>
             {({ values }) => (
               <div className="flex flex-col items-center flex-end w-full gap-5">
-                <Form className=" w-[70%] h-[25em] overflow-y-auto p-5 shadow-2xl rounded-lg bg-[#14212a] scrollbar-hide">
+                <Form className=" lg:w-[70%] w-[95%] h-[25em] overflow-y-auto p-5 shadow-2xl rounded-lg bg-[#14212a] scrollbar-hide">
                   {preguntas?.map((preguntaObj, index) => {
                     const { campo, pregunta, detalle } = preguntaObj;
                     const valor = values[campo];
@@ -184,7 +183,7 @@ const MedicalHistoryForm = ({ isModalOpen, setIsModalOpen }) => {
           />
         </>
       ) : (
-        <>Aun no posee un historial medico</>
+        <div>Aun no posee un historial medico</div>
       )}
     </>
   );
