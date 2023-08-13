@@ -11,9 +11,9 @@ const Details = () => {
     dispatch(fetchClient(id));
   }, [dispatch]);
   return (
-    <div className="bg-[#012542] flex flex-col lg:flex-row md:flex-row items-center lg:h-[70vh] text-lg text-white font-bold py-4">
-      <div className="h-[100%] w-[50%] flex justify-center">
-        <ul className="h-full flex flex-col justify-center pl-4 gap-3">
+    <div className="bg-[#012542] flex flex-col lg:flex-row md:flex-row items-center h-[69vh] text-lg text-white font-bold py-4">
+      <div className="h-[100%] lg:w-[50%] w-full flex justify-center pb-2 ">
+        <ul className="h-full flex flex-col justify-center pl-4 gap-3 ">
           <li>
             <span className="mr-4">Historia clinica n:</span>
             <span className="text-gray-400">{client?.nroHistoriaClinica}</span>
@@ -44,7 +44,7 @@ const Details = () => {
           </li>
         </ul>
       </div>
-      <div className="h-[100%] w-[50%] flex justify-center">
+      <div className="h-[100%] lg:w-[50%] w-full flex justify-center">
         <ul className="h-full flex flex-col justify-center pl-4 gap-3">
           <li>
             <span className="mr-4">Ocupacion / Profesion:</span>
