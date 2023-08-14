@@ -78,8 +78,8 @@ const PacientForm = () => {
   };
 
   return (
-    <div className="bg-secondary-100 flex items-center justify-center h-[100vh]">
-      <form className="w-[900px] h-[700px] bg-primary p-5 mx-3 rounded-3xl shadow-2xl z-10">
+    <div className="bg-secondary-100 flex items-center justify-center overflow-y-hidden h-[100vh]">
+      <form className="w-[900px] h-full bg-primary p-5 mx-3 rounded-3xl shadow-2xl z-10">
         <h2 className="text-4xl font-bold text-center italic text-white pb-10">
           Datos Personales
         </h2>
@@ -328,15 +328,16 @@ const PacientForm = () => {
               <div className="ml-10">
                 {errors.telefono2 && (
                   <label className=" h-0 text-red-500">
-                    {errors.nombre.message}
+                    {errors.telefono2.message}
                   </label>
                 )}
               </div>
             </div>
 
             <div className="flex  flex-row items-center gap-2 w-full">
-              <div className="flex items-center justify-between w-full">
-                <label className="text-white ">Obra social</label>
+            <label className="text-white ">Obra social</label>
+              <div className="flex flex-col items-center justify-between w-full">
+                
                 <select
                   className="border p-2 rounded w-[17em] text-gray-400"
                   {...register("obraSocial", {
@@ -361,8 +362,9 @@ const PacientForm = () => {
             </div>
 
             <div className="flex flex-row items-center gap-2 w-full">
-              <div className="flex items-center justify-between w-full">
-                <label className="text-white ">Plan</label>
+            <label className="text-white ">Plan</label>
+              <div className="flex flex-col items-center justify-between w-full">
+                
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
@@ -384,8 +386,8 @@ const PacientForm = () => {
             </div>
 
             <div className="flex flex-row items-center gap-2 w-full">
-              <div className="flex justify-between items-center w-full">
-                <label className="text-white ">Titular</label>
+            <label className="text-white ">Titular</label>
+              <div className="flex flex-col justify-between items-center w-full">
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
@@ -406,8 +408,9 @@ const PacientForm = () => {
               </div>
             </div>
             <div className="flex flex-row items-center gap-2 w-full">
-              <div className="flex items-center justify-between w-full">
-                <label className="text-white ">N° de afiliado</label>
+            <label className="text-white ">N° de afiliado</label>
+              <div className="flex flex-col items-center justify-between w-full">
+                
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="number"
