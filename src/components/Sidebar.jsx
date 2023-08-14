@@ -77,6 +77,7 @@ const Sidebar = () => {
             </span>
             Logout
           </button>
+          {/* comentario */}
         </div>
       </section>
       <button
