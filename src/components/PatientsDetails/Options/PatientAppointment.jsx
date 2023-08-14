@@ -48,7 +48,7 @@ const PatientAppointment = () => {
 
   return (
     <main className="bg-[#012542] flex flex-col items-center justify-center gap-5 h-[69vh] text-lg text-white font-bold">
-      <div className=" gap-3 flex flex-col  items-center h-[30em] w-[100%] overflow-y-auto">
+      <div className=" gap-3 flex flex-col justify-center  items-center h-[30em] w-[100%] overflow-y-auto">
         {PacientAppointment.length > 0 ? (
           PacientAppointment.map((turno, index) => (
             <section
