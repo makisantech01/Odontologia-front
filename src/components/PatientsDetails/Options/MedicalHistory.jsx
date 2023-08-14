@@ -13,7 +13,7 @@ const MedicalHistory = () => {
     setIsModalOpen(false);
   };
   return (
-    <div className="bg-[#012542] flex flex-col gap-4 justify-center items-center lg:h-[70vh] h-[36em] mb-6 text-lg text-white font-bold py-4 px-1 lg:px-4">
+    <div className="bg-[#012542] flex flex-col gap-4 justify-center items-center h-[69vh] text-lg text-white font-bold py-4 px-1 lg:px-4">
       <MedicalHistoryForm isModalOpen={isModalOpen} />
       <div className="justify-center flex">
         <button

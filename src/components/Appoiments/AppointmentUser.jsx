@@ -91,7 +91,7 @@ const AppointmentUser = () => {
           .post(`${appointmentsUrl}/turnos/${dni}`, appointment)
           .then((response) => {
             console.log("Response ->", response.data);
-            dispatch(getAppointments())
+            dispatch(getAppointments());
             const Toast = Swal.mixin({
               toast: true,
               position: "top-end",
@@ -158,37 +158,44 @@ const AppointmentUser = () => {
   };
 
   return (
-    <div className="flex flex-col lg:mx-[15vw] mx-4  h-[40em]">
-      <ul className=" flex flex-col items-center mt-4 bg-gray-300 text-black h-[30em] w-full rounded-lg lg:rounded-2xl py-5 px-3 overflow-y-auto scrollbar-hide">
-        {filteredAppointments.map((item) => (
-          <li
-            key={item.fecha}
-            className=" item font-semibold mb-4 shadow-md bg-primary py-2 rounded-lg px-5 flex lg:justify-evenly lg:flex-row flex-col lg:w-full"
+    <div className="flex flex-col h-[40em]">
+      <ul className="gap-4 flex flex-col items-center py-3 bg-gray-300 text-black h-full lg:w-[50vw] w-[90vw] rounded-lg lg:rounded-2xl px-3 overflow-y-auto scrollbar-hide">
+        {filteredAppointments.map((item, index) => (
+          <div
+            key={index}
+            className="bg-primary font-semibold shadow-md rounded-lg p-5"
           >
-            <div>{item?.dia}{" "}</div>
-            <div>{item?.fecha}</div>
-            <ul
-              className=" flex flex-col items-center mt-4 bg-gray-300 text-black w-full rounded-lg lg:rounded-2xl py-5 px-3 overflow-y-auto scrollbar-hide cursor-pointer"
-              name="hora"
+            <label className="flex gap-4 text-2xl lg:px-10">
+              <div>{item?.dia} </div>
+              <div>{item?.fecha}</div>
+            </label>
+            <li
+              key={item.fecha}
+              className="item flex lg:justify-evenly lg:flex-row flex-col w-full"
             >
-              {item?.horasDisponibles.map((h) => {
-                if (h.disponible) {
-                  return (
-                    <li
-                      key={h.hora}
-                      value={h.hora}
-                      className=" font-semibold mb-4 shadow-md py-1 rounded-lg px-5 flex lg:justify-evenly lg:flex-row flex-col w-80 lg:w-full items-center"
-                      onClick={() =>
-                        handleSelectAppointment(item.fecha, h.hora)
-                      }
-                    >
-                      {h.hora}
-                    </li>
-                  );
-                }
-              })}
-            </ul>
-          </li>
+              <ul
+                className=" gap-3 flex flex-wrap items-center justify-evenly text-black w-full rounded-lg lg:rounded-2xl overflow-y-auto scrollbar-hide cursor-pointer"
+                name="hora"
+              >
+                {item?.horasDisponibles.map((h) => {
+                  if (h.disponible) {
+                    return (
+                      <li
+                        key={h.hora}
+                        value={h.hora}
+                        className="bg-gray-300 w-[40%] font-semibold my-2 shadow-md py-1 rounded-lg px-5 flex lg:justify-evenly lg:flex-row flex-col items-center"
+                        onClick={() =>
+                          handleSelectAppointment(item.fecha, h.hora)
+                        }
+                      >
+                        {h.hora}
+                      </li>
+                    );
+                  }
+                })}
+              </ul>
+            </li>
+          </div>
         ))}
       </ul>
       <ul className=" flex flex-col items-center mt-4 bg-gray-300 text-black h-[10em] w-full rounded-lg lg:rounded-2xl py-5 px-3 overflow-y-auto scrollbar-hide">

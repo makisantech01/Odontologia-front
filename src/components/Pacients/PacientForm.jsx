@@ -193,7 +193,7 @@ const PacientForm = () => {
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
-                  placeholder="Ingrese SOLO el nombre de su localidad"
+                  placeholder="Localidad"
                   {...register("localidad", {
                     required: "Campo obligatorio",
                   })}
