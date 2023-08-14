@@ -62,15 +62,21 @@ const AppoinmentList = () => {
   }, [dispatch]);
 
   //post request
-  const handlePost = () => {
+  const handlePost = async () => {
     const clientInfo = {
       dni: values.dni,
       fecha: values.date,
       hora: values.time,
       estado: true,
     };
-
-    const response = dispatch(postAppointment(clientInfo));
+    await dispatch(postAppointment(clientInfo));
+    setValues({
+      dni: "",
+      name: "",
+      lastName: "",
+      date: "",
+      time: "",
+    });
   };
 
   const handleCreatePatient = React.useCallback(
@@ -166,52 +172,39 @@ const AppoinmentList = () => {
           </p>
         </div>
 
-        <DateFilter onSelect={handleCreatePatient} />
-
-        <div className="flex gap-4">
-          <select
-            className="bg-secondary-100 text-white py-2 px-3 rounded-lg"
-            onChange={handleSelectChanged}
-            defaultValue={"16:30"}
-          >
-            <option value={"16:00"}>16:00</option>
-            <option value={"16:30"}>16:30</option>
-            <option value={"17:00"}>17:00</option>
-            <option value={"17:30"}>17:30</option>
-            <option value={"18:00"}>18:00</option>
-            <option value={"18:30"}>18:30</option>
-            <option value={"19:00"}>19:00</option>
-            <option value={"19:30"}>19:30</option>
-          </select>
-          <button type="submit" onClick={handlePost}>
-            <FontAwesomeIcon
-              className="h-[2.5em] text-green-800 bg-white rounded-full"
-              icon={faCircleCheck}
-            />
-          </button>
-        </div>
+        <DateFilter
+          onSelect={handleCreatePatient}
+          handlePost={handlePost}
+          handleSelectChanged={handleSelectChanged}
+        />
       </form>
       <ul className=" flex flex-col items-center mt-4 bg-gray-300 text-black h-[30em] w-full rounded-lg lg:rounded-2xl py-5 px-3 overflow-y-auto scrollbar-hide">
-        {currentAppointments.map((item, index) => (
-          <li
-            key={index}
-            className=" font-semibold mb-4 shadow-md bg-primary py-2 rounded-lg px-3 flex lg:justify-evenly lg:flex-row flex-col w-80 lg:w-full items-center"
-          >
-            <div>{item?.pacienteId}</div>
-            <div>
-              {item?.paciente?.nombre} {item?.paciente?.apellido}
-            </div>
+        {currentAppointments.length > 0 ? (
+          currentAppointments.map((item, index) => (
+            <li
+              key={index}
+              className=" font-semibold mb-4 shadow-md bg-primary py-2 rounded-lg px-3 flex lg:justify-evenly lg:flex-row flex-col w-80 lg:w-full items-center"
+            >
+              <div>{item?.pacienteId}</div>
+              <div>
+                {item?.paciente?.nombre} {item?.paciente?.apellido}
+              </div>
 
-            <div>{item.fecha}</div>
-            <div>{item.hora}</div>
-            <button value={item.id} onClick={() => handleDelete(item.id)}>
-              <FontAwesomeIcon
-                className="h-[1.5em] text-red-600 cursor-pointer"
-                icon={faCircleXmark}
-              />
-            </button>
-          </li>
-        ))}
+              <div>{item.fecha}</div>
+              <div>{item.hora}</div>
+              <button value={item.id} onClick={() => handleDelete(item.id)}>
+                <FontAwesomeIcon
+                  className="h-[1.5em] text-red-600 cursor-pointer"
+                  icon={faCircleXmark}
+                />
+              </button>
+            </li>
+          ))
+        ) : (
+          <div className="text-2xl flex font-semibold h-[100%] items-center">
+            <label>No hay Citas Registradas</label>
+          </div>
+        )}
       </ul>
     </div>
   );
