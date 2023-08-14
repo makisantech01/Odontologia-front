@@ -43,7 +43,7 @@ const Login = () => {
       console.log("este es el resposne", response);
       if (response.type === "user/LoginUser/fulfilled") {
         nav("/citas");
-      } 
+      }
     } catch (error) {
       console.error(error);
     }
