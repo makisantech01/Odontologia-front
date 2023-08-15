@@ -56,17 +56,20 @@ const PacientForm = () => {
       if (data.afiliado === "") {
         data.afiliado = 0;
       }
-      console.log("fecha formateada ----->",fechaFormateada);
+      console.log("fecha formateada ----->", fechaFormateada);
       // Actualizar el valor de la fecha de vencimiento en los datos
       const newData = { ...data, fechaNacimiento: fechaFormateada };
       console.log(newData);
       const response = await dispatch(createClient(newData));
-      if (response.type === "client/createClient/fulfilled" ) {
+      if (response.type === "client/createClient/fulfilled") {
         console.log(response.type);
         nav("/historial-medico");
-      }
-      else{
-        Swal.fire("Hubo un error al realizar la operación, verifique que los datos sean correctos.", "", "error");
+      } else {
+        Swal.fire(
+          "Hubo un error al realizar la operación, verifique que los datos sean correctos.",
+          "",
+          "error"
+        );
       }
     } catch (error) {
       console.error(error);
@@ -335,9 +338,8 @@ const PacientForm = () => {
             </div>
 
             <div className="flex  flex-row items-center gap-2 w-full">
-            <label className="text-white ">Obra social</label>
+              <label className="text-white ">Obra social</label>
               <div className="flex flex-col items-center justify-between w-full">
-                
                 <select
                   className="border p-2 rounded w-[17em] text-gray-400"
                   {...register("obraSocial", {
@@ -362,9 +364,8 @@ const PacientForm = () => {
             </div>
 
             <div className="flex flex-row items-center gap-2 w-full">
-            <label className="text-white ">Plan</label>
+              <label className="text-white ">Plan</label>
               <div className="flex flex-col items-center justify-between w-full">
-                
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="text"
@@ -386,7 +387,7 @@ const PacientForm = () => {
             </div>
 
             <div className="flex flex-row items-center gap-2 w-full">
-            <label className="text-white ">Titular</label>
+              <label className="text-white ">Titular</label>
               <div className="flex flex-col justify-between items-center w-full">
                 <input
                   className="border p-2 rounded w-[17em]"
@@ -408,9 +409,8 @@ const PacientForm = () => {
               </div>
             </div>
             <div className="flex flex-row items-center gap-2 w-full">
-            <label className="text-white ">N° de afiliado</label>
+              <label className="text-white ">N° de afiliado</label>
               <div className="flex flex-col items-center justify-between w-full">
-                
                 <input
                   className="border p-2 rounded w-[17em]"
                   type="number"

@@ -198,9 +198,9 @@ const AppointmentUser = () => {
           </div>
         ))}
       </ul>
-      <ul className=" flex flex-col items-center mt-4 bg-gray-300 text-black h-[10em] w-full rounded-lg lg:rounded-2xl py-5 px-3 overflow-y-auto scrollbar-hide">
+      <ul className="flex flex-col justify-center items-center mt-4 bg-gray-300 text-black h-[10em] w-full rounded-lg lg:rounded-2xl py-5 px-3 overflow-y-auto scrollbar-hide">
         {userAppointments.length == 0 ? (
-          <span>No tienes turnos programados</span>
+          <span className="text-2xl">No tienes turnos programados</span>
         ) : (
           <li
             key={userAppointments[0]?.id}
