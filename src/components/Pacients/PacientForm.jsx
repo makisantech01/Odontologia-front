@@ -323,17 +323,9 @@ const PacientForm = () => {
                   type="text"
                   placeholder="Ingrese Otro Numero de Telefono"
                   {...register("telefono2", {
-                    required: "Campo obligatorio",
                   })}
                   onBlur={() => handleBlur("telefono2")}
                 />
-              </div>
-              <div className="ml-10">
-                {errors.telefono2 && (
-                  <label className=" h-0 text-red-500">
-                    {errors.telefono2.message}
-                  </label>
-                )}
               </div>
             </div>
 
