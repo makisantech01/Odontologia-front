@@ -38,7 +38,7 @@ const SidebarLink = ({ item }) => {
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const userType = useSelector((state) => state.users.type);
-
+  const dni = useSelector((state) => state.users.users);
   const onLogout = () => {
     const cookie = new Cookie();
     cookie.remove("token");
@@ -67,7 +67,7 @@ const Sidebar = () => {
                 <SidebarLink key={item.key} item={item} />
               ))}
         </div>
-        <div className="flex flex-col gap-0.5 pt-2">
+        <div className="flex flex-col gap-0.5 pt-2 mb-10">
           <button
             className={classNames("text-red-500 cursor-pointer", linkClasses)}
             onClick={onLogout}
@@ -77,6 +77,7 @@ const Sidebar = () => {
             </span>
             Logout
           </button>
+          {/* comentario */}
         </div>
       </section>
       <button

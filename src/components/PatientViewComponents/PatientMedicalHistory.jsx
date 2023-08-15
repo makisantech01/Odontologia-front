@@ -102,17 +102,17 @@ const PatientMedicalHistory = () => {
     trigger(fieldName);
   };
   return (
-    <form className="w-[95vw] lg:w-[70vw] mx-4 lg:h-[80vh] h-[89vh] bg-primary py-4 rounded-3xl shadow-2xl z-10">
+    <form className="w-[92vw] flex flex-col justify-center items-center lg:w-[70vw] mx-4 lg:h-[80vh] md:h-[80vh] h-[89vh] bg-primary py-4 rounded-3xl shadow-2xl z-10">
       <h2 className="lg:text-6xl text-4xl font-bold text-center italic text-white my-5">
         Historial Médico
       </h2>
-      <div className="flex  lg:flex-row md:flex-row flex-col h-[55%] w-full overflow-y-auto overflow-x-hidden mb-3">
-        <div className=" p-6 flex flex-col gap-4 lg:w-1/2">
-          <div className="flex items-center justify-between">
+      <div className="flex bg-secondary-150 shadow-xl lg:flex-row md:flex-row flex-col h-[55%] w-[95%]  overflow-y-auto mb-3">
+        <div className="p-4 flex flex-col gap-4 md:w-1/2 xs:w-full">
+          <div className=" flex items-center justify-between">
             <label className="text-1xl text-white">Enfermedades</label>
             <select
               defaultValue={client?.enfermedad}
-              className="border p-2 rounded w-[4em]"
+              className="border p-2 rounded w-[3em]"
               {...register("enfermedad")}
               onBlur={() => handleBlur("enfermedad")}
             >
@@ -450,7 +450,7 @@ const PatientMedicalHistory = () => {
             <p className="h-0 text-red-500">{errors.hipertension.message}</p>
           )}
         </div>
-        <div className=" p-6 flex flex-col gap-4 lg:w-1/2">
+        <div className=" p-4 flex flex-col gap-4 md:w-1/2 xs:w-full">
           <div className="flex items-center justify-between">
             <label className="text-1xl text-white">Hipotensión</label>
             <select
@@ -751,8 +751,8 @@ const PatientMedicalHistory = () => {
           )}
         </div>
       </div>
-      <div className="px-5">
-        <div className="flex items-center justify-between">
+      <div className="px-5 w-full">
+        <div className=" h-[8em] overflow-y-auto scrollbar-default flex items-center justify-between">
           <label className="text-1xl text-white">
             Al modificar esta información, declaro que todos los datos
             proporcionados respecto a mi estado de salud son verdaderos y que he

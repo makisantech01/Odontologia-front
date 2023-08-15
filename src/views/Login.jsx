@@ -43,7 +43,7 @@ const Login = () => {
       console.log("este es el resposne", response);
       if (response.type === "user/LoginUser/fulfilled") {
         nav("/citas");
-      } 
+      }
     } catch (error) {
       console.error(error);
     }
@@ -57,7 +57,7 @@ const Login = () => {
     <div className="bg-secondary-100 h-screen overflow-hidden flex items-center justify-center">
       <div className=" flex flex-col justify-center">
         <img src={topWave} className=" absolute z-[1] top-0 right-0 w-[40%]" />
-        <form className="lg:w-[500px] w-[450px] bg-primary p-4 rounded-3xl shadow-black shadow-2xl z-10">
+        <form className="lg:w-[500px] xs:w-[94vw] md:w-[450px] bg-primary p-4 rounded-3xl shadow-black shadow-2xl z-10">
           <h2 className="text-6xl font-bold text-center italic text-white mb-[1.8em] mt-5">
             Conident
           </h2>

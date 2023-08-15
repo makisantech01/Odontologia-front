@@ -46,6 +46,7 @@ const PersonalDataForm = () => {
   const mm = String(fechaNacimiento.getMonth() + 1).padStart(2, "0");
   const yyyy = fechaNacimiento.getFullYear();
   const fechaClienteFormateada = `${yyyy}-${mm}-${dd}`;
+  const isSmallScreen = window.innerWidth < 640;
 
   const onSubmit = async (data) => {
     try {
@@ -117,12 +118,12 @@ const PersonalDataForm = () => {
   };
   return (
     <>
-      <form className="w-[900px] mx-4 lg:mx-0 lg:h-auto h-[82vh] bg-primary p-4 rounded-3xl shadow-2xl z-10">
-        <h2 className="lg:text-6xl text-4xl font-bold text-center italic text-white my-5">
+      <form className="w-[95vw] pt-0 flex flex-col justify-evenly items-center lg:w-[70vw] lg:h-[80vh] md:h-[80vh] h-[89vh] xs:mb-[4em] bg-primary py-4 rounded-3xl shadow-2xl z-10">
+        <h2 className="lg:text-6xl text-4xl font-bold text-center italic text-white">
           Datos Personales
         </h2>
-        <div className="flex justify-center lg:flex-row flex-col items-center h-[500px] overflow-y-auto overflow-x-hidden">
-          <div className=" p-3 flex flex-col gap-4">
+        <div className="bg-secondary-150 shadow-xl w-full flex justify-center lg:flex-row flex-col items-center h-[500px] overflow-y-auto overflow-x-hidden">
+          <div className=" p-3 flex flex-col gap-4 lg:gap-6 h-full w-full lg:w-1/2">
             <div className="flex items-center justify-between">
               <label className="text-1xl text-white">DNI</label>
               <input
@@ -226,7 +227,7 @@ const PersonalDataForm = () => {
               <p className="h-0 text-red-500">{errors.localidad.message}</p>
             )}
           </div>
-          <div className=" p-3 flex flex-col gap-4">
+          <div className="p-3 flex flex-col gap-4 lg:gap-6 h-full w-full lg:w-1/2">
             <div className="flex items-center justify-between">
               <label className="text-1xl text-white">Email</label>
               <input
@@ -248,7 +249,14 @@ const PersonalDataForm = () => {
               <p className="h-0 text-red-500">{errors.email.message}</p>
             )}
             <div className="flex items-center justify-between gap-3">
-              <label className="text-1xl text-white">Ocupación/Profesión</label>
+              {isSmallScreen ? (
+                <label className="text-1xl text-white">Ocupacion</label>
+              ) : (
+                <label className="text-1xl text-white">
+                  Ocupación/Profesión
+                </label>
+              )}
+
               <input
                 defaultValue={client?.ocupacion}
                 className="border p-2 rounded w-[17em]"
