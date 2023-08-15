@@ -15,14 +15,19 @@ const AppointmentUser = () => {
   const dispatch = useDispatch();
   const appointments = useSelector((state) => state.calendar.calendarData);
   const dni = useSelector((state) => state.users.users);
+
   const allAppointments = useSelector(
     (state) => state.appointments.appointments
   );
+  const userType = useSelector((state) => state.users.type);
+  console.log(userType);
 
   useEffect(() => {
     dispatch(fetchData());
     dispatch(getAppointments());
-    dispatch(fetchClient(dni));
+    if(userType !== undefined){
+      dispatch(fetchClient(dni));
+    }
   }, [dispatch, dni]);
 
   //fecha actual

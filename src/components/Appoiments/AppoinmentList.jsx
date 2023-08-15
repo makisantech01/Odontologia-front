@@ -99,7 +99,7 @@ const AppoinmentList = ({setStartDate, startDate}) => {
     try {
       if (dni !== "") {
         const response = await dispatch(fetchClient(dni));
-
+        
         const result = response.payload.data;
         setSearchResult(`${result.nombre} ${result.apellido}`);
         handleCreatePatient({
