@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
 library.add(faIdCard);
 
 const ClinicalHistory = () => {
@@ -44,13 +44,16 @@ const ClinicalHistory = () => {
       data.mesesEmbarazo === "" ? (data.mesesEmbarazo = 0) : data.mesesEmbarazo;
       console.log(data);
       const response = await axios.post(`${api}/historiales/${user}`, data);
-      console.log(response.status)
+      console.log(response.status);
       if (response.status === 200) {
         console.log(response);
         nav("/citas");
-      }
-      else{
-        Swal.fire("Hubo un error al realizar la operación, verifique que los datos sean correctos.", "", "error");
+      } else {
+        Swal.fire(
+          "Hubo un error al realizar la operación, verifique que los datos sean correctos.",
+          "",
+          "error"
+        );
       }
     } catch (error) {
       console.error(error);
@@ -62,10 +65,9 @@ const ClinicalHistory = () => {
   };
 
   return (
-    <div className="bg-secondary-100 h-[100vh] flex items-center justify-center">
+    <div className="bg-secondary-100 h-full flex items-center justify-center">
       <div className=" flex flex-col justify-center">
-        <img src={topWave} className=" absolute z-[1] top-0 right-0 w-[40%]" />
-        <form className=" bg-primary p-4 rounded-3xl shadow-2xl z-10 w-[90vw] lg:w-[50vw] h-[90vh]">
+        <form className=" bg-primary p-4 rounded-3xl shadow-2xl z-10 w-[90vw] lg:w-[50vw] h-full">
           <h2 className="text-4xl font-bold text-center italic text-white mb-5">
             Historial Médico
           </h2>
@@ -782,14 +784,14 @@ const ClinicalHistory = () => {
               </div>
               <div className="">
                 {errors.consentimiento && (
-                  <p className="h-0 text-red-500">
+                  <p className="h-0 mb-5 text-red-500">
                     {errors.consentimiento.message}
                   </p>
                 )}
               </div>
             </div>
           </div>
-          <div className="flex justify-center mt-3">
+          <div className="flex justify-center">
             <button
               className="font-bold w-[8em] border-none rounded-2xl py-3 bg-button-100 hover:bg-button-100/80 text-white text-2xl"
               type="submit"
@@ -799,10 +801,6 @@ const ClinicalHistory = () => {
             </button>
           </div>
         </form>
-        <img
-          src={bottonWave}
-          className=" absolute z-[1] bottom-0 left-0 w-[40%]"
-        />
       </div>
     </div>
   );
