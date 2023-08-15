@@ -14,11 +14,10 @@ import { fetchData } from "../store/features/calendarSlice";
 import { useDispatch } from "react-redux";
 registerLocale("es", es);
 
-function DateFilter({ onSelect, handlePost, handleSelectChanged }) {
+function DateFilter({ onSelect, handlePost, handleSelectChanged}){
   const [startDate, setStartDate] = useState();
   const newFormattedDate = moment(startDate)?.format("DD/MM/YYYY");
   const calendarData = useSelector((state) => state.calendar.calendarData);
-
   const [availableHours, setAvailableHours] = useState([]);
   const dispatch = useDispatch();
 
@@ -64,7 +63,10 @@ function DateFilter({ onSelect, handlePost, handleSelectChanged }) {
             </option>
           ))}
         </select>
-        <button type="submit" onClick={handlePost}>
+        <button type="submit" onClick={() => {
+  handlePost();
+  setStartDate(null);
+}}>
           <FontAwesomeIcon
             className="h-[2.5em] text-green-800 bg-white rounded-full"
             icon={faCircleCheck}
