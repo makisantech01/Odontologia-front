@@ -86,8 +86,6 @@ const PersonalDataForm = () => {
           },
         });
         console.log(response);
-        nav("/citas");
-
         // Toast.fire({
         //   icon: "success",
         //   title: "Información actualizada con éxito!",
