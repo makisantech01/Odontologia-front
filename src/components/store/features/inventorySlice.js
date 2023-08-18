@@ -27,7 +27,6 @@ export const putProducts = createAsyncThunk(
 export const deleteProducts = createAsyncThunk(
   "inventory/deleteProducts",
   async (payload, { dispatch }) => {
-    console.log(payload);
     const response = await axios.delete(`${productosUrl}/productos/${payload}`);
     dispatch(getProducts());
     const responseData = response.data;
@@ -41,7 +40,6 @@ export const postProducts = createAsyncThunk(
     const response = await axios.post(`${productosUrl}/productos`, payload);
     dispatch(getProducts());
     const responseData = response.data;
-    console.log(responseData);
     return responseData;
   }
 );
@@ -65,7 +63,6 @@ const inventorySlice = createSlice({
     });
     builder.addCase(postProducts.fulfilled, (state, action) => {
       Swal.fire("Producto creado con éxito!", "", "success");
-      console.log(action.payload);
     });
   },
 });

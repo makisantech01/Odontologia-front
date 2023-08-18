@@ -28,8 +28,6 @@ const Login = () => {
 
   const loading = useSelector((state) => state.users.loading);
 
-  console.log("este es el loading", loading);
-
   const {
     register,
     handleSubmit,
@@ -40,7 +38,6 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const response = await dispatch(LoginUser(data));
-      console.log("este es el resposne", response);
       if (response.type === "user/LoginUser/fulfilled") {
         nav("/citas");
       }

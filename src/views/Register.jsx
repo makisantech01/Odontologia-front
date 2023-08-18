@@ -35,7 +35,6 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
-      console.log(data);
       const response = await dispatch(RegisterUser(data));
       if (response) {
         await dispatch(LoginUser(data));

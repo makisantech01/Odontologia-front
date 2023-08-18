@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchClient } from "../store/features/clientSlice";
 import DateFilter from "./DateFilter";
 import { fetchData } from "../store/features/calendarSlice";
-import axios from "axios";
 import {
   getAppointments,
   deleteAppointments,
@@ -17,7 +16,7 @@ import {
 } from "../store/features/appointmentsSlice";
 import Swal from "sweetalert2";
 
-const AppoinmentList = ({setStartDate, startDate}) => {
+const AppoinmentList = ({ setStartDate, startDate }) => {
   const [list, setList] = useState([]);
   const [searchResult, setSearchResult] = useState("");
   const [dni, setDni] = useState("");
@@ -76,14 +75,14 @@ const AppoinmentList = ({setStartDate, startDate}) => {
         name: "",
         lastName: "",
       });
-      setDni("")
+      setDni("");
       setValues({
         dni: "",
         name: "",
         lastName: "",
         date: "",
         time: "",
-      })
+      });
     }
   };
 
@@ -99,21 +98,19 @@ const AppoinmentList = ({setStartDate, startDate}) => {
     try {
       if (dni !== "") {
         const response = await dispatch(fetchClient(dni));
-        
+
         const result = response.payload.data;
         setSearchResult(`${result.nombre} ${result.apellido}`);
         handleCreatePatient({
           name: result.nombre,
           lastName: result.apellido,
         });
-      }
-      else{
+      } else {
         handleCreatePatient({
           name: "",
           lastName: "",
         });
-        setSearchResult("")
-        
+        setSearchResult("");
       }
     } catch (error) {
       console.error("Error al buscar pacientes relacionados:", error);
@@ -138,7 +135,7 @@ const AppoinmentList = ({setStartDate, startDate}) => {
       dni: event,
     });
   };
-  
+
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "¿Quieres eliminar este turno?",

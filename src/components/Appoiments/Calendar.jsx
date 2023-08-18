@@ -83,7 +83,7 @@ const Calendar = ({ value = new Date(), onChange }) => {
   const filterClient = (value, id, sectionIndex) => {
     const client = data.find((client) => client.dni === value);
     if (!client) return;
-    console.log("el cliente del flitro ->", client);
+
     return client;
 
     // setPatientName((prevNames) => ({
@@ -96,7 +96,6 @@ const Calendar = ({ value = new Date(), onChange }) => {
     const event = e.target.value;
     const id = e.target.id;
     const client = filterClient(event, id, sectionIndex);
-    console.log("el cliente en el input value ->", client);
 
     if (event.length > 7) {
       e.target.value = event.slice(0, 8);
@@ -121,13 +120,12 @@ const Calendar = ({ value = new Date(), onChange }) => {
         ...client,
       });
       const response = true;
-      console.log("handleClient ->", client);
 
       if (response) {
         setCanUpDate(false);
       }
     } catch (error) {
-      console.log("handleClient error ->", error);
+      alert("handleClient error ->", error);
     }
   };
 

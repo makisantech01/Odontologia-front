@@ -5,7 +5,7 @@ import jwt_decode from "jwt-decode";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import { fetchClients } from "./clientSlice";
-const cookies = new Cookies()
+const cookies = new Cookies();
 
 const userUrl = import.meta.env.VITE_ENDPOINT;
 
@@ -46,7 +46,6 @@ export const LoginUser = createAsyncThunk(
 export const RegisterUser = createAsyncThunk(
   "user/RegisterUser",
   async (formData) => {
-    console.log("Form data ----->",formData)
     const response = await axios.post(
       "https://api-sist-odontologico-production-889e.up.railway.app/usuarios",
       formData
@@ -56,13 +55,11 @@ export const RegisterUser = createAsyncThunk(
   }
 );
 
-
-
 const initialState = {
   users: null,
   login: {},
   loading: false,
-  regLoading:false,
+  regLoading: false,
   error: null,
   type: null,
 };
@@ -90,7 +87,7 @@ const usersSlice = createSlice({
         state.loading = true;
       })
       .addCase(LoginUser.fulfilled, (state, action) => {
-        state.loading=false
+        state.loading = false;
         const responseData = action.payload;
         cookies.set("token", responseData, { path: "/" });
         const typeData = cookies.get("token");
@@ -101,7 +98,7 @@ const usersSlice = createSlice({
         }
       })
       .addCase(LoginUser.rejected, (state, action) => {
-        state.loading = false
+        state.loading = false;
         state.error = "hubo un error al iniciar sesión";
         Swal.fire(
           "Hubo un error al iniciar sesión, inténtelo nuevamente",
@@ -109,12 +106,11 @@ const usersSlice = createSlice({
           "error"
         );
       })
-      .addCase(getUserData.fulfilled, (state, action)=>{
+      .addCase(getUserData.fulfilled, (state, action) => {
         const { type, users } = action.payload;
         state.type = type;
         state.users = users;
-      })
-
+      });
   },
 });
 export const { actions: usersActions, reducer: usersReducer } = usersSlice;

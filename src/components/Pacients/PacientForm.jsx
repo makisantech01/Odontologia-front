@@ -42,7 +42,6 @@ const PacientForm = () => {
 
   const userType = useSelector((state) => state.users.type);
   const user = useSelector((state) => state.users.users);
-  console.log("el usuario --->", user);
 
   const onSubmit = async (data) => {
     try {
@@ -56,13 +55,11 @@ const PacientForm = () => {
       if (data.afiliado === "") {
         data.afiliado = 0;
       }
-      console.log("fecha formateada ----->", fechaFormateada);
       // Actualizar el valor de la fecha de vencimiento en los datos
       const newData = { ...data, fechaNacimiento: fechaFormateada };
-      console.log(newData);
+
       const response = await dispatch(createClient(newData));
       if (response.type === "client/createClient/fulfilled") {
-        console.log(response.type);
         nav("/historial-medico");
       } else {
         Swal.fire(
@@ -322,8 +319,7 @@ const PacientForm = () => {
                   className="border p-2 rounded w-[17em]"
                   type="text"
                   placeholder="Ingrese Otro Numero de Telefono"
-                  {...register("telefono2", {
-                  })}
+                  {...register("telefono2", {})}
                   onBlur={() => handleBlur("telefono2")}
                 />
               </div>

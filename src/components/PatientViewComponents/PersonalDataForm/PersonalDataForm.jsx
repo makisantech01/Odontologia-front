@@ -60,7 +60,6 @@ const PersonalDataForm = () => {
 
       // Actualizar el valor de la fecha de vencimiento en los datos
       const newData = { ...data, fechaNacimiento: fechaFormateada };
-      console.log(newData);
 
       const result = await Swal.fire({
         title: `¿Confirma las modificaciones?`,
@@ -85,7 +84,7 @@ const PersonalDataForm = () => {
             toast.addEventListener("mouseleave", Swal.resumeTimer);
           },
         });
-        console.log(response);
+
         nav("/citas");
 
         // Toast.fire({

@@ -14,21 +14,17 @@ const PatientAppointment = () => {
   const dispatch = useDispatch();
 
   const client = useSelector((state) => state?.clients?.selectedClient?.data);
-  console.log("dni", client.dni);
 
   useEffect(() => {
     dispatch(getAppointments());
   }, [dispatch]);
 
-  console.log("appointments", appointments);
-
   const PacientAppointment = appointments.filter(
     (turno) => turno.pacienteId === client.dni
   );
-  console.log("este es el turno filtrado", PacientAppointment);
 
   const AppointmentId = PacientAppointment.map((turno) => turno.id);
-  console.log(AppointmentId);
+
   const onHandleDelete = async () => {
     const result = await Swal.fire({
       title:
@@ -40,9 +36,7 @@ const PatientAppointment = () => {
       reverseButtons: true,
     });
     if (result.isConfirmed) {
-      console.log(AppointmentId);
       const response = await dispatch(deleteAppointments(AppointmentId));
-      console.log(response);
     }
   };
 

@@ -42,11 +42,10 @@ const ClinicalHistory = () => {
         }
       }
       data.mesesEmbarazo === "" ? (data.mesesEmbarazo = 0) : data.mesesEmbarazo;
-      console.log(data);
+
       const response = await axios.post(`${api}/historiales/${user}`, data);
-      console.log(response.status);
+
       if (response.status === 200) {
-        console.log(response);
         nav("/citas");
       } else {
         Swal.fire(
@@ -777,9 +776,7 @@ const ClinicalHistory = () => {
                   })}
                   defaultChecked={false}
                   onBlur={() => handleBlur("consentimiento")}
-                  onClick={(e) => {
-                    console.log(e.target.checked);
-                  }}
+                  onClick={(e) => {}}
                 />
               </div>
               <div className="">

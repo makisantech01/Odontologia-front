@@ -4,7 +4,11 @@ import axios from "axios";
 
 const DienteApp = () => {
   const handleSubmit = (data) => {
-    axios.post("api-sist-odontologico-production-889e.up.railway.app/dientes", data)
+    axios
+      .post(
+        "api-sist-odontologico-production-889e.up.railway.app/dientes",
+        data
+      )
       .then((response) => {
         console.log("Respuesta del servidor:", response.data);
       })
@@ -24,7 +28,7 @@ const DienteApp = () => {
   };
 
   const handleCancel = () => {
-    console.log("Formulario cancelado");
+    alert("Formulario cancelado");
   };
 
   return (
