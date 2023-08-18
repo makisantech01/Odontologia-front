@@ -15,14 +15,18 @@ const AppointmentUser = () => {
   const dispatch = useDispatch();
   const appointments = useSelector((state) => state.calendar.calendarData);
   const dni = useSelector((state) => state.users.users);
+
   const allAppointments = useSelector(
     (state) => state.appointments.appointments
   );
+  const userType = useSelector((state) => state.users.type);
 
   useEffect(() => {
     dispatch(fetchData());
     dispatch(getAppointments());
-    dispatch(fetchClient(dni));
+    if (userType !== undefined) {
+      dispatch(fetchClient(dni));
+    }
   }, [dispatch, dni]);
 
   //fecha actual
@@ -90,7 +94,7 @@ const AppointmentUser = () => {
         axios
           .post(`${appointmentsUrl}/turnos/${dni}`, appointment)
           .then((response) => {
-            console.log("Response ->", response.data);
+
             dispatch(getAppointments());
             const Toast = Swal.mixin({
               toast: true,

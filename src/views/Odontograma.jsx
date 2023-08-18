@@ -11,9 +11,10 @@ const OdontogramaView = () => {
 
   const fetchOdontograma = async () => {
     try {
-      const response = await axios.get("https://api-sist-odontologico-production-889e.up.railway.app/odontogramas");
+      const response = await axios.get(
+        "https://api-sist-odontologico-production-889e.up.railway.app/odontogramas"
+      );
       setOdontograma(response.data);
-      console.log(response)
     } catch (error) {
       console.error(error);
     }
@@ -25,7 +26,7 @@ const OdontogramaView = () => {
       <p>Paciente: {odontograma?.paciente}</p>
       <p>Fecha: {odontograma?.fecha}</p>
       <p>Observaciones: {odontograma?.observaciones}</p>
-      
+
       <h2>Dientes:</h2>
       {odontograma?.dientes?.map((diente) => (
         <OdontogramaDiente key={diente?.numero} {...diente} />

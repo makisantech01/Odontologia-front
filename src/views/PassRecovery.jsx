@@ -28,8 +28,6 @@ const PassRecovery = () => {
           { email: data.email }
         )
         .then(async (response) => {
-          console.log(response.data);
-
           const result = await Swal.fire({
             title: "Link de recuperación enviado. Revise su casilla de correo!",
             icon: "success",

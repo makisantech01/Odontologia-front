@@ -43,8 +43,6 @@ const PatientMedicalHistory = () => {
           data[key] = "";
         }
       }
-      console.log(data);
-
       const result = await Swal.fire({
         title: `¿Confirma las modificaciones?`,
         icon: "question",
@@ -70,7 +68,7 @@ const PatientMedicalHistory = () => {
             toast.addEventListener("mouseleave", Swal.resumeTimer);
           },
         });
-        console.log(response);
+
         nav("/citas");
 
         // Toast.fire({
@@ -770,7 +768,7 @@ const PatientMedicalHistory = () => {
             defaultChecked={false}
             onBlur={() => handleBlur("consentimiento")}
             onClick={(e) => {
-              console.log(e.target.checked);
+
             }}
           />
         </div>

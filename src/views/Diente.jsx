@@ -17,14 +17,12 @@ const Diente = () => {
           `https://api-sist-odontologico-production-889e.up.railway.app/dientes/${existingDiente.id}`,
           data
         );
-        console.log("Diente actualizado:", existingDiente.id);
       } else {
         // Si no existe, crea un nuevo diente
         await axios.post(
           "https://api-sist-odontologico-production-889e.up.railway.app/dientes",
           data
         );
-        console.log("Nuevo diente creado:", data.numero);
       }
     } catch (error) {
       console.error("Error al enviar los datos:", error);
@@ -33,11 +31,11 @@ const Diente = () => {
 
   const handleCancel = () => {
     // Aquí puedes realizar alguna acción cuando se cancele el formulario
-    console.log("Formulario cancelado");
+    alert("Formulario cancelado");
   };
 
   return (
-    <div class = "diente">
+    <div class="diente">
       <h1>Crear o editar un Diente</h1>
       <DienteForm onSubmit={handleSubmit} onCancel={handleCancel} />
     </div>

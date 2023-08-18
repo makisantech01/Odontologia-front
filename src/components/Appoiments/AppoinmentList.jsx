@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchClient } from "../store/features/clientSlice";
 import DateFilter from "./DateFilter";
 import { fetchData } from "../store/features/calendarSlice";
-import axios from "axios";
 import {
   getAppointments,
   deleteAppointments,
@@ -17,13 +16,13 @@ import {
 } from "../store/features/appointmentsSlice";
 import Swal from "sweetalert2";
 
-const AppoinmentList = () => {
+const AppoinmentList = ({ setStartDate, startDate }) => {
   const [list, setList] = useState([]);
   const [searchResult, setSearchResult] = useState("");
   const [dni, setDni] = useState("");
   const appointments = useSelector((state) => state.appointments.appointments);
   const dispatch = useDispatch();
-
+  const [inputValue, setInputValue] = useState("");
   //fecha actual
   const date = new Date();
   const dia = date.getDate();
@@ -60,7 +59,6 @@ const AppoinmentList = () => {
   React.useEffect(() => {
     dispatch(getAppointments());
   }, [dispatch]);
-
   //post request
   const handlePost = async () => {
     const clientInfo = {
@@ -69,14 +67,23 @@ const AppoinmentList = () => {
       hora: values.time,
       estado: true,
     };
-    await dispatch(postAppointment(clientInfo));
-    setValues({
-      dni: "",
-      name: "",
-      lastName: "",
-      date: "",
-      time: "",
-    });
+    const response = await dispatch(postAppointment(clientInfo));
+    if (response.type === "appointments/postAppointment/fulfilled") {
+      setInputValue(""); // Limpia el valor del campo de entrada
+      setSearchResult("");
+      handleCreatePatient({
+        name: "",
+        lastName: "",
+      });
+      setDni("");
+      setValues({
+        dni: "",
+        name: "",
+        lastName: "",
+        date: "",
+        time: "",
+      });
+    }
   };
 
   const handleCreatePatient = React.useCallback(
@@ -93,12 +100,17 @@ const AppoinmentList = () => {
         const response = await dispatch(fetchClient(dni));
 
         const result = response.payload.data;
-
         setSearchResult(`${result.nombre} ${result.apellido}`);
         handleCreatePatient({
           name: result.nombre,
           lastName: result.apellido,
         });
+      } else {
+        handleCreatePatient({
+          name: "",
+          lastName: "",
+        });
+        setSearchResult("");
       }
     } catch (error) {
       console.error("Error al buscar pacientes relacionados:", error);
@@ -117,11 +129,13 @@ const AppoinmentList = () => {
     e.preventDefault();
     const event = e.target.value;
     setDni(event);
+    setInputValue(event); // Actualiza el valor del estado inputValue
     handleCreatePatient({
       ...values,
       dni: event,
     });
   };
+
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "¿Quieres eliminar este turno?",
@@ -163,6 +177,7 @@ const AppoinmentList = () => {
           onChange={(e) => {
             handleInputValue(e);
           }}
+          value={inputValue}
           className="px-2 py-2 rounded-lg w-[10em] pl-5 outline-none"
           placeholder="DNI..."
         />
