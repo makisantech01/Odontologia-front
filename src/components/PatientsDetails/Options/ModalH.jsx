@@ -155,7 +155,12 @@ const ModalH = ({ isOpen, onClose }) => {
                 const { campo, pregunta, detalle } = preguntaObj;
                 const valor = paciente[campo];
                 const detalleValor = paciente[detalle];
-                console.log("-->", detalleValor);
+                console.log(" puc-->", patientUpdates[campo]);
+
+                const stringvalueTrue = "true";
+                const stringValueFalse = "false";
+                const boolFalse = JSON.parse(stringValueFalse);
+                const boolTrue = JSON.parse(stringvalueTrue);
 
                 return (
                   <div key={index}>
@@ -166,25 +171,23 @@ const ModalH = ({ isOpen, onClose }) => {
                         defaultValue={valor}
                         onChange={(e) => handleChange(e, campo)}
                       >
-                        <option value="true">Si</option>
-                        <option value="false">No</option>
+                        <option value={boolTrue}>Si</option>
+                        <option value={boolFalse}>No</option>
                       </select>
                     </div>
 
                     {/* {detalle && valor && ( */}
-                    {patientUpdates[campo] === true ? (
+                    {patientUpdates[campo] === true && (
                       <div className="flex justify-between mb-2 ">
                         <label className="text-black">¿Cuál?</label>
                         <input
                           className="text-black text-right px-2"
                           type="text"
-                          defaultValue={detalleValor}
+                          defaultValue={detalleValor ? detalleValor : ""}
                           onChange={(e) => handleChange(e, campo)}
                           placeholder="Cual?"
                         />
                       </div>
-                    ) : (
-                      <label className="text-black">Hola</label>
                     )}
                   </div>
                 );
