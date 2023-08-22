@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { clientSelector } from "../../store/features/clientSlice";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clientSelector,
+  fetchClient,
+  putHistorial,
+} from "../../store/features/clientSlice";
 import axios from "axios";
+import { useEffect } from "react";
 
 const ModalH = ({ isOpen, onClose }) => {
   const client = useSelector((state) => state?.clients?.selectedClient.data);
   const paciente = client?.historial;
+  const pacienteDni = paciente.id;
+  const clientDni = client.dni;
 
   const preguntas = [
     {
@@ -107,40 +114,52 @@ const ModalH = ({ isOpen, onClose }) => {
       detalle: "detalleOtros",
     },
   ];
-  const editMedicalHistory = import.meta.env.VITE_MEDICAL_HISTORY_URL;
-  const [patientUpdates, setPatientUpdates] = useState({});
-  console.log("patientUpdates ->", patientUpdates);
+  const dispatch = useDispatch();
+  const [patientUpdates, setPatientUpdates] = useState({ ...paciente });
+
+  useEffect(() => {
+    dispatch(fetchClient(clientDni));
+  }, [dispatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(
-        `${editMedicalHistory}/${paciente.id}`,
-        { ...paciente, patientUpdates },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      var propiedadesExcluir = ["pacienteId", "fecha", "id"];
+
+      var newPatientUpdates = Object.keys(patientUpdates)
+        .filter(function (key) {
+          return !propiedadesExcluir.includes(key);
+        })
+        .reduce(function (acc, key) {
+          acc[key] = patientUpdates[key];
+          return acc;
+        }, {});
+
+      console.log("new patient", newPatientUpdates);
+      console.log("Client MODAL H", client);
+      const response = await dispatch(
+        putHistorial({ newPatientUpdates, pacienteDni, clientDni })
       );
       console.log("response ->", response);
-      if (response.status === 201) {
-        alert("Los cambios fueron guardados exitosamente");
-        onClose();
-      } else {
-        alert("Error al guardar los datos");
-      }
+      onClose();
     } catch (error) {
       console.error("Error al comunicarse con el servidor", error);
     }
   };
 
   const handleChange = (e, campo) => {
-    const { value } = e?.target;
-    setPatientUpdates((prevPatientUpdates) => ({
-      ...prevPatientUpdates,
-      [campo]: value ? value : "desconocido",
-    }));
+    const { value } = e.target;
+    const parsedValue = JSON.parse(value);
+    console.log("parseado", parsedValue);
+    setPatientUpdates({
+      ...patientUpdates,
+      [campo]: parsedValue ? parsedValue : false,
+    });
+  };
+
+  const detailChange = (e, detalle) => {
+    const { value } = e.target;
+    setPatientUpdates({ ...patientUpdates, [detalle]: value ? value : null });
   };
 
   return (
@@ -159,8 +178,7 @@ const ModalH = ({ isOpen, onClose }) => {
                 const valor = paciente[campo];
                 // console.log("valor ->", valor);
                 const detalleValor = paciente[detalle];
-                // console.log("detalleValor ->", detalleValor);
-
+                console.log("PatietnUpedates", patientUpdates[campo]);
                 return (
                   <div key={index}>
                     <div className="flex justify-between mb-2">
@@ -180,12 +198,14 @@ const ModalH = ({ isOpen, onClose }) => {
                         <input
                           className="text-black text-right px-2"
                           type="text"
-                          defaultValue={detalleValor ? detalleValor : ""}
-                          onChange={(e) => handleChange(e, campo)}
+                          defaultValue={detalleValor}
+                          onChange={(e) => detailChange(e, detalle)}
                           placeholder="Cual?"
                         />
                       </div>
-                    ) : null}
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 );
               })}

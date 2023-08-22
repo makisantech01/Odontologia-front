@@ -43,6 +43,7 @@ const PatientMedicalHistory = () => {
           data[key] = "";
         }
       }
+   
       const result = await Swal.fire({
         title: `¿Confirma las modificaciones?`,
         icon: "question",
@@ -56,6 +57,9 @@ const PatientMedicalHistory = () => {
           `${api}/historiales/${client.id}`,
           data
         );
+
+       
+        
 
         const Toast = Swal.mixin({
           toast: true,
@@ -76,8 +80,9 @@ const PatientMedicalHistory = () => {
         //   title: "Información actualizada con éxito!",
         // });
       }
-    } catch (error) {
-      console.error(error);
+    } catch (response) {
+      console.log("data user",data);
+      console.error(response);
       const Toast = Swal.mixin({
         toast: true,
         position: "top-end",

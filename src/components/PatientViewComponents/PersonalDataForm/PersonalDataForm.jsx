@@ -84,9 +84,7 @@ const PersonalDataForm = () => {
             toast.addEventListener("mouseleave", Swal.resumeTimer);
           },
         });
-
-        nav("/citas");
-
+        console.log(response);
         // Toast.fire({
         //   icon: "success",
         //   title: "Información actualizada con éxito!",

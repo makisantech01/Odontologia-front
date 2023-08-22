@@ -43,8 +43,8 @@ const ClinicalHistory = () => {
       }
       data.mesesEmbarazo === "" ? (data.mesesEmbarazo = 0) : data.mesesEmbarazo;
 
-      const response = await axios.post(`${api}/historiales/${user}`, data);
-
+      // const response = await axios.post(`${api}/historiales/${user}`, data);
+       console.log("Data form",data);
       if (response.status === 200) {
         nav("/citas");
       } else {
