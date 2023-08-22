@@ -32,7 +32,7 @@ const History = () => {
       axios
         .put(endpointUrl, values)
         .then((response) => {
-          console.log("Respuesta del servidor (PUT):", response.data);
+
           setFormData(response.data);
           setIsEditing(false);
           setSubmitting(false);

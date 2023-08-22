@@ -3,7 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
-
+const editMedicalHistory = import.meta.env.VITE_MEDICAL_HISTORY_URL;
 const pacientesUrl = import.meta.env.VITE_PATIENTS_URL;
 const userUrl = import.meta.env.VITE_ENDPOINT;
 
@@ -39,6 +39,26 @@ export const deleteClient = createAsyncThunk(
     const response = await axios.delete(`${pacientesUrl}/${dni}`)
     const responseUser = await axios.delete(`${userUrl}/usuarios/${dni}`)
     dispatch(fetchClients());
+    return response.data
+  }
+)
+
+export const putHistorial = createAsyncThunk (
+  "client/putHistorial",
+  async(payload, {dispatch})=>{
+    const {newPatientUpdates, pacienteDni, clientDni} = payload
+    const id = clientDni
+    const response = await axios.put(`${editMedicalHistory}/${pacienteDni}`,
+      newPatientUpdates,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const fetch=await dispatch(fetchClient(id))
+    console.log(fetch);
+    console.log(response.data);
     return response.data
   }
 )
@@ -88,6 +108,20 @@ const clientSlice = createSlice({
         "error"
       );
     });
+    builder.addCase(putHistorial.fulfilled, (state, action) =>{
+      Swal.fire(
+        "El historial del paciente se modificó correctamente.",
+        "",
+        "success"
+      );
+    })
+    builder.addCase(putHistorial.rejected, (state, action) =>{
+      Swal.fire(
+        "Hubo un error al modificar el historial del paciente.",
+        "",
+        "error"
+      );
+    })
   },
 });
 

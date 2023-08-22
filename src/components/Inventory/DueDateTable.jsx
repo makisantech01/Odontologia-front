@@ -7,11 +7,11 @@ const DueDateTable = ({ productos }) => {
     if (!productos) {
       return [];
     }
-  
+
     return productos.slice().sort((a, b) => {
       const dateA = a.vencimiento.split("/").map(Number); // Convertir a números
       const dateB = b.vencimiento.split("/").map(Number); // Convertir a números
-  
+
       // Comparar año, luego mes, luego día
       if (dateA[2] !== dateB[2]) {
         return dateA[2] - dateB[2];
@@ -22,9 +22,6 @@ const DueDateTable = ({ productos }) => {
       return dateA[0] - dateB[0];
     });
   }, [productos]);
-  
-
-  console.log("estos son los prod ordenados",productosOrdenados)
 
   const columns = useMemo(
     () => [

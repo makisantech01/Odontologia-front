@@ -69,7 +69,6 @@ export const AppointmentSlice = createSlice({
       Swal.fire("Turno creado con exito", "", "success");
     });
     builder.addCase(postAppointment.rejected, (state, action) => {
-      console.log(action.payload);
       Swal.fire("Hubo un error al crear el turno", "", "error");
     });
   },

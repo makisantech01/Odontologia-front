@@ -6,6 +6,7 @@ import ModalH from "./ModalH.jsx";
 
 const MedicalHistoryForm = ({ isModalOpen, setIsModalOpen }) => {
   const client = useSelector(clientSelector);
+  console.log("Client Medical History Form ---->",client);
   const paciente = client?.data?.historial;
   const pacienteInicial = paciente;
   const [pacienteIni, setPacienteIni] = useState(pacienteInicial);
