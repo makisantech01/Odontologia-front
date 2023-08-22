@@ -1,8 +1,9 @@
-import OdontogramaDiente from "../../Odontograma/OdontogramaDiente";
+import OdontogramComponent from "../../Odontograma/OdontogramComponent";
+
 const Odontogram = () => {
   return (
-    <div className="bg-[#012542] flex flex-col lg:flex-row h-[69vh] text-lg text-white font-bold py-4">
-      <OdontogramaDiente />
+    <div className="bg-[#012542] flex flex-col lg:flex-row justify-center items-center h-[69vh] text-lg text-white font-bold py-4">
+      <OdontogramComponent />
     </div>
   );
 };
