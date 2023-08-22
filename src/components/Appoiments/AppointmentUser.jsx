@@ -20,12 +20,11 @@ const AppointmentUser = () => {
     (state) => state.appointments.appointments
   );
   const userType = useSelector((state) => state.users.type);
-  console.log(userType);
 
   useEffect(() => {
     dispatch(fetchData());
     dispatch(getAppointments());
-    if(userType !== undefined){
+    if (userType !== undefined) {
       dispatch(fetchClient(dni));
     }
   }, [dispatch, dni]);
@@ -95,7 +94,7 @@ const AppointmentUser = () => {
         axios
           .post(`${appointmentsUrl}/turnos/${dni}`, appointment)
           .then((response) => {
-            console.log("Response ->", response.data);
+
             dispatch(getAppointments());
             const Toast = Swal.mixin({
               toast: true,

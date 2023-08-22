@@ -43,8 +43,7 @@ const PatientMedicalHistory = () => {
           data[key] = "";
         }
       }
-      console.log(data);
-
+   
       const result = await Swal.fire({
         title: `¿Confirma las modificaciones?`,
         icon: "question",
@@ -59,6 +58,9 @@ const PatientMedicalHistory = () => {
           data
         );
 
+       
+        
+
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -70,7 +72,7 @@ const PatientMedicalHistory = () => {
             toast.addEventListener("mouseleave", Swal.resumeTimer);
           },
         });
-        console.log(response);
+
         nav("/citas");
 
         // Toast.fire({
@@ -78,8 +80,9 @@ const PatientMedicalHistory = () => {
         //   title: "Información actualizada con éxito!",
         // });
       }
-    } catch (error) {
-      console.error(error);
+    } catch (response) {
+      console.log("data user",data);
+      console.error(response);
       const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -770,7 +773,7 @@ const PatientMedicalHistory = () => {
             defaultChecked={false}
             onBlur={() => handleBlur("consentimiento")}
             onClick={(e) => {
-              console.log(e.target.checked);
+
             }}
           />
         </div>

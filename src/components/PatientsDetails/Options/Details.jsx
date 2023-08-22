@@ -11,7 +11,7 @@ const Details = () => {
     dispatch(fetchClient(id));
   }, [dispatch]);
   return (
-    <div className="bg-[#012542] flex flex-col lg:flex-row md:flex-row items-center h-[69vh] text-lg text-white font-bold py-4">
+    <div className="bg-[#012542] flex flex-col lg:flex-row md:flex-row items-center h-[67vh] text-lg text-white font-bold py-4 overflow-y-auto">
       <div className="h-[100%] lg:w-[50%] w-full flex justify-center pb-2 ">
         <ul className="h-full flex flex-col justify-center pl-4 gap-3 ">
           <li>

@@ -6,14 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchClient, fetchClients } from "../store/features/clientSlice";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
 library.add(faCheck, faEdit, faTrash);
 import { deleteClient } from "../store/features/clientSlice";
 
 const ClientTable = ({ searchTerm }) => {
   const clients = useSelector((state) => state.clients.clients);
-   
-  console.log(clients)
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -25,7 +23,6 @@ const ClientTable = ({ searchTerm }) => {
       {
         Header: "DNI",
         accessor: "dni",
-        
       },
       {
         Header: "Nombre",
@@ -34,7 +31,6 @@ const ClientTable = ({ searchTerm }) => {
           const onPacientInfo = () => {
             const dni = row.original.dni;
             dispatch(fetchClient(dni));
-            console.log(dni);
           };
           return (
             <Link to={`/pacientes/${row.original.dni}`}>
@@ -54,7 +50,7 @@ const ClientTable = ({ searchTerm }) => {
       },
       {
         accessor: "opciones",
-        Cell: ({row}) => {
+        Cell: ({ row }) => {
           const dispatch = useDispatch();
           const onHandleDelete = async () => {
             const result = await Swal.fire({
@@ -67,16 +63,18 @@ const ClientTable = ({ searchTerm }) => {
               reverseButtons: true,
             });
             if (result.isConfirmed) {
-             const response =  await dispatch(deleteClient(row.original.dni));
-              console.log(response)
+              const response = await dispatch(deleteClient(row.original.dni));
             }
-          }
-          return(
+          };
+          return (
             <div className="flex gap-1 justify-evenly">
-          <FontAwesomeIcon icon="trash" onClick={onHandleDelete} className="text-red-600 cursor-pointer text-2xl" />
-        </div>
-          )
-          
+              <FontAwesomeIcon
+                icon="trash"
+                onClick={onHandleDelete}
+                className="text-red-600 cursor-pointer text-2xl"
+              />
+            </div>
+          );
         },
       },
     ],

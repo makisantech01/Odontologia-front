@@ -34,8 +34,6 @@ const PassRestore = () => {
           { token, password: data.password }
         )
         .then(async (response) => {
-          console.log(response.data);
-
           const result = await Swal.fire({
             title: "Contraseña restablecida con éxito!",
             icon: "success",
