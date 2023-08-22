@@ -28,7 +28,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Routes>
-        {/* Dashboard routes */}
+        {/* Dashboard routes :D */}
         <Route path="/" element={<Login />} />
         <Route path="/citas" element={<Citas />} />
         <Route path="/inventario" element={<Inventory />} />
