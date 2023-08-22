@@ -17,33 +17,36 @@ import PatientData from "./views/PatientData";
 import PatientHistory from "./views/PatientHistory";
 import Diente from "./views/Diente";
 import Odontograma from "./views/Odontograma";
+import { ThemeProvider } from "@mui/material/styles";
 
 function App() {
+  const theme = {};
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserData());
   }, [dispatch]);
   return (
-    <Routes>
-      {/* Dashboard routes */}
-      <Route path="/" element={<Login />} />
-      <Route path="/citas" element={<Citas />} />
-      <Route path="/inventario" element={<Inventory />} />
-      <Route path="/registrarse" element={<Register />} />
-      <Route path="/pacientes" element={<Patients />} />
-      <Route path="/pacientes/:id" element={<PatientDetails />} />
-      <Route path="/recuperacion-contraseña" element={<PassRecovery />} />
-      <Route path="/restablecer-contrasena" element={<PassRestore />} />
-      <Route path="/datos-personales" element={<PacientForm />} />
-      <Route path="/historial-medico" element={<ClinicalHistory />} />
-      <Route path="/datos" element={<PatientData />} />
-      <Route path="/historial" element={<PatientHistory />} />
-      {/* <Route path="/turnos" element={<PatientData />} /> */}
-      {/* Pacients routes */}
-      <Route path="/diente" element={<Diente />} />
-      <Route path="/odontograma" element={<Odontograma />} />
-
-    </Routes>
+    <ThemeProvider theme={theme}>
+      <Routes>
+        {/* Dashboard routes */}
+        <Route path="/" element={<Login />} />
+        <Route path="/citas" element={<Citas />} />
+        <Route path="/inventario" element={<Inventory />} />
+        <Route path="/registrarse" element={<Register />} />
+        <Route path="/pacientes" element={<Patients />} />
+        <Route path="/pacientes/:id" element={<PatientDetails />} />
+        <Route path="/recuperacion-contraseña" element={<PassRecovery />} />
+        <Route path="/restablecer-contrasena" element={<PassRestore />} />
+        <Route path="/datos-personales" element={<PacientForm />} />
+        <Route path="/historial-medico" element={<ClinicalHistory />} />
+        <Route path="/datos" element={<PatientData />} />
+        <Route path="/historial" element={<PatientHistory />} />
+        {/* <Route path="/turnos" element={<PatientData />} /> */}
+        {/* Pacients routes */}
+        <Route path="/diente" element={<Diente />} />
+        <Route path="/odontograma" element={<Odontograma />} />
+      </Routes>
+    </ThemeProvider>
   );
 }
 
