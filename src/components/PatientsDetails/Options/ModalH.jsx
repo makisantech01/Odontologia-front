@@ -108,7 +108,7 @@ const ModalH = ({ isOpen, onClose }) => {
   ];
   const editMedicalHistory = import.meta.env.VITE_MEDICAL_HISTORY_URL;
   const [patientUpdates, setPatientUpdates] = useState({});
-  console.log("PU ->", patientUpdates);
+  console.log("patientUpdates ->", patientUpdates);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -155,8 +155,7 @@ const ModalH = ({ isOpen, onClose }) => {
                 const { campo, pregunta, detalle } = preguntaObj;
                 const valor = paciente[campo];
                 const detalleValor = paciente[detalle];
-                console.log(" puc-->", patientUpdates[campo]);
-
+                console.log(" patientUpdates[campo] ->", patientUpdates[campo]);
                 const stringvalueTrue = "true";
                 const stringValueFalse = "false";
                 const boolFalse = JSON.parse(stringValueFalse);
