@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import OdontogramaDiente from "../components/Odontograma/OdontogramaDiente";
+import OdontogramComponent from "../components/Odontograma/OdontogramComponent";
 
 const OdontogramaView = () => {
   const [odontograma, setOdontograma] = useState({ dientes: [] });
@@ -29,7 +29,7 @@ const OdontogramaView = () => {
 
       <h2>Dientes:</h2>
       {odontograma?.dientes?.map((diente) => (
-        <OdontogramaDiente key={diente?.numero} {...diente} />
+        <OdontogramComponent key={diente?.numero} {...diente} />
       ))}
     </div>
   );
