@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { clientSelector } from "../../store/features/clientSlice";
 import axios from "axios";
@@ -6,6 +6,7 @@ import axios from "axios";
 const ModalH = ({ isOpen, onClose }) => {
   const client = useSelector((state) => state?.clients?.selectedClient.data);
   const paciente = client?.historial;
+
   const preguntas = [
     {
       campo: "enfermedad",
@@ -135,9 +136,11 @@ const ModalH = ({ isOpen, onClose }) => {
   };
 
   const handleChange = (e, campo) => {
-    const { value } = e.target;
-
-    setPatientUpdates({ ...paciente, [campo]: value ? value : "desconocido" });
+    const { value } = e?.target;
+    setPatientUpdates((prevPatientUpdates) => ({
+      ...prevPatientUpdates,
+      [campo]: value ? value : "desconocido",
+    }));
   };
 
   return (
@@ -154,12 +157,9 @@ const ModalH = ({ isOpen, onClose }) => {
               {preguntas.map((preguntaObj, index) => {
                 const { campo, pregunta, detalle } = preguntaObj;
                 const valor = paciente[campo];
+                // console.log("valor ->", valor);
                 const detalleValor = paciente[detalle];
-                console.log(" patientUpdates[campo] ->", patientUpdates[campo]);
-                const stringvalueTrue = "true";
-                const stringValueFalse = "false";
-                const boolFalse = JSON.parse(stringValueFalse);
-                const boolTrue = JSON.parse(stringvalueTrue);
+                // console.log("detalleValor ->", detalleValor);
 
                 return (
                   <div key={index}>
@@ -167,16 +167,14 @@ const ModalH = ({ isOpen, onClose }) => {
                       <label className="text-black">{pregunta}</label>
                       <select
                         className="text-black"
-                        defaultValue={valor}
+                        defaultValue={valor ? "true" : "false"}
                         onChange={(e) => handleChange(e, campo)}
                       >
-                        <option value={boolTrue}>Si</option>
-                        <option value={boolFalse}>No</option>
+                        <option value="true">Si</option>
+                        <option value="false">No</option>
                       </select>
                     </div>
-
-                    {/* {detalle && valor && ( */}
-                    {patientUpdates[campo] === true && (
+                    {detalleValor ? (
                       <div className="flex justify-between mb-2 ">
                         <label className="text-black">¿Cuál?</label>
                         <input
@@ -187,7 +185,7 @@ const ModalH = ({ isOpen, onClose }) => {
                           placeholder="Cual?"
                         />
                       </div>
-                    )}
+                    ) : null}
                   </div>
                 );
               })}
