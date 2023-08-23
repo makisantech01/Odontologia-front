@@ -1,21 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { makeStyles, withStyles } from "@mui/styles";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import Store from "./Store/Store.js";
 import Tooth from "./Tooth.jsx";
 import Toolbar from "./Toolbar.jsx";
-
 import "./OdontogramComponent.css";
 
 const TabContainer = (props) => {
   return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
+    <div component="div" style={{ padding: 8 * 3 }}>
       {props.children}
-    </Typography>
+    </div>
   );
 };
 
@@ -23,12 +17,12 @@ TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme?.palette?.background.paper,
-  },
-}));
+// const styles = makeStyles((theme) => ({
+//   root: {
+//     flexGrow: 1,
+//     backgroundColor: theme?.palette?.background.paper,
+//   },
+// }));
 
 class OdontogramComponent extends Component {
   constructor(props) {
@@ -67,25 +61,31 @@ class OdontogramComponent extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     const { value } = this.state;
 
     return (
       <div className="container w-[980px] h-auto m-0 bg-green-200 items-center flex">
         <main className="bg-white w-full">
-          <div className={classes.root}>
-            <AppBar
+          {/* <div className={classes.root}> */}
+          <div>
+            <nav
               position="static"
               style={{ backgroundColor: "#eb9934", margin: 0, padding: 0 }}
             >
-              <Tabs value={value} onChange={this.handleChange}>
-                <Tab label="Adulto" />
-                <Tab label="Infantil" />
-              </Tabs>
-            </AppBar>
+              <div
+                className="bg-primary py-4"
+                value={value}
+                onChange={this.handleChange}
+              >
+                <label className="text" label="Adulto">
+                  Adulto
+                </label>
+                <label label="Infantil">Infantil</label>
+              </div>
+            </nav>
 
             {value === 0 && (
-              <TabContainer>
+              <div>
                 {this.state.arcada.adulto.map((item, index) => {
                   return (
                     <Tooth
@@ -97,11 +97,11 @@ class OdontogramComponent extends Component {
                     />
                   );
                 })}
-              </TabContainer>
+              </div>
             )}
 
             {value === 1 && (
-              <TabContainer>
+              <div>
                 {this.state.arcada.infantil.map((item, index) => {
                   return (
                     <Tooth
@@ -113,7 +113,7 @@ class OdontogramComponent extends Component {
                     />
                   );
                 })}
-              </TabContainer>
+              </div>
             )}
           </div>
 
@@ -128,10 +128,8 @@ class OdontogramComponent extends Component {
   }
 }
 
-OdontogramComponent.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+// OdontogramComponent.propTypes = {
+//   classes: PropTypes.object.isRequired,
+// };
 
-export default withStyles(useStyles)(OdontogramComponent);
-
-// comment
+export default OdontogramComponent;
