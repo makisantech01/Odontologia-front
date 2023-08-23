@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-
-import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/styles.css";
 
 export default class Toolbar extends Component {
@@ -12,14 +10,14 @@ export default class Toolbar extends Component {
           let nome = item.nome;
 
           return (
-            <AwesomeButton
+            <button
               type="primary"
               key={nome}
-              className="bt-toolbar"
-              onPress={() => this.props.handleAction(cor, nome)}
+              className="bt-toolbar bg-primary hover:bg-secondary-300 py-2 px-3 rounded-lg"
+              onClick={() => this.props.handleAction(cor, nome)}
             >
               {nome}
-            </AwesomeButton>
+            </button>
           );
         })}
       </div>

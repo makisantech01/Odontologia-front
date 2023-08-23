@@ -5,7 +5,6 @@ import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
-
 import Store from "./Store/Store.js";
 import Tooth from "./Tooth.jsx";
 import Toolbar from "./Toolbar.jsx";

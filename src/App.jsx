@@ -17,10 +17,22 @@ import PatientData from "./views/PatientData";
 import PatientHistory from "./views/PatientHistory";
 import Diente from "./views/Diente";
 import Odontograma from "./views/Odontograma";
-import { ThemeProvider } from "@mui/material/styles";
+import {
+  ThemeProvider,
+  createTheme,
+  makeStyles,
+} from "@material-ui/core/styles";
+
+const theme = createTheme();
+
+export const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme?.palette?.background.paper,
+  },
+}));
 
 function App() {
-  const theme = {};
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserData());
@@ -28,7 +40,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Routes>
-        {/* Dashboard routes :D */}
+        {/* Dashboard routes */}
         <Route path="/" element={<Login />} />
         <Route path="/citas" element={<Citas />} />
         <Route path="/inventario" element={<Inventory />} />
