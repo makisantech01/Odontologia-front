@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@mui/styles";
+import { makeStyles, withStyles } from "@mui/styles";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -23,12 +23,12 @@ TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme?.palette?.background.paper,
   },
-});
+}));
 
 class OdontogramComponent extends Component {
   constructor(props) {
@@ -132,6 +132,6 @@ OdontogramComponent.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(OdontogramComponent);
+export default withStyles(useStyles)(OdontogramComponent);
 
 // comment

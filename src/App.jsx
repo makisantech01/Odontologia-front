@@ -17,11 +17,8 @@ import PatientData from "./views/PatientData";
 import PatientHistory from "./views/PatientHistory";
 import Diente from "./views/Diente";
 import Odontograma from "./views/Odontograma";
-import {
-  ThemeProvider,
-  createTheme,
-  makeStyles,
-} from "@material-ui/core/styles";
+import { ThemeProvider, createTheme } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
 const theme = createTheme();
 
