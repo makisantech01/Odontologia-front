@@ -20,8 +20,6 @@ import Odontograma from "./views/Odontograma";
 // import { ThemeProvider, createTheme } from "@mui/material";
 // import { makeStyles } from "@mui/styles";
 
-// const theme = createTheme();
-
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
