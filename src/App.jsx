@@ -30,7 +30,7 @@ function App() {
   return (
     // <ThemeProvider theme={theme}>
     <Routes>
-      {/* Dashboard routes :D */}
+      {/* Dashboard routes */}
       <Route path="/" element={<Login />} />
       <Route path="/citas" element={<Citas />} />
       <Route path="/inventario" element={<Inventory />} />
