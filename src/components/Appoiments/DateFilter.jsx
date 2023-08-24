@@ -9,8 +9,6 @@ import {
   faCircleCheck,
   faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
-// import { formatDate } from "react-calendar/dist/cjs/shared/dateFormatter";
-import { fetchData } from "../store/features/calendarSlice";
 import { useDispatch } from "react-redux";
 registerLocale("es", es);
 
