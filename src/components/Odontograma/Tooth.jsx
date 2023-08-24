@@ -5,7 +5,6 @@ export default class Tooth extends Component {
     return (
       <div
         style={{
-          // backgroundColor: "#eb9934",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
