@@ -6,23 +6,12 @@ import Toolbar from "./Toolbar.jsx";
 import "./OdontogramComponent.css";
 
 const TabContainer = (props) => {
-  return (
-    <div component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </div>
-  );
+  return <div component="div">{props.children}</div>;
 };
 
 TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
-// const styles = makeStyles((theme) => ({
-//   root: {
-//     flexGrow: 1,
-//     backgroundColor: theme?.palette?.background.paper,
-//   },
-// }));
 
 class OdontogramComponent extends Component {
   constructor(props) {
@@ -34,12 +23,9 @@ class OdontogramComponent extends Component {
   handleChange = (event, value) => {
     this.setState({ value });
   };
-
-  //Muda acao dos de pintura
   handleAction = (cor, nome) => {
     this.setState({ marked: { selecionado: nome, cor } });
   };
-  //Toogle - adiciona e remove dente
   toggleTooth = (data) => {
     if (data.status) {
       data.status = false;
@@ -49,7 +35,6 @@ class OdontogramComponent extends Component {
       this.setState({ data });
     }
   };
-  //Pinta face
   setFace = (face, index, data) => {
     const acao = this.state.marked.cor;
     if (acao === data.faces[index].estado) {
@@ -62,30 +47,25 @@ class OdontogramComponent extends Component {
 
   render() {
     const { value } = this.state;
+    console.log("value ->", value);
 
     return (
-      <div className="container w-[980px] h-auto m-0 bg-green-200 items-center flex">
-        <main className="bg-white w-full">
-          {/* <div className={classes.root}> */}
+      <div className="w-[980px] h-auto m-0 p-0 items-center justify-center flex">
+        <main className="bg-green-200 flex flex-col justify-center items-center p-0 m-0">
           <div>
-            <nav
-              position="static"
-              style={{ backgroundColor: "#eb9934", margin: 0, padding: 0 }}
-            >
+            <nav position="static" className="bg-primary">
               <div
-                className="bg-primary py-4"
+                className="bg-primary py-4 flex justify-evenly"
                 value={value}
                 onChange={this.handleChange}
               >
-                <label className="text" label="Adulto">
-                  Adulto
-                </label>
-                <label label="Infantil">Infantil</label>
+                <button className="text cursor-pointer">Adulto</button>
+                <button className="text cursor-pointer">Infantil</button>
               </div>
             </nav>
 
             {value === 0 && (
-              <div>
+              <div className="bg-blue-500 m-4">
                 {this.state.arcada.adulto.map((item, index) => {
                   return (
                     <Tooth
@@ -127,9 +107,5 @@ class OdontogramComponent extends Component {
     );
   }
 }
-
-// OdontogramComponent.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
 
 export default OdontogramComponent;

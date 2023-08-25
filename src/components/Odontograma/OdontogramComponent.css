@@ -33,17 +33,6 @@
   clear: both;
 }
 
-.spaceRight {
-  margin-right: 40px;
-}
-.noMarginRight {
-  margin-right: 0;
-}
-
-.bt-toolbar {
-  margin: 5px 10px;
-}
-
 .face {
   cursor: pointer;
 }
