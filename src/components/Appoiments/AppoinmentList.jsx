@@ -36,6 +36,7 @@ const AppoinmentList = ({ setStartDate, startDate }) => {
     return a.fecha >= currentDateISO;
   });
 
+
   //eliminacion de turnos antiguos pasados los 2 meses
   appointments.map(async (a) => {
     const [day, month, year] = a.fecha.split("/");

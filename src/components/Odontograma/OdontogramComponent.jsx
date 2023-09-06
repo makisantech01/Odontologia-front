@@ -24,6 +24,8 @@ TabContainer.propTypes = {
 //   },
 // }));
 
+console.log(Store);
+
 class OdontogramComponent extends Component {
   constructor(props) {
     super(props);
