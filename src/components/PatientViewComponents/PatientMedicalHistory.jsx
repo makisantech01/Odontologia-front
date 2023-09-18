@@ -40,10 +40,10 @@ const PatientMedicalHistory = () => {
         } else if (data[key] === "false") {
           data[key] = false;
         } else if (data[key] === null) {
-          data[key] = "";
+          data[key] = null;
         }
       }
-   
+
       const result = await Swal.fire({
         title: `¿Confirma las modificaciones?`,
         icon: "question",
@@ -58,6 +58,8 @@ const PatientMedicalHistory = () => {
           data
         );
 
+        console.log("este es el response",response);
+        console.log("esto es data",data);
        
         
 
@@ -72,8 +74,6 @@ const PatientMedicalHistory = () => {
             toast.addEventListener("mouseleave", Swal.resumeTimer);
           },
         });
-
-        nav("/citas");
 
         // Toast.fire({
         //   icon: "success",

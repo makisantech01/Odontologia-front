@@ -88,12 +88,11 @@ const AppointmentUser = () => {
         reverseButtons: true,
       });
       if (result.isConfirmed) {
-        // const authUrl = `${appointmentsUrl}/google`;
-        // // Abrir una nueva pestaña con la URL de autorización
-        // await window.open(authUrl, "_blank");
+
         axios
           .post(`${appointmentsUrl}/turnos/${dni}`, appointment)
-          .then((response) => {
+          .then(async(response) => {
+
 
             dispatch(getAppointments());
             const Toast = Swal.mixin({
@@ -108,10 +107,25 @@ const AppointmentUser = () => {
               },
             });
 
-            Toast.fire({
-              icon: "success",
-              title: "Turno reservado con éxito!",
+            const calendar =  await Swal.fire({
+              title: `¿Quieres agendar este turno en Google calendar?`,
+              icon: "question",
+              showCancelButton: true,
+              confirmButtonText: "Sí, agendar",
+              cancelButtonText: "No",
+              reverseButtons: true,
             });
+
+            if (calendar.isConfirmed) {
+              window.open("https://calendar.google.com/calendar/", "_blank")
+              Toast.fire({
+                icon: "success",
+                title: "Turno reservado con éxito ",
+              });
+            }
+
+            
+            
           })
           .catch((error) => {
             console.error("Error ->", error);
