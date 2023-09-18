@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clientSelector, fetchClient, putHistorial } from "../../store/features/clientSlice";
+import {
+  clientSelector,
+  fetchClient,
+  putHistorial,
+} from "../../store/features/clientSlice";
 import axios from "axios";
 import { useEffect } from "react";
 
 const ModalH = ({ isOpen, onClose }) => {
   const client = useSelector((state) => state?.clients?.selectedClient.data);
   const paciente = client?.historial;
-  const pacienteDni= paciente.id
-  const clientDni = client.dni
-
+  const pacienteDni = paciente.id;
+  const clientDni = client.dni;
 
   const preguntas = [
     {
@@ -111,30 +114,34 @@ const ModalH = ({ isOpen, onClose }) => {
       detalle: "detalleOtros",
     },
   ];
-  const dispatch= useDispatch()
-  const [patientUpdates, setPatientUpdates] = useState({...paciente});
+  const dispatch = useDispatch();
+  const [patientUpdates, setPatientUpdates] = useState({ ...paciente });
 
-  useEffect (()=>{
-    dispatch(fetchClient(clientDni))
-  }, [dispatch])
-  
+  useEffect(() => {
+    dispatch(fetchClient(clientDni));
+  }, [dispatch]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       var propiedadesExcluir = ["pacienteId", "fecha", "id"];
 
-      var newPatientUpdates = Object.keys(patientUpdates).filter(function(key) {
-    return !propiedadesExcluir.includes(key);
-  }).reduce(function(acc, key) {
-    acc[key] = patientUpdates[key];
-    return acc;
-  }, {});
+      var newPatientUpdates = Object.keys(patientUpdates)
+        .filter(function (key) {
+          return !propiedadesExcluir.includes(key);
+        })
+        .reduce(function (acc, key) {
+          acc[key] = patientUpdates[key];
+          return acc;
+        }, {});
 
-  console.log("new patient",newPatientUpdates);
-  console.log("Client MODAL H",client);
-      const response = await dispatch(putHistorial({newPatientUpdates, pacienteDni, clientDni }))
+      console.log("new patient", newPatientUpdates);
+      console.log("Client MODAL H", client);
+      const response = await dispatch(
+        putHistorial({ newPatientUpdates, pacienteDni, clientDni })
+      );
       console.log("response ->", response);
-      onClose()
+      onClose();
     } catch (error) {
       console.error("Error al comunicarse con el servidor", error);
     }
@@ -142,16 +149,18 @@ const ModalH = ({ isOpen, onClose }) => {
 
   const handleChange = (e, campo) => {
     const { value } = e.target;
-    const parsedValue = JSON.parse(value)
-    console.log("parseado",parsedValue);
-    setPatientUpdates({ ...patientUpdates, [campo]: parsedValue ? parsedValue : false });
+    const parsedValue = JSON.parse(value);
+    console.log("parseado", parsedValue);
+    setPatientUpdates({
+      ...patientUpdates,
+      [campo]: parsedValue ? parsedValue : false,
+    });
   };
 
-  const detailChange = (e, detalle) =>{
+  const detailChange = (e, detalle) => {
     const { value } = e.target;
     setPatientUpdates({ ...patientUpdates, [detalle]: value ? value : null });
-  }
-
+  };
 
   return (
     <>
@@ -167,24 +176,23 @@ const ModalH = ({ isOpen, onClose }) => {
               {preguntas.map((preguntaObj, index) => {
                 const { campo, pregunta, detalle } = preguntaObj;
                 const valor = paciente[campo];
+                // console.log("valor ->", valor);
                 const detalleValor = paciente[detalle];
-                console.log("PatietnUpedates",patientUpdates[campo]);
+                console.log("PatietnUpedates", patientUpdates[campo]);
                 return (
                   <div key={index}>
                     <div className="flex justify-between mb-2">
                       <label className="text-black">{pregunta}</label>
                       <select
                         className="text-black"
-                        defaultValue={valor}
+                        defaultValue={valor ? "true" : "false"}
                         onChange={(e) => handleChange(e, campo)}
                       >
                         <option value="true">Si</option>
                         <option value="false">No</option>
                       </select>
                     </div>
-
-                    {/* {detalle && valor && ( */}
-                    {patientUpdates[campo] === true ? (
+                    {detalleValor ? (
                       <div className="flex justify-between mb-2 ">
                         <label className="text-black">¿Cuál?</label>
                         <input

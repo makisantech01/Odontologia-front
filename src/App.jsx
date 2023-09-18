@@ -8,7 +8,7 @@ import Register from "./views/Register";
 import PassRecovery from "./views/PassRecovery";
 import PassRestore from "./views/PassRestore";
 import { getUserData } from "./components/store/features/usersSlice";
-import Cookies from "universal-cookie";
+// import Cookies from "universal-cookie";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import PacientForm from "./components/Pacients/PacientForm";
@@ -17,6 +17,8 @@ import PatientData from "./views/PatientData";
 import PatientHistory from "./views/PatientHistory";
 import Diente from "./views/Diente";
 import Odontograma from "./views/Odontograma";
+// import { ThemeProvider, createTheme } from "@mui/material";
+// import { makeStyles } from "@mui/styles";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,6 +26,7 @@ function App() {
     dispatch(getUserData());
   }, [dispatch]);
   return (
+    // <ThemeProvider theme={theme}>
     <Routes>
       {/* Dashboard routes */}
       <Route path="/" element={<Login />} />
@@ -42,8 +45,8 @@ function App() {
       {/* Pacients routes */}
       <Route path="/diente" element={<Diente />} />
       <Route path="/odontograma" element={<Odontograma />} />
-
     </Routes>
+    // </ThemeProvider>
   );
 }
 

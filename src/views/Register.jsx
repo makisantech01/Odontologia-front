@@ -16,6 +16,7 @@ import {
   LoginUser,
   RegisterUser,
 } from "../components/store/features/usersSlice";
+import Swal from 'sweetalert2'
 library.add(faIdCard, faLock, faEyeSlash, faEye);
 
 const Register = () => {
@@ -36,9 +37,17 @@ const Register = () => {
   const onSubmit = async (data) => {
     try {
       const response = await dispatch(RegisterUser(data));
-      if (response) {
-        await dispatch(LoginUser(data));
+      console.log(response.type);
+      if (response.type=== "user/RegisterUser/fulfilled"){
+       await dispatch(LoginUser(data));
         nav("/datos-personales");
+      }
+      else {
+        Swal.fire(
+          "Hubo un error al registrarse, inténtelo nuevamente",
+          "",
+          "error"
+        );
       }
     } catch (error) {
       console.error(error);
