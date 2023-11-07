@@ -20,18 +20,18 @@ const Toolbar = (props) => {
         let nome = item.nome;
         console.log("colores -->", colors);
 
-        // const buttonStyle = {
-        //   backgroundColor:
-        //     selectedButton === nome ? `bg-${colors}-700` : `bg-${colors}-800`,
-        // };
+        const buttonStyle = {
+          backgroundColor:
+            selectedButton === nome ? `bg-${cor}-500` : `bg-${cor}-900`,
+        };
 
         return (
           <button
             type="primary"
             key={nome}
-            className={`bg-gray-400 py-2 px-3 rounded-lg flex flex-row gap-3 items-center`}
-            // style={buttonStyle}
-            onClick={() => handleButtonClick(colors, nome)}
+            className={`bt-toolbar text-black bg-${cor}-500 py-2 px-3 rounded-lg`}
+            style={buttonStyle}
+            onClick={() => handleButtonClick(cor, nome)}
           >
             <p>{nome}</p>
             <p className={`rounded-full p-2 bg-${colors}-700`}></p>

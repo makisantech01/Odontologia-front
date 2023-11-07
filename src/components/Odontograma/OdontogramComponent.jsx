@@ -22,6 +22,7 @@ const OdontogramComponent = () => {
 
   const setFace = (face, index, data) => {
     const acao = state.marked.cor;
+    console.log(acao);
     const newData = { ...data };
     if (acao === newData.faces[index].estado) {
       newData.faces[index].estado = "white";

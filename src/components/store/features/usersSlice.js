@@ -51,6 +51,7 @@ export const RegisterUser = createAsyncThunk(
       formData
     );
     const data = response.data;
+    console.log("data reg",data);
     return data;
   }
 );

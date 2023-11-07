@@ -21,6 +21,7 @@ export const createClient = createAsyncThunk(
   "client/createClient",
   async (client) => {
     const response = await axios.post(`${pacientesUrl}/${client.dni}`, client);
+    console.log("res",response.data);
     return response.data;
   }
 );
@@ -39,6 +40,7 @@ export const deleteClient = createAsyncThunk(
     const response = await axios.delete(`${pacientesUrl}/${dni}`)
     const responseUser = await axios.delete(`${userUrl}/usuarios/${dni}`)
     dispatch(fetchClients());
+    console.log("esto es resposne user",responseUser)
     return response.data
   }
 )
