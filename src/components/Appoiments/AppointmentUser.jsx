@@ -68,8 +68,8 @@ const AppointmentUser = () => {
 
   const handleSelectAppointment = async (date, time) => {
     const appointment = { fecha: date, hora: time };
-    const appointmentsUrl =
-      "https://api-sist-odontologico-production-889e.up.railway.app";
+
+    const appointmentsUrl = import.meta.env.VITE_ENDPOINT;
 
     if (userAppointments.length > 0) {
       await Swal.fire({
@@ -88,12 +88,9 @@ const AppointmentUser = () => {
         reverseButtons: true,
       });
       if (result.isConfirmed) {
-
         axios
           .post(`${appointmentsUrl}/turnos/${dni}`, appointment)
-          .then(async(response) => {
-
-
+          .then(async (response) => {
             dispatch(getAppointments());
             const Toast = Swal.mixin({
               toast: true,
@@ -107,7 +104,7 @@ const AppointmentUser = () => {
               },
             });
 
-            const calendar =  await Swal.fire({
+            const calendar = await Swal.fire({
               title: `¿Quieres agendar este turno en Google calendar?`,
               icon: "question",
               showCancelButton: true,
@@ -117,15 +114,12 @@ const AppointmentUser = () => {
             });
 
             if (calendar.isConfirmed) {
-              window.open("https://calendar.google.com/calendar/", "_blank")
+              window.open("https://calendar.google.com/calendar/", "_blank");
               Toast.fire({
                 icon: "success",
                 title: "Turno reservado con éxito ",
               });
             }
-
-            
-            
           })
           .catch((error) => {
             console.error("Error ->", error);

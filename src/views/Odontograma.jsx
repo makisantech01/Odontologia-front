@@ -4,6 +4,7 @@ import OdontogramComponent from "../components/Odontograma/OdontogramComponent";
 
 const OdontogramaView = () => {
   const [odontograma, setOdontograma] = useState({ dientes: [] });
+  const url = import.meta.env.VITE_ENDPOINT;
 
   useEffect(() => {
     fetchOdontograma();
@@ -11,9 +12,7 @@ const OdontogramaView = () => {
 
   const fetchOdontograma = async () => {
     try {
-      const response = await axios.get(
-        "https://api-sist-odontologico-production-889e.up.railway.app/odontogramas"
-      );
+      const response = await axios.get(`${url}/odontogramas`);
       setOdontograma(response.data);
     } catch (error) {
       console.error(error);

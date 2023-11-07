@@ -30,7 +30,7 @@ const PatientMedicalHistory = () => {
     dispatch(fetchClient(user));
   }, [dispatch]);
 
-  const api = "https://api-sist-odontologico-production-889e.up.railway.app";
+  const api = import.meta.env.VITE_ENDPOINT;
 
   const onSubmit = async (data) => {
     try {
@@ -58,10 +58,8 @@ const PatientMedicalHistory = () => {
           data
         );
 
-        console.log("este es el response",response);
-        console.log("esto es data",data);
-        
-        
+        console.log("este es el response", response);
+        console.log("esto es data", data);
 
         const Toast = Swal.mixin({
           toast: true,
@@ -74,17 +72,15 @@ const PatientMedicalHistory = () => {
             toast.addEventListener("mouseleave", Swal.resumeTimer);
           },
         });
-        if(response.status=== 201){
+        if (response.status === 201) {
           Toast.fire({
             icon: "success",
             title: "Información actualizada con éxito!",
           });
         }
-       
-        
       }
     } catch (response) {
-      console.log("data user",data);
+      console.log("data user", data);
       console.error(response);
       const Toast = Swal.mixin({
         toast: true,
@@ -775,9 +771,7 @@ const PatientMedicalHistory = () => {
             })}
             defaultChecked={false}
             onBlur={() => handleBlur("consentimiento")}
-            onClick={(e) => {
-
-            }}
+            onClick={(e) => {}}
           />
         </div>
         {errors.consentimiento && (

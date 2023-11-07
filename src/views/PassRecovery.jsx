@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 library.add(faIdCard, faEnvelope);
+const url = import.meta.env.VITE_ENDPOINT;
 
 const PassRecovery = () => {
   const nav = useNavigate();
@@ -23,10 +24,9 @@ const PassRecovery = () => {
   const onSubmit = async (data) => {
     try {
       await axios
-        .post(
-          `https://api-sist-odontologico-production-889e.up.railway.app/solicitar-restablecimiento/${data.dni}`,
-          { email: data.email }
-        )
+        .post(`${url}/solicitar-restablecimiento/${data.dni}`, {
+          email: data.email,
+        })
         .then(async (response) => {
           const result = await Swal.fire({
             title: "Link de recuperación enviado. Revise su casilla de correo!",
