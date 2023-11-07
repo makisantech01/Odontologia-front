@@ -30,7 +30,7 @@ const ClinicalHistory = () => {
     setShowCualInput(selectedValue === "true");
   };
 
-  const api = "https://api-sist-odontologico-production-889e.up.railway.app";
+  const api = import.meta.env.VITE_ENDPOINT;
 
   const onSubmit = async (data) => {
     try {
@@ -43,7 +43,7 @@ const ClinicalHistory = () => {
       }
       data.mesesEmbarazo === "" ? (data.mesesEmbarazo = 0) : data.mesesEmbarazo;
 
-      // const response = await axios.post(`${api}/historiales/${user}`, data);
+      const response = await axios.post(`${api}/historiales/${user}`, data);
 
       if (response.status === 200) {
         nav("/citas");

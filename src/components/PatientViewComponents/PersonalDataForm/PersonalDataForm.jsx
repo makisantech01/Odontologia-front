@@ -47,7 +47,7 @@ const PersonalDataForm = () => {
   const yyyy = fechaNacimiento.getFullYear();
   const fechaClienteFormateada = `${yyyy}-${mm}-${dd}`;
   const isSmallScreen = window.innerWidth < 640;
-
+ console.log("client",client);
   const onSubmit = async (data) => {
     try {
       const fechaNacimiento = new Date(data?.fechaNacimiento);
@@ -72,6 +72,7 @@ const PersonalDataForm = () => {
 
       if (result.isConfirmed) {
         const response = await dispatch(updateClient(newData));
+        console.log("esto es new data",newData);
 
         const Toast = Swal.mixin({
           toast: true,

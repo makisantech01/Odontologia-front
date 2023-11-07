@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 library.add(faLock, faEyeSlash, faEye);
+const url = import.meta.env.VITE_ENDPOINT;
 
 const PassRestore = () => {
   const nav = useNavigate();
@@ -29,10 +30,10 @@ const PassRestore = () => {
       const urlParams = new URLSearchParams(window.location.search);
       const token = urlParams.get("token");
       await axios
-        .post(
-          "https://api-sist-odontologico-production-889e.up.railway.app/restablecer-contrasena",
-          { token, password: data.password }
-        )
+        .post(`${url}/restablecer-contrasena`, {
+          token,
+          password: data.password,
+        })
         .then(async (response) => {
           const result = await Swal.fire({
             title: "Contraseña restablecida con éxito!",

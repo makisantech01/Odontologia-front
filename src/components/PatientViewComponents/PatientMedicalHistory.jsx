@@ -30,7 +30,7 @@ const PatientMedicalHistory = () => {
     dispatch(fetchClient(user));
   }, [dispatch]);
 
-  const api = "https://api-sist-odontologico-production-889e.up.railway.app";
+  const api = import.meta.env.VITE_ENDPOINT;
 
   const onSubmit = async (data) => {
     try {
@@ -39,11 +39,11 @@ const PatientMedicalHistory = () => {
           data[key] = true;
         } else if (data[key] === "false") {
           data[key] = false;
-        } else if (data[key] === null) {
-          data[key] = "";
+        } else if (data[key] === "") {
+          data[key] = null;
         }
       }
-   
+
       const result = await Swal.fire({
         title: `¿Confirma las modificaciones?`,
         icon: "question",
@@ -58,8 +58,8 @@ const PatientMedicalHistory = () => {
           data
         );
 
-       
-        
+        console.log("este es el response", response);
+        console.log("esto es data", data);
 
         const Toast = Swal.mixin({
           toast: true,
@@ -72,16 +72,15 @@ const PatientMedicalHistory = () => {
             toast.addEventListener("mouseleave", Swal.resumeTimer);
           },
         });
-
-        nav("/citas");
-
-        // Toast.fire({
-        //   icon: "success",
-        //   title: "Información actualizada con éxito!",
-        // });
+        if (response.status === 201) {
+          Toast.fire({
+            icon: "success",
+            title: "Información actualizada con éxito!",
+          });
+        }
       }
     } catch (response) {
-      console.log("data user",data);
+      console.log("data user", data);
       console.error(response);
       const Toast = Swal.mixin({
         toast: true,
@@ -105,7 +104,7 @@ const PatientMedicalHistory = () => {
     trigger(fieldName);
   };
   return (
-    <form className="w-[92vw] flex flex-col justify-center items-center lg:w-[70vw] mx-4 lg:h-[80vh] md:h-[80vh] h-[89vh] bg-primary py-4 rounded-3xl shadow-2xl z-10">
+    <form className="w-[92vw] flex flex-col justify-center items-center lg:w-[70vw] mx-4 lg:h-[90vh] md:h-[80vh] h-[89vh] bg-primary py-4 rounded-3xl shadow-2xl z-10">
       <h2 className="lg:text-6xl text-4xl font-bold text-center italic text-white my-5">
         Historial Médico
       </h2>
@@ -772,9 +771,7 @@ const PatientMedicalHistory = () => {
             })}
             defaultChecked={false}
             onBlur={() => handleBlur("consentimiento")}
-            onClick={(e) => {
-
-            }}
+            onClick={(e) => {}}
           />
         </div>
         {errors.consentimiento && (

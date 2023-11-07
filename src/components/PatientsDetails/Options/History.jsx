@@ -27,12 +27,12 @@ const History = () => {
     values.otros = values.otros === "si";
     values.consentimiento = values.consentimiento === "si";
 
-    const endpointUrl = `https://api-sist-odontologico-production-889e.up.railway.app/historiales/${id}`;
+    const url = import.meta.env.VITE_ENDPOINT;
+    const endpointUrl = `${url}/historiales/${id}`;
     if (isEditing) {
       axios
         .put(endpointUrl, values)
         .then((response) => {
-
           setFormData(response.data);
           setIsEditing(false);
           setSubmitting(false);
