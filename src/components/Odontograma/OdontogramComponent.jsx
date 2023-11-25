@@ -3,9 +3,15 @@ import Store from "./Store/Store.js";
 import Tooth from "./Tooth.jsx";
 import Toolbar from "./Toolbar.jsx";
 import "./OdontogramComponent.css";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const OdontogramComponent = () => {
+  const { id } = useParams();
+  console.log("el id ->", id);
   const [state, setState] = useState({ ...Store, value: 0 });
+  console.log("state ->", state);
+  const endpointUrl = import.meta.env.VITE_ENDPOINT;
 
   const handleChange = (event, value) => {
     setState({ ...state, value });
@@ -22,7 +28,7 @@ const OdontogramComponent = () => {
 
   const setFace = (face, index, data) => {
     const acao = state.marked.cor;
-    console.log(acao);
+    console.log("marked color ->", acao);
     const newData = { ...data };
     if (acao === newData.faces[index].estado) {
       newData.faces[index].estado = "white";
@@ -33,6 +39,18 @@ const OdontogramComponent = () => {
   };
 
   const { value } = state;
+
+  const saveData = () => {
+    const url = `${endpointUrl}/odontogramas/${id}`;
+    axios
+      .post(url, state)
+      .then((response) => {
+        console.log("Datos guardados con éxito", response.data);
+      })
+      .catch((error) => {
+        console.error("Error al guardar los datos", error);
+      });
+  };
 
   return (
     <div className="flex flex-col justify-center items-center gap-8">
@@ -98,7 +116,9 @@ const OdontogramComponent = () => {
           cor={state.marked.cor}
         />
       </main>
-      <button className="bg-gray-500 py-2 px-3 rounded-xl">Guardar</button>
+      <button onClick={saveData} className="bg-gray-500 py-2 px-3 rounded-xl">
+        Guardar
+      </button>
     </div>
   );
 };

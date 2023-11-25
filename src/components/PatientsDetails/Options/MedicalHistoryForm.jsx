@@ -110,12 +110,10 @@ const MedicalHistoryForm = ({ isModalOpen, setIsModalOpen }) => {
     },
   ];
 
+  const url = import.meta.env.VITE_ENDPOINT;
   const handleSaveChanges = (nuevoPaciente) => {
     axios
-      .put(
-        `https://api-sist-odontologico-production-889e.up.railway.app/historiales/${nuevoPaciente.id}`,
-        nuevoPaciente
-      )
+      .put(`${url}/historiales/${nuevoPaciente.id}`, nuevoPaciente)
       .then((response) => {
         setPacienteIni(nuevoPaciente);
         setIsModalOpen(false);

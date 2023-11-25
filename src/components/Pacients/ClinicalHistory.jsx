@@ -30,7 +30,7 @@ const ClinicalHistory = () => {
     setShowCualInput(selectedValue === "true");
   };
 
-  const api = "https://api-sist-odontologico-production-889e.up.railway.app";
+  const api = import.meta.env.VITE_ENDPOINT;
 
   const onSubmit = async (data) => {
     try {

@@ -11,7 +11,6 @@ const Details = () => {
   const dispatch = useDispatch();
   const client = useSelector((state) => state?.clients?.selectedClient?.data);
   const [nroHist, setNroHist] = useState(client?.nroHistoriaClinica)
-  console.log(client);
   useEffect(() => {
     dispatch(fetchClient(id));
   }, [dispatch]);
@@ -31,7 +30,6 @@ const Details = () => {
 
   const onChange = ((e)=>{
     const event = e.target.value
-    console.log("event",event);
     setNroHist(event)
   })
 

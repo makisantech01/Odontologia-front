@@ -4,7 +4,6 @@ import Cookies from "universal-cookie";
 import jwt_decode from "jwt-decode";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
-import { fetchClients } from "./clientSlice";
 const cookies = new Cookies();
 
 const userUrl = import.meta.env.VITE_ENDPOINT;
@@ -33,10 +32,7 @@ export const getUserData = createAsyncThunk(
 export const LoginUser = createAsyncThunk(
   "user/LoginUser",
   async (formData) => {
-    const response = await axios.post(
-      "https://api-sist-odontologico-production-889e.up.railway.app/login",
-      formData
-    );
+    const response = await axios.post(`${userUrl}/login`, formData);
     const data = response.data.token;
 
     return data;
@@ -46,12 +42,9 @@ export const LoginUser = createAsyncThunk(
 export const RegisterUser = createAsyncThunk(
   "user/RegisterUser",
   async (formData) => {
-    const response = await axios.post(
-      "https://api-sist-odontologico-production-889e.up.railway.app/usuarios",
-      formData
-    );
+    const response = await axios.post(`${userUrl}/usuarios`, formData);
     const data = response.data;
-    console.log("data reg",data);
+    console.log("data reg", data);
     return data;
   }
 );

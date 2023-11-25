@@ -7,7 +7,7 @@ const Store = {
     opcoes: [
       {
         nome: "Restaurado",
-        cor: "gray",
+        cor: "pink",
       },
       {
         nome: "Caríado",
@@ -19,7 +19,7 @@ const Store = {
       },
       {
         nome: "Obturacion",
-        cor: "blue",
+        cor: "yellow",
       },
       {
         nome: "Corona",

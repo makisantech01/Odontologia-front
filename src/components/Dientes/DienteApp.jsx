@@ -15,16 +15,6 @@ const DienteApp = () => {
       .catch((error) => {
         console.error("Error al enviar los datos:", error);
       });
-
-    // console.log("Datos del formulario que se enviarían:", {
-    //   numero,
-    //   posicionX,
-    //   posicionY,
-    //   caras,
-    //   todoElDiente,
-    //   observacion,
-    //   color,
-    // });
   };
 
   const handleCancel = () => {
